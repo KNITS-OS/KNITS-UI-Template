@@ -4,11 +4,11 @@ import {
   CARE_MEMBER_CREATE,
   CARE_MEMBER_EDIT,
   CARE_MEMBER_SEARCH,
+  EMPLOYEE_DETAILS,
+  EMPLOYEE_SEARCH,
   CreateCareMemberPage,
   EditCareMemberPage,
   EmployeeDetailsPage,
-  EMPLOYEE_DETAILS,
-  EMPLOYEE_SEARCH,
   SearchCareMembersPage,
   SearchEmployeesPage,
 } from ".";

@@ -14,29 +14,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { useEffect, useRef, useState } from "react";
-import { Audio } from "react-loader-spinner";
+import { useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import careLogo from "assets/img/brand/CareLogoMin.png";
 
 import { routes } from "routes";
-
-import { useAppDispatch, useAppSelector } from "redux/app";
-import {
-  findAllBusinessUnits,
-  findAllCountries,
-  findAllGroups,
-  findAllRoles,
-  findAllJobTitles,
-  searchCareMembers,
-  selectAllBusinessUnitData,
-  selectAllCareMembersData,
-  selectAllCountryData,
-  selectAllGroupsData,
-  selectAllRolesData,
-  selectAllJobTitleData,
-} from "redux/features";
 
 import { AdminFooter } from "components/footers";
 import { AdminNavbar } from "components/navbars";
@@ -45,106 +28,11 @@ import { Sidebar } from "components/sidebar";
 import { useScrollToTop } from ".";
 
 export const AdminLayout = () => {
-  const dispatch = useAppDispatch();
   const location = useLocation();
 
   const mainContentRef = useRef(document.createElement("div"));
-  const [isDataLoadingCompleted, setIsDataLoadingCompleted] = useState(false);
-
-  const [isCountryDataLoaded, setIsCountryDataLoaded] = useState(false);
-  const [isBusinessUnitsDataLoaded, setIsBusinessUnitsDataLoaded] = useState(false);
-  const [isRolesDataLoaded, setIsRolesDataLoaded] = useState(false);
-  const [isGroupsDataLoaded, setIsGroupsDataLoaded] = useState(false);
-  const [isCareMembersDataLoaded, setIsCareMembersDataLoaded] = useState(false);
-  const [isJobTitlesDataLoaded, setIsJobTitlesDataLoaded] = useState(false);
-
-  const countries = useAppSelector(selectAllCountryData);
-  const businessUnits = useAppSelector(selectAllBusinessUnitData);
-  const roles = useAppSelector(selectAllRolesData);
-  const groups = useAppSelector(selectAllGroupsData);
-  const careMembers = useAppSelector(selectAllCareMembersData);
-  const jobTitles = useAppSelector(selectAllJobTitleData);
 
   useScrollToTop(mainContentRef);
-
-  useEffect(() => {
-    if (!countries || countries.length == 0) {
-      dispatch(findAllCountries());
-    } else {
-      setIsCountryDataLoaded(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countries, isCountryDataLoaded]);
-
-  useEffect(() => {
-    if (!businessUnits || businessUnits.length == 0) {
-      dispatch(findAllBusinessUnits());
-    } else {
-      setIsBusinessUnitsDataLoaded(true);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [businessUnits, isBusinessUnitsDataLoaded]);
-
-  useEffect(() => {
-    if (!jobTitles || jobTitles.length == 0) {
-      dispatch(findAllJobTitles());
-    } else {
-      setIsJobTitlesDataLoaded(true);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jobTitles, isJobTitlesDataLoaded]);
-
-  useEffect(() => {
-    if (!careMembers || careMembers.length == 0) {
-      dispatch(searchCareMembers({}));
-    } else {
-      setIsCareMembersDataLoaded(true);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [careMembers, isCareMembersDataLoaded]);
-
-  useEffect(() => {
-    if (!roles || roles.length == 0) {
-      dispatch(findAllRoles());
-    } else {
-      setIsRolesDataLoaded(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roles, isRolesDataLoaded]);
-
-  useEffect(() => {
-    if (!groups || groups.length == 0) {
-      dispatch(findAllGroups());
-    } else {
-      setIsGroupsDataLoaded(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [groups, isGroupsDataLoaded]);
-
-  useEffect(() => {
-    if (
-      isCountryDataLoaded &&
-      isBusinessUnitsDataLoaded &&
-      isRolesDataLoaded &&
-      isGroupsDataLoaded &&
-      isCareMembersDataLoaded &&
-      isJobTitlesDataLoaded
-    ) {
-      setIsDataLoadingCompleted(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isCountryDataLoaded,
-    isBusinessUnitsDataLoaded,
-    isGroupsDataLoaded,
-    isRolesDataLoaded,
-    isCareMembersDataLoaded,
-    isJobTitlesDataLoaded,
-    isDataLoadingCompleted,
-  ]);
 
   const getNavbarTheme = () => {
     return location.pathname.indexOf("admin/alternative-dashboard") === -1 ? "dark" : "light";
@@ -152,33 +40,20 @@ export const AdminLayout = () => {
 
   return (
     <>
-      {!isDataLoadingCompleted ? (
-        <>
-          <div className="main-content" ref={mainContentRef}>
-            <div style={{ height: "300pt" }}>&nbsp;</div>
-            <div className="d-flex justify-content-center mb-3">
-              <Audio color={ThemeColors.theme.primary} height={160} width={160} />
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <Sidebar
-            routes={routes}
-            logo={{
-              innerLink: "/",
-              imgSrc: careLogo,
-              imgAlt: "...",
-            }}
-            rtlActive={false}
-          />
-          <div className="main-content" ref={mainContentRef}>
-            <AdminNavbar theme={getNavbarTheme()} />
-            <Outlet />
-            <AdminFooter />
-          </div>
-        </>
-      )}
+      <Sidebar
+        routes={routes}
+        logo={{
+          innerLink: "/",
+          imgSrc: careLogo,
+          imgAlt: "...",
+        }}
+        rtlActive={false}
+      />
+      <div className="main-content" ref={mainContentRef}>
+        <AdminNavbar theme={getNavbarTheme()} />
+        <Outlet />
+        <AdminFooter />
+      </div>
     </>
   );
 };

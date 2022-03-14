@@ -1,11 +1,10 @@
 import classnames from "classnames";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
-import { toggleSidebar } from "redux/features";
+import { useSidebar } from "hooks";
 
 export const SidebarToggler = () => {
-  const { isSidebarOpen } = useAppSelector(state => state.sidebar);
-  const dispatch = useAppDispatch();
+  const { isSidebarOpen, toggleSidebar } = useSidebar();
+
   return (
     <div className="ml-auto sidebar-toggler">
       <div
@@ -15,8 +14,8 @@ export const SidebarToggler = () => {
         role="button"
         tabIndex={0}
         // @docs https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/click-events-have-key-events.md
-        onKeyDown={() => dispatch(toggleSidebar())}
-        onClick={() => dispatch(toggleSidebar())}
+        onKeyDown={() => toggleSidebar()}
+        onClick={() => toggleSidebar()}
       >
         <div className="sidenav-toggler-inner">
           <i className="sidenav-toggler-line" />

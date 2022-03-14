@@ -1,4 +1,3 @@
-import { Moment } from "moment";
 import { useState } from "react";
 
 import { Col, Row } from "reactstrap";
@@ -10,21 +9,9 @@ import { WithAuthorization } from "components/authorization";
 import { FilterPanel } from "components/panels";
 import { DateField, InputField, SelectField } from "components/widgets";
 
+import { DATE_FILTER_FORMAT, Permission, Role } from "variables/app.consts";
 
-import { DATE_FILTER_FORMAT } from "variables/app.consts";
-
-interface onSearchEmployeesFunction {
-  (employeeSearchRequest: EmployeeQueryFilters): void;
-}
-
-interface SearchEmployeesFilterPanelProps {
-  countries: SelectOption[];
-  businessUnits: SelectOption[];
-  // jobTitle: SelectOption[];
-  onSearchEmployees: onSearchEmployeesFunction;
-}
-
-export const SearchEmployeesFilterPanel = (props: SearchEmployeesFilterPanelProps) => {
+export const SearchEmployeesFilterPanel = props => {
   const userRole = useAppSelector(selectLoggedUserRole);
   const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
@@ -42,7 +29,7 @@ export const SearchEmployeesFilterPanel = (props: SearchEmployeesFilterPanelProp
   const [searchHiringDate, setSearchHiringDate] = useState();
   // const [searchJobTitle, setSearchJobTitle] = useState();
 
-  const onChangeSearchLastName = () => {
+  const onChangeSearchLastName = e => {
     const searchLastName = e.target.value;
     setSearchLastName(searchLastName);
   };
@@ -62,7 +49,7 @@ export const SearchEmployeesFilterPanel = (props: SearchEmployeesFilterPanelProp
     props.onSearchEmployees(filters);
   };
 
-  const parametersToFilter = (): EmployeeQueryFilters => {
+  const parametersToFilter = () => {
     return Object.assign(
       {},
       searchLastName && searchLastName !== "" ? { lastName: searchLastName } : null,
@@ -101,7 +88,7 @@ export const SearchEmployeesFilterPanel = (props: SearchEmployeesFilterPanelProp
             value={businessUnitSelected}
             options={props.businessUnits}
             onChange={item => {
-              setBusinessUnitSelected(item 
+              setBusinessUnitSelected(item);
             }}
           />
         </Col>
@@ -113,7 +100,7 @@ export const SearchEmployeesFilterPanel = (props: SearchEmployeesFilterPanelProp
               value={countrySelected}
               options={props.countries}
               onChange={item => {
-                setCountrySelected(item 
+                setCountrySelected(item);
               }}
             />
           </Col>

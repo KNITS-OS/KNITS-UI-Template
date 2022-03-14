@@ -1,5 +1,4 @@
 import { FaGreaterThan, FaLessThan } from "react-icons/fa";
-import { Row } from "react-table";
 
 export const PaginationReactTable = ({
   canNextPage,

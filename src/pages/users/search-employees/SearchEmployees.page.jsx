@@ -1,16 +1,13 @@
-import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row, Spinner } from "reactstrap";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
+import { useAppSelector } from "redux/app";
 import {
-  selectEmployeesState,
-  searchEmployees,
   selectAllBusinessUnitsDataAsSelectOptions,
-  deleteEmployee,
   selectAllCountriesDataAsSelectOptions,
   selectAllEmployeesData,
+  selectEmployeesState,
 } from "redux/features";
 
 import { BoxHeader } from "components/headers";
@@ -24,7 +21,6 @@ import { employeesTableColumns, SearchEmployeesFilterPanel, SearchEmployeesModal
 
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const employees = useAppSelector(selectAllEmployeesData);
   const employeeState = useAppSelector(selectEmployeesState);
@@ -32,8 +28,8 @@ export const SearchEmployeesPage = () => {
   const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
   const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);
 
-  const onSearchEmployees = (filters: EmployeeQueryFilters): void => {
-    dispatch(searchEmployees(filters));
+  const onSearchEmployees = filters => {
+    console.log("filters", filters);
   };
   const { alert, setIsSuccess, setSuccessMessage, setSaveSent } = useLocalStateAlerts();
   const onViewEmployeeDetails = e => {
@@ -45,7 +41,7 @@ export const SearchEmployeesPage = () => {
   const onDeleteEmployee = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    dispatch(deleteEmployee(parseInt(id)));
+    console.log("delete employee", id);
   };
 
   return (

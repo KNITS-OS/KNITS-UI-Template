@@ -3,23 +3,22 @@ import { NavLink as NavLinkRRD } from "react-router-dom";
 
 import { Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
-import { useAppDispatch } from "redux/app";
-import { toggleSidebar } from "redux/features";
+import { useSidebar } from "hooks/useSidebar";
 
 import { getViewCollapseInitialState, activeRoute } from "..";
 
 import { RouteIcon } from ".";
 
 export const CreateSidebarLinks = ({ routes, userRole, collapseState, setCollapseState }) => {
-  const dispatch = useAppDispatch();
+  const { toggleSidebar } = useSidebar();
 
   /**
    * this is used on mobile devices, when a user navigates
    * the sidebar will autoclose
    */
-  const closeSidebar = dispatch => {
+  const closeSidebar = () => {
     if (window.innerWidth < 1200) {
-      dispatch(toggleSidebar());
+      toggleSidebar();
     }
   };
 
@@ -70,7 +69,7 @@ export const CreateSidebarLinks = ({ routes, userRole, collapseState, setCollaps
                 <NavLink
                   to={route.layout + route.path}
                   activeClassName=""
-                  onClick={() => closeSidebar(dispatch)}
+                  onClick={() => closeSidebar()}
                   tag={NavLinkRRD}
                 >
                   <RouteIcon route={route} />

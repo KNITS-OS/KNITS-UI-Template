@@ -1,12 +1,8 @@
 import { forwardRef, useEffect, useRef } from "react";
 
-interface CheckboxProps {
-  indeterminate?: boolean;
-}
-
 export const IndeterminateCheckbox = forwardRef(
   // @todo find type for ref
-  ({ indeterminate, ...rest }: CheckboxProps, ref: any) => {
+  ({ indeterminate, ...rest }, ref) => {
     const defaultRef = useRef();
     const resolvedRef = ref || defaultRef;
 

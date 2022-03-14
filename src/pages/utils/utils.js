@@ -1,3 +1,5 @@
+import { businessUnitsData, countriesData, employeesData, careRolesData, groupsData } from "data";
+import { SELECT_ALL, Role } from "variables/app.consts";
 import { AuthorizationPolicies } from "variables/rbac.config";
 
 export const toFileArray = filelist => {
@@ -65,4 +67,73 @@ export const toBoolean = value => {
     return false;
   }
   return [true, "true", "True", "TRUE", "1", 1].includes(value);
+};
+
+export const selectAllBusinessUnitsDataAsSelectOptions = () => {
+  const businessUnitOptions = businessUnitsData.map(businessUnit => {
+    return { value: `${businessUnit.id}`, label: businessUnit.name };
+  });
+  return [SELECT_ALL, ...businessUnitOptions];
+};
+
+export const selectAllCountriesDataAsSelectOptions = () => {
+  const countryOptions = countriesData.map(country => {
+    return { value: `${country.code3}`, label: country.name };
+  });
+  return [SELECT_ALL, ...countryOptions];
+};
+
+export const selectLoggedUserDefaultCountryAsSelection = userCountry => {
+  const countriesAsSelections = selectAllCountriesDataAsSelectOptions();
+  const countrySelectOption = countriesAsSelections.find(
+    countryOption => countryOption.value === userCountry
+  );
+  return countrySelectOption;
+};
+
+export const selectCountryByIsoCodeAsSelectOption = code => {
+  const countryFound = countriesData.find(country => country.code3 === code);
+
+  return {
+    value: countryFound.code3,
+    label: countryFound.name,
+  };
+};
+
+export const selectAllEmployeeDataAsSelectOptions = () => {
+  const employeesOptions = employeesData.map(employee => {
+    return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
+  });
+  return [SELECT_ALL, ...employeesOptions];
+};
+
+export const selectRoleByIdAsSelectOption = id => {
+  const roleFound = careRolesData.find(role => role.id === id);
+
+  return {
+    value: `${roleFound.id}`,
+    label: roleFound.name,
+  };
+};
+
+export const selectAllRolesDataAsSelectOptions = () => {
+  const rolesOptions = careRolesData.map(role => {
+    return { value: `${role.id}`, label: role.name };
+  });
+  return [SELECT_ALL, ...rolesOptions];
+};
+
+export const selectGroupsByIdsAsSelectValues = ids => {
+  const groups = groupsData.filter(group => ids.includes(group.id));
+  const groupsOptions = groups.map(group => {
+    return { value: `${group.id}`, label: group.name };
+  });
+  return [...groupsOptions];
+};
+
+export const selectAllGroupsDataAsSelectOptions = () => {
+  const groupsOptions = groupsData.map(group => {
+    return { value: `${group.id}`, label: group.name };
+  });
+  return [SELECT_ALL, ...groupsOptions];
 };

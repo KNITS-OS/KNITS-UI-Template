@@ -19,7 +19,7 @@ import { VectorMap } from "react-jvectormap";
 
 import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
+import { useAppSelector } from "redux/app";
 import {
   fetchActiveMembersReport,
   fetchAutoOffboardedMembersReport,
@@ -35,8 +35,6 @@ import {
 import { MapsHeader } from "components/headers";
 
 export const WorldOverviewPage = () => {
-  const dispatch = useAppDispatch();
-
   const activeMap = useAppSelector(selectCurrentMapData);
   let activeMembersMap = useAppSelector(selectActiveMembersReportsData);
   let newMembersMap = useAppSelector(selectNewMembersReportsData);

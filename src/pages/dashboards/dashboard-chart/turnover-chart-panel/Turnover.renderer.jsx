@@ -1,8 +1,10 @@
 import { Bar } from "react-chartjs-2";
 
+import { ThemeColors } from "variables/app.consts";
+
 import { barDataTemplate, barOptionsTemplate } from "..";
 
-export const toTurnoverBarChartUI = (apiResponse: TurnoverChart[]): IBarChart => {
+export const toTurnoverBarChartUI = apiResponse => {
   const template = barDataTemplate({
     bars: [
       { label: "Onboarded", backgroundColor: ThemeColors.theme["success"] },
@@ -22,8 +24,8 @@ export const toTurnoverBarChartUI = (apiResponse: TurnoverChart[]): IBarChart =>
   };
 };
 
-export const renderChart = (response: ApiResponse<TurnoverChart[]>): JSX.Element => {
+export const renderChart = response => {
   const chartData = response.data; //necessary for undefined checking in ts
-  const barChart: IBarChart = toTurnoverBarChartUI(chartData);
+  const barChart = toTurnoverBarChartUI(chartData);
   return <Bar data={barChart.data} options={barChart.options} className="chart-canvas" />;
 };

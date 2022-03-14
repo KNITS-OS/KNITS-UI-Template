@@ -60,7 +60,6 @@ module.exports = {
     "import/no-named-as-default": "off",
 
     "jsx-a11y/anchor-is-valid": "off",
-
     "import/order": [
       "error",
       {

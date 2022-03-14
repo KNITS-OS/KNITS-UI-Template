@@ -31,15 +31,13 @@ import {
 
 import placeholderPortrait from "assets/img/icons/common/Portrait_Placeholder.png";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
-import { logout, selectLoggedUser } from "redux/features";
+import { useAuth } from "context";
 
 export const AdminNavbar = ({ theme }) => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(selectLoggedUser);
+  const { user, setUser } = useAuth();
 
   const logOut = () => {
-    dispatch(logout());
+    setUser(null);
   };
 
   return (

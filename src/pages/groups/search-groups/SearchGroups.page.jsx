@@ -1,10 +1,9 @@
-import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row, Spinner } from "reactstrap";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
-import { deleteGroup, selectAllGroupsData, selectGroupState } from "redux/features";
+import { useAppSelector } from "redux/app";
+import { selectAllGroupsData, selectGroupState } from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
@@ -15,7 +14,7 @@ import { groupsTableColumns } from ".";
 
 export const SearchGroupsPage = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+
   const groupState = useAppSelector(selectGroupState);
   const groups = useAppSelector(selectAllGroupsData);
 
@@ -26,7 +25,7 @@ export const SearchGroupsPage = () => {
 
   const onDeleteGroup = e => {
     const { id } = e.target;
-    dispatch(deleteGroup(parseInt(id)));
+    console.log("delete group", id);
   };
 
   return (

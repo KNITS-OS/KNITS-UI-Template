@@ -1,5 +1,3 @@
-import { ChartData, ChartOptions } from "chart.js";
-
 export const barDataTemplate = ({ bars }) => {
   const datasets = bars.map(bar => ({
     label: bar.label,
@@ -23,7 +21,7 @@ export const barOptionsTemplate = {
   },
 };
 
-export const multiBarOptionsTemplate: ChartOptions<"bar"> = {
+export const multiBarOptionsTemplate = {
   plugins: {
     tooltip: {
       mode: "index",

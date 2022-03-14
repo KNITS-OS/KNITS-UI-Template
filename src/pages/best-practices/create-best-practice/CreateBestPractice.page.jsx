@@ -3,28 +3,26 @@ import CreatableSelect from "react-select/creatable";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, FormGroup, Row } from "reactstrap";
 
-import { toFileArray } from "types/utils";
-
-import { useAppDispatch, useAppSelector } from "redux/app";
-import { createBestPractice, selectBestPracticeState } from "redux/features";
+import { useAppSelector } from "redux/app";
+import { selectBestPracticeState } from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
-import { useAlerts } from "hooks";
+import { toFileArray } from "pages/utils";
 
+import { useAlerts } from "hooks";
 import { defaultBestPracticesTags } from "variables/app.consts";
 
 import { bestPracticeDefaultState } from "..";
 
 export const CreateBestPracticePage = () => {
-  const dispatch = useAppDispatch();
   const [bestPractice, setBestPractice] = useState(bestPracticeDefaultState);
   const bestPracticeState = useAppSelector(selectBestPracticeState);
 
   const { alert, setSaveSent, setSuccessMessage } = useAlerts(bestPracticeState);
 
-  const changeFileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeFileHandler = event => {
     if (event.currentTarget.files) {
       setBestPractice({
         ...bestPractice,
@@ -34,7 +32,7 @@ export const CreateBestPracticePage = () => {
   };
 
   const onCreateBestPractice = () => {
-    dispatch(createBestPractice(bestPractice));
+    console.log("create best practice", bestPractice);
     setSuccessMessage("Best Practice Created");
     setSaveSent(true);
   };

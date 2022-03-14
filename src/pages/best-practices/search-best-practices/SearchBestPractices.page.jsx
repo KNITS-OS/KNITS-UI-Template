@@ -14,18 +14,13 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
-import {
-  deleteBestPractice,
-  selectBestPracticeState,
-  searchBestPractices,
-  selectAllBestPracticesData,
-} from "redux/features";
+import { useAppSelector } from "redux/app";
+import { selectAllBestPracticesData, selectBestPracticeState } from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
@@ -33,25 +28,24 @@ import { ReactTable } from "components/widgets";
 import { BEST_PRACTICE_DETAILS } from "../best-practices.routes.const";
 import { BestPracticeHighlightsPanel } from "../panels";
 
-import { SearchBestPracticesFilterPanel, bestPracticesTableColumns } from ".";
+import { bestPracticesTableColumns, SearchBestPracticesFilterPanel } from ".";
 
 export const SearchBestPracticesPage = () => {
   const navigate = useNavigate();
 
   const [alert] = useState(null);
 
-  const dispatch = useAppDispatch();
   const bestPracticeState = useAppSelector(selectBestPracticeState);
   const bestPractices = useAppSelector(selectAllBestPracticesData);
 
-  const onSearchBestPractices = (filters: BestPracticesQueryFilters): void => {
-    dispatch(searchBestPractices(filters));
+  const onSearchBestPractices = filters => {
+    console.log("searchBestPractices", filters);
   };
 
   const onDeleteBestPractice = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    dispatch(deleteBestPractice(parseInt(id)));
+    console.log("deleteBestPractice", id);
   };
 
   const onViewBestPracticeDetails = e => {

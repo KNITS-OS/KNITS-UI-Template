@@ -2,13 +2,7 @@ import { Col, Form, Row } from "reactstrap";
 
 import { InputField } from "components/widgets";
 
-interface EmployeePanelProps {
-  employee: Employee;
-}
-
-export const EmployeePanel = (props: EmployeePanelProps) => {
-  const { employee } = props;
-
+export const EmployeePanel = ({ employee }) => {
   return (
     <Form>
       <h6 className="heading-small text-muted mb-4">User information</h6>

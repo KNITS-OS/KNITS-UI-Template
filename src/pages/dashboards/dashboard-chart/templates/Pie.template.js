@@ -1,11 +1,4 @@
-import { ChartData, ChartOptions } from "chart.js";
-
-interface PieDataProps {
-  label
-  backgroundColor[];
-}
-
-export const pieDataTemplate = ({ label, backgroundColor }: PieDataProps) => {
+export const pieDataTemplate = ({ label, backgroundColor }) => {
   return {
     labels: [],
     datasets: [
@@ -15,10 +8,10 @@ export const pieDataTemplate = ({ label, backgroundColor }: PieDataProps) => {
         backgroundColor,
       },
     ],
-  } 
+  };
 };
 
-export const pieOptionsTemplate: ChartOptions<"pie"> = {
+export const pieOptionsTemplate = {
   plugins: {
     legend: {
       position: "top",

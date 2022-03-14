@@ -1,10 +1,4 @@
-import { ChartData, ChartOptions } from "chart.js";
-
-interface LineDataProps {
-  label
-}
-
-export const lineDataTemplate = ({ label }: LineDataProps) => {
+export const lineDataTemplate = ({ label }) => {
   return {
     labels: [],
     datasets: [
@@ -14,10 +8,10 @@ export const lineDataTemplate = ({ label }: LineDataProps) => {
         pointRadius: 4,
       },
     ],
-  } 
+  };
 };
 
-export const lineOptionsTemplate: ChartOptions<"line"> = {
+export const lineOptionsTemplate = {
   plugins: {
     tooltip: {
       intersect: false,

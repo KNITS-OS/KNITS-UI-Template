@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
+import { useAppSelector } from "redux/app";
 import { deleteGroup, selectGroupById, updateGroup } from "redux/features";
 
 import { BoxHeader } from "components/headers";
@@ -11,25 +11,23 @@ import { InputField } from "components/widgets";
 
 import { useFeatureDisabledWarning, useLocalStateAlerts } from "hooks";
 
-
 import { MembersPanel } from "..";
 
 export const GroupDetailsPage = () => {
-  const { id } = useParams() 
+  const { id } = useParams();
   const groupId = parseInt(id);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const groupState = useAppSelector(state => selectGroupById(state, groupId));
 
-  const [group, setGroup] = useState(groupState 
+  const [group, setGroup] = useState(groupState);
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const { fireAlert } = useFeatureDisabledWarning();
 
   const onSaveGroup = () => {
-    dispatch(updateGroup({ id: groupId, body: group }));
+    console.log("update group", groupId, group);
     setSuccessMessage("Group Updated");
     setIsSuccess(true);
     setSaveSent(true);
@@ -38,11 +36,12 @@ export const GroupDetailsPage = () => {
   const onToggleGroupActive = () => {
     fireAlert();
 
-    dispatch(updateGroup({ id: groupId, body: { ...group, active: !group.active } }));
+    console.log("toggle group active", groupId, group);
+    // dispatch(updateGroup({ id: groupId, body: { ...group, active: !group.active } }));
   };
   const onDeleteGroup = () => {
     fireAlert();
-    dispatch(deleteGroup(groupId));
+    console.log("delete group", groupId);
   };
 
   return (
@@ -89,7 +88,7 @@ export const GroupDetailsPage = () => {
                           label="Group Name"
                           value={group.name}
                           type="text"
-                          onChange={() =>
+                          onChange={e =>
                             setGroup({
                               ...group,
                               name: e.target.value,
@@ -106,7 +105,7 @@ export const GroupDetailsPage = () => {
                           label="Group Description"
                           value={group.description}
                           type="text"
-                          onChange={() =>
+                          onChange={e =>
                             setGroup({
                               ...group,
                               description: e.target.value,

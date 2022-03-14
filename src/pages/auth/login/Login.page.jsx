@@ -19,18 +19,16 @@ import {
   InputGroupAddon,
 } from "reactstrap";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
-import { login, selectPrincipalState } from "redux/features";
-
 import { AuthHeader } from "components/headers";
 
 import { HOME } from "pages/home";
 
+import { useAuth } from "context";
 import { Role } from "variables/app.consts";
 
 export const LoginPage = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
 
   const [focusedEmail, setfocusedEmail] = useState(false);
   const [focusedPassword, setfocusedPassword] = useState(false);
@@ -38,26 +36,33 @@ export const LoginPage = () => {
   const [email, setEmail] = useState("gabriela.rios@kuehne-nagel.com");
   const [password, setPassword] = useState("");
 
-  const user = useAppSelector(selectPrincipalState);
-
   const handleSignIn = e => {
     e.preventDefault();
-    dispatch(login({ email, password }));
+    setUser({
+      fullName: "Gabriela Rios",
+      username: "gabriela.rios",
+      email: "gabriela.rios@kuehne-nagel.com",
+      jwtToken: "asdlasdloldfiadjadsfhueiy2839r7489fsdhfaiuehf328",
+      countryCode3: "BRA",
+      authRole: Role.RegionalManager,
+      role: "RegionalTransformationManager",
+      imageUrl: "https://i.pravatar.cc/300",
+    });
   };
 
   useEffect(() => {
-    if (user.entity !== null && user.entity.authRole !== Role.Anonymous) {
+    if (user !== null && user.authRole !== Role.Anonymous) {
       navigate(`/admin${HOME}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.entity]);
+  }, [user]);
 
   return (
     <>
       <AuthHeader title="Welcome to Kn Care" lead="Please login" />
 
       <Container className="mt--8 pb-5">
-        {user.entity !== null && user.entity.authRole === Role.Anonymous && (
+        {user !== null && user.authRole === Role.Anonymous && (
           <Alert color="warning">Login Failed! Email or Password was wrong.</Alert>
         )}
         <Row className="justify-content-center">

@@ -1,14 +1,12 @@
-import moment, { Moment } from "moment";
+import moment from "moment";
 import { useState } from "react";
 
 import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 
-import { useAppDispatch, useAppSelector } from "redux/app";
+import { useAppSelector } from "redux/app";
 import {
   selectAllGroupsDataAsSelectOptions,
   selectAllRolesDataAsSelectOptions,
-  updateMultipleCareMembers,
-  updateMultipleEmployees,
 } from "redux/features";
 
 import { DateField, SelectField } from "components/widgets";
@@ -26,7 +24,6 @@ export const SearchEmployeesModal = ({
   setSuccessMessage,
   setSaveSent,
 }) => {
-  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   // state to know which fields has the user selected
@@ -41,8 +38,8 @@ export const SearchEmployeesModal = ({
   const [roleId, setRoleId] = useState();
   const [groups, setGroups] = useState([]);
 
-  const roleOptions: SelectOption[] = useAppSelector(selectAllRolesDataAsSelectOptions);
-  const groupOptions: SelectOption[] = useAppSelector(selectAllGroupsDataAsSelectOptions);
+  const roleOptions = useAppSelector(selectAllRolesDataAsSelectOptions);
+  const groupOptions = useAppSelector(selectAllGroupsDataAsSelectOptions);
 
   const unselectRows = () => {
     if (toggleAllRowsSelected) {
@@ -64,9 +61,8 @@ export const SearchEmployeesModal = ({
      * this function maps the selected employees to careMembers array
      */
     const createCareMembers = () => {
-      const newCareMembers: CareMember[] = selectedFlatRows.map((employee: Employee) => {
+      const newCareMembers = selectedFlatRows.map(employee => {
         const { id, ...rest } = employee;
-        console.log(id);
 
         return {
           ...rest,
@@ -79,15 +75,14 @@ export const SearchEmployeesModal = ({
           careMember: true,
         };
       });
-      const updatedEmployees: Employee[] = selectedFlatRows.map((employee: Employee) => {
+      const updatedEmployees = selectedFlatRows.map(employee => {
         return {
           ...employee,
           careMember: true,
         };
       });
 
-      dispatch(updateMultipleCareMembers(newCareMembers));
-      dispatch(updateMultipleEmployees({ id: 0, body: updatedEmployees }));
+      console.log("update multible employees", updatedEmployees);
     };
 
     createCareMembers();

@@ -31,7 +31,7 @@ export const AddMemberPanel = ({
       members: currentGroupMembers.map(member => member.id),
     };
 
-  const careMemberResultSet: CareMember[] = useAppSelector(selectCareMembersByFilters(filters));
+  const careMemberResultSet = useAppSelector(selectCareMembersByFilters(filters));
 
   return (
     <>

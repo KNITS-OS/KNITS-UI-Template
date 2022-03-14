@@ -1,21 +1,12 @@
-import { dashboardService } from "redux/features/dashboards";
-
-
+import { dashboardService } from "redux/features";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
 
 import { renderChart } from "./Turnover.renderer";
 
-// interface onSaveFunction {
-//   (careMemberRequest: CareMemberSaveRequest): void;
-// }
-
 export const TurnoverChartPanel = () => {
-  const { isLoading, chart, alert } = useChart<TurnoverChart[]>(
-    dashboardService.getTurnoverReport,
-    renderChart
-  );
+  const { isLoading, chart, alert } = useChart(dashboardService.getTurnoverReport, renderChart);
   return (
     <ChartPanel
       alert={alert}

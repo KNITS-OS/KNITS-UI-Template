@@ -2,18 +2,7 @@ import { useEffect, useState } from "react";
 
 import { renderAlert } from "../Chart.renderers";
 
-interface ApiCallFunction<T> {
-  (): Promise<ApiResponse<T>>;
-}
-
-interface RenderChartFunction<T> {
-  (response: ApiResponse<T>): JSX.Element;
-}
-
-export const useChart = <T>(
-  asyncFunction: ApiCallFunction<T>,
-  renderChart: RenderChartFunction<T>
-) => {
+export const useChart = (asyncFunction, renderChart) => {
   const [isLoading, setIsLoading] = useState(true);
   const [chart, setChart] = useState();
   const [alert, setAlert] = useState();
