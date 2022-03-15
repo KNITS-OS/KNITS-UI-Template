@@ -1,5 +1,4 @@
 import { MdArrowDownward, MdArrowUpward } from "react-icons/md";
-import { HeaderGroup } from "react-table";
 
 export const Sorter = ({ column }) => {
   return (

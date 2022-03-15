@@ -34,13 +34,10 @@ import {
   Row,
 } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
-import { selectBestPracticeById } from "redux/features";
-import { huddle64pdf } from "redux/features/utils/in-memory-api-mock";
-
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
+import { huddle64pdf, bestPracticesData } from "data";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 import { SEARCH_BEST_PRACTICE } from "../best-practices.routes.const";
@@ -49,12 +46,12 @@ export const BestPracticeDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const bestPractice = useAppSelector(state => selectBestPracticeById(state, parseInt(id)));
+  const [bestPractice] = useState(bestPracticesData.find(bestPractice => bestPractice.id === id));
 
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const onDocumentLoadSuccess = ({ numPages }: any) => {
+  const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
     setPageNumber(1);
   };

@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
-import { Card, CardHeader, Container, Row, Spinner } from "reactstrap";
-
-import { useAppSelector } from "redux/app";
-import { selectAllGroupsData, selectGroupState } from "redux/features";
+import { Card, CardHeader, Container, Row } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
+
+import { groupsData } from "data";
 
 import { GROUP_DETAILS } from "..";
 
@@ -15,8 +14,7 @@ import { groupsTableColumns } from ".";
 export const SearchGroupsPage = () => {
   const navigate = useNavigate();
 
-  const groupState = useAppSelector(selectGroupState);
-  const groups = useAppSelector(selectAllGroupsData);
+  const groups = groupsData;
 
   const onViewGroupDetails = e => {
     const { id } = e.target;
@@ -39,23 +37,14 @@ export const SearchGroupsPage = () => {
                 <h3 className="mb-0">Groups</h3>
                 <p className="text-sm mb-0">Groups</p>
               </CardHeader>
-              {groupState.isLoading ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <Spinner />
-                </div>
-              ) : (
-                <ReactTable
-                  data={groups}
-                  columns={groupsTableColumns({
-                    onDetailsButtonClick: onViewGroupDetails,
-                    onRemoveButtonClick: onDeleteGroup,
-                  })}
-                />
-              )}
+
+              <ReactTable
+                data={groups}
+                columns={groupsTableColumns({
+                  onDetailsButtonClick: onViewGroupDetails,
+                  onRemoveButtonClick: onDeleteGroup,
+                })}
+              />
             </Card>
           </div>
         </Row>

@@ -2,32 +2,26 @@ import { useState } from "react";
 
 import { Col, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
-import { selectLoggedUserDefaultCountryAsSelection, selectLoggedUserRole } from "redux/features";
-
 import { WithAuthorization } from "components/authorization";
 import { FilterPanel } from "components/panels";
 import { DateField, InputField, SelectField } from "components/widgets";
 
+import { selectLoggedUserDefaultCountryAsSelection } from "pages/utils";
+
+import { useAuth } from "context";
 import { DATE_FILTER_FORMAT, Permission, Role } from "variables/app.consts";
 
 export const SearchEmployeesFilterPanel = props => {
-  const userRole = useAppSelector(selectLoggedUserRole);
+  const { user } = useAuth();
   const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
 
-  // const [searchBusinessUnitId, setSearchBusinessUnitId] = useState();
-  // const [searchCountryIsoCode3, setSearchCountryIsoCode3] = useState(
-  //   useAppSelector(selectLoggedUserDefaultCountry)
-  // );
-
   const [businessUnitSelected, setBusinessUnitSelected] = useState();
   const [countrySelected, setCountrySelected] = useState(
-    useAppSelector(selectLoggedUserDefaultCountryAsSelection)
+    selectLoggedUserDefaultCountryAsSelection(user.countryCode3)
   );
 
   const [searchHiringDate, setSearchHiringDate] = useState();
-  // const [searchJobTitle, setSearchJobTitle] = useState();
 
   const onChangeSearchLastName = e => {
     const searchLastName = e.target.value;
@@ -39,7 +33,7 @@ export const SearchEmployeesFilterPanel = props => {
     setSearchNewMembersOnly(false);
     setBusinessUnitSelected(null);
     setSearchHiringDate(undefined);
-    if (userRole === Role.RegionalManager) {
+    if (user.authRole === Role.RegionalManager) {
       setCountrySelected(null);
     }
   };
@@ -132,17 +126,6 @@ export const SearchEmployeesFilterPanel = props => {
           </div>
         </Col>
       </Row>
-      {/* <Col md="3">
-        <SelectField
-          id="select-jobTitle"
-          label="Job Title"
-          options={props.jobTitle}
-          onChange={item => {
-            const { value } = item 
-            setSearchJobTitle(value);
-          }}
-        />
-      </Col> */}
     </FilterPanel>
   );
 };

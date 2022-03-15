@@ -1,4 +1,3 @@
-import { Moment } from "moment";
 import { useState } from "react";
 
 import { Col, Row } from "reactstrap";
@@ -31,7 +30,7 @@ export const SearchBestPracticesFilterPanel = ({ onSearch }) => {
     onSearch(searchFilters);
   };
 
-  const parametersToFilter = (): BestPracticesQueryFilters => {
+  const parametersToFilter = () => {
     return Object.assign(
       {},
       searchAuthor && searchAuthor !== "" ? { author: searchAuthor } : null,

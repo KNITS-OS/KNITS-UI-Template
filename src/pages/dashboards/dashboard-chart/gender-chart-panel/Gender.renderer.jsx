@@ -1,8 +1,10 @@
 import { Pie } from "react-chartjs-2";
 
+import { ThemeColors } from "variables/app.consts";
+
 import { pieDataTemplate, pieOptionsTemplate } from "..";
 
-const toPieChartUI = (apiResponse: Chart[]): IPieChart => {
+const toPieChartUI = apiResponse => {
   const genderTemplate = pieDataTemplate({
     label: "Gender",
     backgroundColor: [ThemeColors.theme["primary"], ThemeColors.theme["info"]],
@@ -19,8 +21,8 @@ const toPieChartUI = (apiResponse: Chart[]): IPieChart => {
   };
 };
 
-export const renderChart = (response: ApiResponse<Chart[]>): JSX.Element => {
+export const renderChart = response => {
   const chartData = response.data; //necessary for undefined checking in ts
-  const pieChart: IPieChart = toPieChartUI(chartData);
+  const pieChart = toPieChartUI(chartData);
   return <Pie data={pieChart.data} options={pieChart.options} className="chart-canvas" />;
 };

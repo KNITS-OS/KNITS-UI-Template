@@ -2,14 +2,13 @@ import { useState } from "react";
 
 import { Card, Collapse, Spinner } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
-import { selectCareMembersByFilters, selectLoggedUserDefaultCountry } from "redux/features";
-
 import { AddNewMemberButton } from "components/buttons";
 import { ReactTable } from "components/widgets";
 
 import { careMemberTableColumns, SearchCareMemberFilterPanel } from "pages/users";
 
+import { useAuth } from "context";
+import { employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
 
 export const AddMemberPanel = ({
@@ -21,17 +20,13 @@ export const AddMemberPanel = ({
 }) => {
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const userCountry = useAppSelector(selectLoggedUserDefaultCountry);
+  const { user } = useAuth();
+  const [filters, setFilters] = useState({
+    countryIso3: user.countryCode3,
+    members: currentGroupMembers.map(member => member.id),
+  });
 
-  const [filters, setFilters] =
-    useState <
-    CareMemberQueryFilters >
-    {
-      countryIso3: userCountry,
-      members: currentGroupMembers.map(member => member.id),
-    };
-
-  const careMemberResultSet = useAppSelector(selectCareMembersByFilters(filters));
+  const employeesResultSet = employeesData;
 
   return (
     <>
@@ -44,13 +39,13 @@ export const AddMemberPanel = ({
             currentGroupMembers={currentGroupMembers}
           />
           {/* @todo add loading here */}
-          {!careMemberResultSet ? (
+          {!employeesResultSet ? (
             <div className="text-center">
               <Spinner />
             </div>
           ) : (
             <ReactTable
-              data={careMemberResultSet}
+              data={employeesResultSet}
               selectElement={
                 <AddNewMemberButton
                   setGroup={setGroup}

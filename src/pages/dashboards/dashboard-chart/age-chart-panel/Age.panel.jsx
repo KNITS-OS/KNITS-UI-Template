@@ -1,4 +1,4 @@
-import { dashboardService } from "redux/features/dashboards";
+import { distributionByAgeReport } from "data";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
@@ -6,18 +6,7 @@ import { useChart } from "../hooks";
 import { renderChart } from "./Age.renderer";
 
 export const AgeChartPanel = () => {
-  const { isLoading, chart, alert } = useChart(
-    dashboardService.getDistributionByAgeReport,
-    renderChart
-  );
+  const { chart } = useChart(distributionByAgeReport, renderChart);
 
-  return (
-    <ChartPanel
-      alert={alert}
-      chart={chart}
-      isLoading={isLoading}
-      title="Composition"
-      subTitle="By Age"
-    />
-  );
+  return <ChartPanel chart={chart} title="Composition" subTitle="By Age" />;
 };

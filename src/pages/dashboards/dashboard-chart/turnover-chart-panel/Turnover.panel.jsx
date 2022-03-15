@@ -1,4 +1,4 @@
-import { dashboardService } from "redux/features";
+import { memberTurnoverReport } from "data";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
@@ -6,7 +6,7 @@ import { useChart } from "../hooks";
 import { renderChart } from "./Turnover.renderer";
 
 export const TurnoverChartPanel = () => {
-  const { isLoading, chart, alert } = useChart(dashboardService.getTurnoverReport, renderChart);
+  const { isLoading, chart, alert } = useChart(memberTurnoverReport, renderChart);
   return (
     <ChartPanel
       alert={alert}

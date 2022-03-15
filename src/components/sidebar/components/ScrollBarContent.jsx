@@ -4,13 +4,14 @@ import { Collapse, Nav, NavbarBrand, NavItem, NavLink } from "reactstrap";
 
 import { routes } from "routes";
 
-import { useAppSelector } from "redux/app";
-import { selectLoggedUserRole } from "redux/features";
+import { useAuth } from "context";
 
 import { CreateSidebarLinks, SidebarToggler } from ".";
 
 export const ScrollBarContent = ({ logo, collapseState, setCollapseState }) => {
-  const userRole = useAppSelector(selectLoggedUserRole);
+  const { user } = useAuth();
+
+  const { userRole } = user;
 
   let navbarBrandProps;
 

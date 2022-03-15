@@ -2,16 +2,17 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import { routes } from "routes";
 
-import { useAppSelector } from "redux/app";
-import { selectLoggedUserRole } from "redux/features";
-
 import { LOGIN } from "pages/auth";
 import { HOME } from "pages/home";
 
+import { useAuth } from "context";
 import { getRoutes, AdminLayout, AuthLayout } from "layouts";
+import { Role } from "variables/app.consts";
 
 export const Router = () => {
-  const userRole = useAppSelector(selectLoggedUserRole);
+  const { user } = useAuth();
+
+  const { userRole } = user;
 
   return (
     <Routes>

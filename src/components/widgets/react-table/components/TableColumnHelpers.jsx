@@ -1,17 +1,6 @@
-import { MouseEvent } from "react";
-import { Column } from "react-table";
-
 import { Button } from "reactstrap";
 
-export interface IDefaultActionButtons {
-  onDetailsButtonClick?: (e) => void;
-  onRemoveButtonClick?: (e) => void;
-}
-
-export const TwoMouseEventActionButtons = <T extends { id: string | undefined }>({
-  onDetailsButtonClick,
-  onRemoveButtonClick,
-}: IDefaultActionButtons) => {
+export const TwoMouseEventActionButtons = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
   return {
     accessor: "action",
     Header: "",

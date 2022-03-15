@@ -17,13 +17,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Card, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
-
-import { useAppSelector } from "redux/app";
-import { selectAllBestPracticesData, selectBestPracticeState } from "redux/features";
+import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
+
+import { bestPracticesData } from "data";
 
 import { BEST_PRACTICE_DETAILS } from "../best-practices.routes.const";
 import { BestPracticeHighlightsPanel } from "../panels";
@@ -35,8 +34,7 @@ export const SearchBestPracticesPage = () => {
 
   const [alert] = useState(null);
 
-  const bestPracticeState = useAppSelector(selectBestPracticeState);
-  const bestPractices = useAppSelector(selectAllBestPracticesData);
+  const [bestPractices] = useState(bestPracticesData);
 
   const onSearchBestPractices = filters => {
     console.log("searchBestPractices", filters);
@@ -76,23 +74,14 @@ export const SearchBestPracticesPage = () => {
               <CardHeader>
                 <h3 className="mb-0">Search results</h3>
               </CardHeader>
-              {bestPracticeState.isLoading ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <Spinner />
-                </div>
-              ) : (
-                <ReactTable
-                  data={bestPractices}
-                  columns={bestPracticesTableColumns({
-                    onDetailsButtonClick: onViewBestPracticeDetails,
-                    onRemoveButtonClick: onDeleteBestPractice,
-                  })}
-                />
-              )}
+
+              <ReactTable
+                data={bestPractices}
+                columns={bestPracticesTableColumns({
+                  onDetailsButtonClick: onViewBestPracticeDetails,
+                  onRemoveButtonClick: onDeleteBestPractice,
+                })}
+              />
             </Card>
           </div>
         </Row>

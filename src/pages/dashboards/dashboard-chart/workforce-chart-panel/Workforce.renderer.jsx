@@ -2,7 +2,7 @@ import { Line } from "react-chartjs-2";
 
 import { lineDataTemplate, lineOptionsTemplate } from "..";
 
-const toWorkforceLineChartUI = (apiResponse: Chart[]): ILineChart => {
+const toWorkforceLineChartUI = apiResponse => {
   const template = lineDataTemplate({ label: "Members" });
   apiResponse.forEach(workforceRecord => {
     template.labels = template.labels ? template.labels : [];
@@ -15,9 +15,9 @@ const toWorkforceLineChartUI = (apiResponse: Chart[]): ILineChart => {
   };
 };
 
-export const renderChart = (response: ApiResponse<Chart[]>): JSX.Element => {
+export const renderChart = response => {
   const chartData = response.data;
-  const chart: ILineChart = toWorkforceLineChartUI(chartData);
+  const chart = toWorkforceLineChartUI(chartData);
   return (
     <Line data={chart.data} options={chart.options} id="chart-workforce" className="chart-canvas" />
   );

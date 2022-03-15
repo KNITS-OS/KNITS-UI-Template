@@ -1,11 +1,6 @@
-import { Column } from "react-table";
+import { TwoMouseEventActionButtons } from "components/widgets";
 
-import { IDefaultActionButtons, TwoMouseEventActionButtons } from "components/widgets";
-
-export const employeesTableColumns = ({
-  onDetailsButtonClick,
-  onRemoveButtonClick,
-}: IDefaultActionButtons) => {
+export const employeesTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
   return [
     {
       accessor: "id",

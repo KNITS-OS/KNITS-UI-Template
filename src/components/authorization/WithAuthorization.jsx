@@ -1,10 +1,10 @@
-import { useAppSelector } from "redux/app";
-import { selectLoggedUserRole } from "redux/features/authorization/authorization.selectors";
-import { checkAuthorized } from "../../pages/utils/utils";
+import { checkAuthorized } from "pages/utils";
+
+import { useAuth } from "context";
 
 export const WithAuthorization = ({ children, onUnauthorized, requires }) => {
-  const currentUserRole = useAppSelector(selectLoggedUserRole);
+  const { user } = useAuth();
   const unauthorizedFragments = onUnauthorized ? onUnauthorized : <></>;
-  const hasPermission = checkAuthorized(currentUserRole, requires);
+  const hasPermission = checkAuthorized(user.authRole, requires);
   return <>{hasPermission ? children : unauthorizedFragments}</>;
 };

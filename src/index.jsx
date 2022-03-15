@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import { AlertProvider } from "context";
+import { AuthProvider } from "context";
 
 import "variables/chartDefaults";
 import { Router } from "./Router";
@@ -23,9 +23,9 @@ import "components/widgets/react-table/styles/reactTable.css";
 ReactDOM.render(
   <BrowserRouter>
     <StrictMode>
-      <AlertProvider>
+      <AuthProvider>
         <Router />
-      </AlertProvider>
+      </AuthProvider>
     </StrictMode>
   </BrowserRouter>,
   document.getElementById("root")

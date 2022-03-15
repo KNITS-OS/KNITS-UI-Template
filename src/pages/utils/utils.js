@@ -137,3 +137,24 @@ export const selectAllGroupsDataAsSelectOptions = () => {
   });
   return [SELECT_ALL, ...groupsOptions];
 };
+
+// export const selectGroupMembers = (groupId: number) =>
+//   createSelector(
+//     [
+//       (state: RootState) => selectGroupById(state, groupId), // select the current group
+//       (state: RootState) => selectAllCareMembersData(state),
+//     ],
+//     (group, careMembers) => {
+// return Object.keys(careMembers)
+//   .map(key => careMembers[parseInt(key)])
+//   .filter(careMember => group?.members.includes(careMember.id));
+//     }
+//   );
+export const selectGroupMembers = groupId => {
+  const group = groupsData.find(group => group.id === groupId);
+  const employees = employeesData;
+
+  return Object.keys(employees)
+    .map(key => employees[parseInt(key)])
+    .filter(careMember => group?.members.includes(careMember.id));
+};

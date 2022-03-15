@@ -1,14 +1,10 @@
 import moment from "moment";
-import { Column } from "react-table";
 
-import { TwoMouseEventActionButtons, IDefaultActionButtons } from "components/widgets";
+import { TwoMouseEventActionButtons } from "components/widgets";
 
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const bestPracticesTableColumns = ({
-  onDetailsButtonClick,
-  onRemoveButtonClick,
-}: IDefaultActionButtons) => {
+export const bestPracticesTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
   return [
     {
       accessor: "id",
@@ -46,18 +42,7 @@ export const bestPracticesTableColumns = ({
       Header: "Rating",
       Cell: ({ row }) => {
         const { rating } = row.original;
-        return (
-          <>
-            {/* @todo - fix rating to use react-rating component */}
-            {rating}
-            {/* <Rating
-              initialRating={rating}
-              emptySymbol="fa fa-star-o fa-2x"
-              fullSymbol="fa fa-star fa-2x"
-              readonly
-            /> */}
-          </>
-        );
+        return <>{rating}</>;
       },
     },
     {

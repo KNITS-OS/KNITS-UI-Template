@@ -1,10 +1,10 @@
-import { Button, Card, CardBody, CardHeader, Col, Row, Spinner } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 
 import { InputField } from "components/widgets";
 
 import { MembersPanel } from ".";
 
-export const EditGroupPanel = ({ group, setGroup, onSave, isLoading, onBackToSearchClick }) => {
+export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }) => {
   const { name, description } = group;
 
   return (
@@ -29,7 +29,7 @@ export const EditGroupPanel = ({ group, setGroup, onSave, isLoading, onBackToSea
                       label="Group Name"
                       value={name}
                       type="text"
-                      onChange={() =>
+                      onChange={e =>
                         setGroup({
                           ...group,
                           name: e.target.value,
@@ -46,7 +46,7 @@ export const EditGroupPanel = ({ group, setGroup, onSave, isLoading, onBackToSea
                       label="Group Description"
                       value={description}
                       type="text"
-                      onChange={() =>
+                      onChange={e =>
                         setGroup({
                           ...group,
                           description: e.target.value,
@@ -62,7 +62,7 @@ export const EditGroupPanel = ({ group, setGroup, onSave, isLoading, onBackToSea
               <Row className="align-items-center py-4">
                 <Col lg="12" xs="7" className="text-right">
                   <Button color="success" onClick={() => onSave(group)}>
-                    {isLoading ? <Spinner /> : "Submit"}
+                    Submit
                   </Button>
 
                   {onBackToSearchClick ? (

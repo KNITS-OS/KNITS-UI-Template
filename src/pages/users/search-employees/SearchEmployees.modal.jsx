@@ -3,15 +3,14 @@ import { useState } from "react";
 
 import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
-import {
-  selectAllGroupsDataAsSelectOptions,
-  selectAllRolesDataAsSelectOptions,
-} from "redux/features";
-
 import { DateField, SelectField } from "components/widgets";
 
-import { autoOffboardingDate, createOnboardingDate } from "pages/utils";
+import {
+  autoOffboardingDate,
+  createOnboardingDate,
+  selectAllRolesDataAsSelectOptions,
+  selectAllGroupsDataAsSelectOptions,
+} from "pages/utils";
 
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
@@ -38,8 +37,8 @@ export const SearchEmployeesModal = ({
   const [roleId, setRoleId] = useState();
   const [groups, setGroups] = useState([]);
 
-  const roleOptions = useAppSelector(selectAllRolesDataAsSelectOptions);
-  const groupOptions = useAppSelector(selectAllGroupsDataAsSelectOptions);
+  const roleOptions = selectAllRolesDataAsSelectOptions();
+  const groupOptions = selectAllGroupsDataAsSelectOptions();
 
   const unselectRows = () => {
     if (toggleAllRowsSelected) {
@@ -61,24 +60,14 @@ export const SearchEmployeesModal = ({
      * this function maps the selected employees to careMembers array
      */
     const createCareMembers = () => {
-      const newCareMembers = selectedFlatRows.map(employee => {
-        const { id, ...rest } = employee;
-
-        return {
-          ...rest,
-          roleId,
-          groups,
-          employeeId: employee.id,
-          id: employee.careMemberId !== null ? employee.careMemberId : -1,
-          onboardingDate,
-          offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
-          careMember: true,
-        };
-      });
       const updatedEmployees = selectedFlatRows.map(employee => {
         return {
           ...employee,
           careMember: true,
+          roleId,
+          groups,
+          onboardingDate,
+          offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
         };
       });
 

@@ -3,24 +3,17 @@ import CreatableSelect from "react-select/creatable";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, FormGroup, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
-import { selectBestPracticeState } from "redux/features";
-
 import { BoxHeader } from "components/headers";
 import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
 import { toFileArray } from "pages/utils";
 
-import { useAlerts } from "hooks";
 import { defaultBestPracticesTags } from "variables/app.consts";
 
 import { bestPracticeDefaultState } from "..";
 
 export const CreateBestPracticePage = () => {
   const [bestPractice, setBestPractice] = useState(bestPracticeDefaultState);
-  const bestPracticeState = useAppSelector(selectBestPracticeState);
-
-  const { alert, setSaveSent, setSuccessMessage } = useAlerts(bestPracticeState);
 
   const changeFileHandler = event => {
     if (event.currentTarget.files) {
@@ -33,8 +26,6 @@ export const CreateBestPracticePage = () => {
 
   const onCreateBestPractice = () => {
     console.log("create best practice", bestPractice);
-    setSuccessMessage("Best Practice Created");
-    setSaveSent(true);
   };
 
   const onChangeSelectedTag = newValue => {
@@ -72,7 +63,7 @@ export const CreateBestPracticePage = () => {
                           id="input-title"
                           label="Title"
                           value={bestPractice.title}
-                          onChange={() =>
+                          onChange={e =>
                             setBestPractice({
                               ...bestPractice,
                               title: e.target.value,
@@ -89,7 +80,7 @@ export const CreateBestPracticePage = () => {
                           type="textarea"
                           rows="5"
                           value={bestPractice.description}
-                          onChange={() =>
+                          onChange={e =>
                             setBestPractice({
                               ...bestPractice,
                               description: e.target.value,
@@ -119,7 +110,7 @@ export const CreateBestPracticePage = () => {
                           id="input-image-url"
                           label="Image Url"
                           value={bestPractice.imageUrl}
-                          onChange={() =>
+                          onChange={e =>
                             setBestPractice({
                               ...bestPractice,
                               imageUrl: e.target.value,

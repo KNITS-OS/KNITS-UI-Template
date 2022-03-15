@@ -1,4 +1,4 @@
-import { dashboardService } from "redux/features/dashboards";
+import { distributionByBusinessUnitReport } from "data";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
@@ -6,10 +6,7 @@ import { useChart } from "../hooks";
 import { renderChart } from "./BusinessUnit.renderer";
 
 export const BusinessUnitChartPanel = () => {
-  const { isLoading, chart, alert } = useChart(
-    dashboardService.getDistributionByBusinessUnitReport,
-    renderChart
-  );
+  const { isLoading, chart, alert } = useChart(distributionByBusinessUnitReport, renderChart);
 
   return (
     <ChartPanel

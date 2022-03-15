@@ -1,4 +1,3 @@
-import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Collapse, Spinner } from "reactstrap";

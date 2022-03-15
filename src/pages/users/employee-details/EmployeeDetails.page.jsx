@@ -15,24 +15,22 @@
 
 */
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
-import { selectEmployeeById } from "redux/features";
-
-import { WithAuthorization } from "components/authorization";
 import { BoxHeader } from "components/headers";
 
-import { CARE_MEMBER_CREATE, EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
+import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
+
+import { employeesData } from "data";
 
 export const EmployeeDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const employee = useAppSelector(state => selectEmployeeById(state, id));
-  const buttonColor = employee.careMember ? "secondary" : "success";
+  const [employee] = useState(employeesData.find(e => e.id === id));
 
   return (
     <>
@@ -49,15 +47,6 @@ export const EmployeeDetailsPage = () => {
                 </Row>
                 <Row className="align-items-center py-4">
                   <Col lg="12" xs="7" className="text-right">
-                    <WithAuthorization requires={Permission.CareMember_write}>
-                      <Button
-                        color={buttonColor}
-                        onClick={() => navigate(`/admin${CARE_MEMBER_CREATE}/${id}`)}
-                        disabled={employee.careMember}
-                      >
-                        Invite to Care
-                      </Button>
-                    </WithAuthorization>
                     <Button
                       className="btn btn-primary"
                       color="primary"

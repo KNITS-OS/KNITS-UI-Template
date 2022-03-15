@@ -1,4 +1,4 @@
-import { dashboardService } from "redux/features/dashboards";
+import { distributionByRoleReport } from "data";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
@@ -6,10 +6,7 @@ import { useChart } from "../hooks";
 import { renderChart } from "./Role.renderer";
 
 export const RoleChartPanel = () => {
-  const { isLoading, chart, alert } = useChart(
-    dashboardService.getDistributionByRoleReport,
-    renderChart
-  );
+  const { isLoading, chart, alert } = useChart(distributionByRoleReport, renderChart);
 
   return (
     <ChartPanel

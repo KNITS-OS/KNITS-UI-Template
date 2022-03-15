@@ -1,4 +1,4 @@
-import { WarningAlert } from "components/alerts/WarningAlert";
+import { WarningAlert } from "components/alerts";
 
 import { useAlert } from "context";
 

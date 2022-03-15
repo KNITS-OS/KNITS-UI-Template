@@ -1,20 +1,14 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Card, CardHeader, Container, Row, Spinner } from "reactstrap";
-
-import { useAppSelector } from "redux/app";
-import {
-  selectAllBusinessUnitsDataAsSelectOptions,
-  selectAllCountriesDataAsSelectOptions,
-  selectAllEmployeesData,
-  selectEmployeesState,
-} from "redux/features";
+import { Card, CardHeader, Container, Row } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
+import { businessUnitsData, countriesData, employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
 
 import { employeesTableColumns, SearchEmployeesFilterPanel, SearchEmployeesModal } from ".";
@@ -22,12 +16,10 @@ import { employeesTableColumns, SearchEmployeesFilterPanel, SearchEmployeesModal
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
 
-  const employees = useAppSelector(selectAllEmployeesData);
-  const employeeState = useAppSelector(selectEmployeesState);
+  const [employees] = useState(employeesData);
 
-  const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
-  const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);
-
+  const businessUnits = businessUnitsData;
+  const countries = countriesData;
   const onSearchEmployees = filters => {
     console.log("filters", filters);
   };
@@ -67,30 +59,21 @@ export const SearchEmployeesPage = () => {
                 <h3 className="mb-0">Employees</h3>
                 <p className="text-sm mb-0">Kn Employees from PDM</p>
               </CardHeader>
-              {employeeState.isLoading ? (
-                <div
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <Spinner />
-                </div>
-              ) : (
-                <ReactTable
-                  data={employees}
-                  selectElement={
-                    <SearchEmployeesModal
-                      setIsSuccess={setIsSuccess}
-                      setSuccessMessage={setSuccessMessage}
-                      setSaveSent={setSaveSent}
-                    />
-                  }
-                  columns={employeesTableColumns({
-                    onDetailsButtonClick: onViewEmployeeDetails,
-                    onRemoveButtonClick: onDeleteEmployee,
-                  })}
-                />
-              )}
+
+              <ReactTable
+                data={employees}
+                selectElement={
+                  <SearchEmployeesModal
+                    setIsSuccess={setIsSuccess}
+                    setSuccessMessage={setSuccessMessage}
+                    setSaveSent={setSaveSent}
+                  />
+                }
+                columns={employeesTableColumns({
+                  onDetailsButtonClick: onViewEmployeeDetails,
+                  onRemoveButtonClick: onDeleteEmployee,
+                })}
+              />
             </Card>
           </div>
         </Row>

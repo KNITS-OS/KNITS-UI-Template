@@ -3,12 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
-import { deleteGroup, selectGroupById, updateGroup } from "redux/features";
-
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
+import { groupsData } from "data";
 import { useFeatureDisabledWarning, useLocalStateAlerts } from "hooks";
 
 import { MembersPanel } from "..";
@@ -18,9 +16,7 @@ export const GroupDetailsPage = () => {
   const groupId = parseInt(id);
   const navigate = useNavigate();
 
-  const groupState = useAppSelector(state => selectGroupById(state, groupId));
-
-  const [group, setGroup] = useState(groupState);
+  const [group, setGroup] = useState(groupsData.find(e => e.id === id));
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
@@ -37,7 +33,6 @@ export const GroupDetailsPage = () => {
     fireAlert();
 
     console.log("toggle group active", groupId, group);
-    // dispatch(updateGroup({ id: groupId, body: { ...group, active: !group.active } }));
   };
   const onDeleteGroup = () => {
     fireAlert();

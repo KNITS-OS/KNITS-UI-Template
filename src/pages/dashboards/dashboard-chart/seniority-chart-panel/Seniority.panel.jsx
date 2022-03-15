@@ -1,4 +1,4 @@
-import { dashboardService } from "redux/features/dashboards";
+import { distributionBySeniorityReport } from "data";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
@@ -6,10 +6,7 @@ import { useChart } from "../hooks";
 import { renderChart } from "./Seniority.renderer";
 
 export const SeniorityChartPanel = () => {
-  const { isLoading, chart, alert } = useChart(
-    dashboardService.getDistributionBySeniorityReport,
-    renderChart
-  );
+  const { isLoading, chart, alert } = useChart(distributionBySeniorityReport, renderChart);
 
   return (
     <ChartPanel
