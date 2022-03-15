@@ -11,7 +11,7 @@ import { selectLoggedUserDefaultCountryAsSelection } from "pages/utils";
 import { useAuth } from "context";
 import { DATE_FILTER_FORMAT, Permission, Role } from "variables/app.consts";
 
-export const SearchEmployeesFilterPanel = props => {
+export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchEmployees }) => {
   const { user } = useAuth();
   const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
@@ -40,7 +40,7 @@ export const SearchEmployeesFilterPanel = props => {
 
   const findByAllParameters = () => {
     const filters = parametersToFilter();
-    props.onSearchEmployees(filters);
+    onSearchEmployees(filters);
   };
 
   const parametersToFilter = () => {
@@ -55,7 +55,6 @@ export const SearchEmployeesFilterPanel = props => {
       searchNewMembersOnly ? { newMembersOnly: searchNewMembersOnly } : null
     );
   };
-
   return (
     <FilterPanel
       title="Search Employees"
@@ -80,7 +79,7 @@ export const SearchEmployeesFilterPanel = props => {
             id="select-businessUnits"
             label="Business Unit"
             value={businessUnitSelected}
-            options={props.businessUnits}
+            options={businessUnits}
             onChange={item => {
               setBusinessUnitSelected(item);
             }}
@@ -92,7 +91,7 @@ export const SearchEmployeesFilterPanel = props => {
               id="select-country"
               label="Country"
               value={countrySelected}
-              options={props.countries}
+              options={countries}
               onChange={item => {
                 setCountrySelected(item);
               }}

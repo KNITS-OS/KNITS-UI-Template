@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ErrorAlert, SuccessAlert } from "components/alerts";
 
 export const useLocalStateAlerts = changedState => {
-  const [alert, setAlert] = useState(null);
+  const [alert, setAlert] = useState();
   const [isSuccess, setIsSuccess] = useState(false);
   const [saveSent, setSaveSent] = useState(false);
   const [successMessage, setSuccessMessage] = useState("Success");
@@ -11,14 +11,14 @@ export const useLocalStateAlerts = changedState => {
 
   useEffect(() => {
     if (isSuccess && saveSent) {
-      setAlert(() => <SuccessAlert>{successMessage}</SuccessAlert>);
+      setAlert(() => <SuccessAlert setAlert={setAlert}>{successMessage}</SuccessAlert>);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changedState, isSuccess]);
 
   useEffect(() => {
     if (!isSuccess && saveSent) {
-      setAlert(() => <ErrorAlert>{errorMessage}</ErrorAlert>);
+      setAlert(() => <ErrorAlert setAlert={setAlert}>{errorMessage}</ErrorAlert>);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changedState, isSuccess]);

@@ -5,13 +5,14 @@ import { Collapse, Nav, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import { routes } from "routes";
 
 import { useAuth } from "context";
+import { Role } from "variables/app.consts";
 
 import { CreateSidebarLinks, SidebarToggler } from ".";
 
 export const ScrollBarContent = ({ logo, collapseState, setCollapseState }) => {
   const { user } = useAuth();
 
-  const userRole = user.authRole;
+  const userRole = user?.authRole || Role.Anonymous;
 
   let navbarBrandProps;
 

@@ -28,9 +28,10 @@ import { employeesData } from "data";
 
 export const EmployeeDetailsPage = () => {
   const { id } = useParams();
+  const employeeId = parseInt(id);
   const navigate = useNavigate();
 
-  const [employee] = useState(employeesData.find(e => e.id === id));
+  const [employee] = useState(employeesData.find(e => e.id === employeeId));
 
   return (
     <>

@@ -7,6 +7,7 @@ import { renderChart } from "./Turnover.renderer";
 
 export const TurnoverChartPanel = () => {
   const { isLoading, chart, alert } = useChart(memberTurnoverReport, renderChart);
+  console.log(memberTurnoverReport);
   return (
     <ChartPanel
       alert={alert}

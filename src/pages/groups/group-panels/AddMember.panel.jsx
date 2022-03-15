@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Card, Collapse, Spinner } from "reactstrap";
+import { Card, Collapse } from "reactstrap";
 
 import { AddNewMemberButton } from "components/buttons";
 import { ReactTable } from "components/widgets";
@@ -26,40 +26,34 @@ export const AddMemberPanel = ({
     members: currentGroupMembers.map(member => member.id),
   });
 
-  const employeesResultSet = employeesData;
+  console.log("add member panel filters: ", filters);
 
+  const [employeesResultSet] = useState(employeesData);
   return (
     <>
       {alert}
       <Collapse isOpen={addMemberCollapse}>
         <Card>
           <SearchAdvancedEmployeesFilterPanel
-            filters={filters}
             setFilters={setFilters}
             currentGroupMembers={currentGroupMembers}
           />
-          {/* @todo add loading here */}
-          {!employeesResultSet ? (
-            <div className="text-center">
-              <Spinner />
-            </div>
-          ) : (
-            <ReactTable
-              data={employeesResultSet}
-              selectElement={
-                <AddNewMemberButton
-                  setGroup={setGroup}
-                  setCurrentGroupMembers={setCurrentGroupMembers}
-                  setSaveSent={setSaveSent}
-                  setSuccessMessage={setSuccessMessage}
-                  setIsSuccess={setIsSuccess}
-                  setFilters={setFilters}
-                  group={group}
-                />
-              }
-              columns={employeesTableColumns({})}
-            />
-          )}
+
+          <ReactTable
+            data={employeesResultSet}
+            selectElement={
+              <AddNewMemberButton
+                setGroup={setGroup}
+                setCurrentGroupMembers={setCurrentGroupMembers}
+                setSaveSent={setSaveSent}
+                setSuccessMessage={setSuccessMessage}
+                setIsSuccess={setIsSuccess}
+                setFilters={setFilters}
+                group={group}
+              />
+            }
+            columns={employeesTableColumns({})}
+          />
         </Card>
       </Collapse>
     </>

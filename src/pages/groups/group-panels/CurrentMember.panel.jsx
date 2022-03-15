@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-import { Card, CardHeader, Collapse, Spinner } from "reactstrap";
+import { Card, CardHeader, Collapse } from "reactstrap";
 
 import { ReactTable } from "components/widgets";
 
-import { CARE_MEMBER_EDIT, employeesTableColumns } from "pages/users";
+import { EMPLOYEE_DETAILS, employeesTableColumns } from "pages/users";
 
 export const CurrentMemberPanel = ({
   currentMembersCollapse,
@@ -14,9 +14,9 @@ export const CurrentMemberPanel = ({
 }) => {
   const navigate = useNavigate();
 
-  const onViewEmailDetails = e => {
+  const onViewMemberDetails = e => {
     const { id } = e.currentTarget;
-    navigate(`/admin${CARE_MEMBER_EDIT}/${id}`);
+    navigate(`/admin${EMPLOYEE_DETAILS}/${id}`);
   };
 
   const onRemoveMember = e => {
@@ -36,24 +36,14 @@ export const CurrentMemberPanel = ({
           <h3 className="mb-0">Group members</h3>
           <p className="text-sm mb-0">Care Members</p>
         </CardHeader>
-        {/* @todo add loading here */}
-        {!currentGroupMembers ? (
-          <div
-            style={{
-              textAlign: "center",
-            }}
-          >
-            <Spinner />
-          </div>
-        ) : (
-          <ReactTable
-            data={currentGroupMembers}
-            columns={employeesTableColumns({
-              onDetailsButtonClick: onViewEmailDetails,
-              onRemoveButtonClick: onRemoveMember,
-            })}
-          />
-        )}
+
+        <ReactTable
+          data={currentGroupMembers}
+          columns={employeesTableColumns({
+            onDetailsButtonClick: onViewMemberDetails,
+            onRemoveButtonClick: onRemoveMember,
+          })}
+        />
       </Card>
     </Collapse>
   );

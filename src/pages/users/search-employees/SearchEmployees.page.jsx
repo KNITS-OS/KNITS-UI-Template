@@ -8,7 +8,12 @@ import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import { businessUnitsData, countriesData, employeesData } from "data";
+import { employeesData } from "data";
+
+import {
+  selectAllBusinessUnitsDataAsSelectOptions,
+  selectAllCountriesDataAsSelectOptions,
+} from "../../utils";
 
 import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 
@@ -17,8 +22,8 @@ export const SearchEmployeesPage = () => {
 
   const [employees] = useState(employeesData);
 
-  const businessUnits = businessUnitsData;
-  const countries = countriesData;
+  const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
+  const countries = selectAllCountriesDataAsSelectOptions();
   const onSearchEmployees = filters => {
     console.log("filters", filters);
   };

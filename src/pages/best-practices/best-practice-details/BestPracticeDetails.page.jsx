@@ -45,8 +45,11 @@ import { SEARCH_BEST_PRACTICE } from "../best-practices.routes.const";
 export const BestPracticeDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const bestPracticeId = parseInt(id);
 
-  const [bestPractice] = useState(bestPracticesData.find(bestPractice => bestPractice.id === id));
+  const [bestPractice] = useState(
+    bestPracticesData.find(bestPractice => bestPractice.id === bestPracticeId)
+  );
 
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -67,7 +70,6 @@ export const BestPracticeDetailPage = () => {
   };
 
   const nextPage = () => {
-    // @ts-ignore
     if (pageNumber < numPages) {
       changePage(1);
     }
@@ -193,7 +195,6 @@ export const BestPracticeDetailPage = () => {
 
                             <PaginationItem>
                               <PaginationLink
-                                // @ts-ignore
                                 disabled={pageNumber >= numPages}
                                 aria-label="Next"
                                 href="#pablo"

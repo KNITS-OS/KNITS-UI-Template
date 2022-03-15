@@ -17,10 +17,10 @@ import {
 import { useAuth } from "context";
 import { DATE_FILTER_FORMAT, Permission, Role } from "variables/app.consts";
 
-export const SearchAdvancedEmployeesFilterPanel = (filters, setFilters, currentGroupMembers) => {
+export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMembers }) => {
   const { user } = useAuth();
 
-  const userRole = user.authRole;
+  const userRole = user?.authRole || Role.Anonymous;
 
   const businessUnits = useState(selectAllBusinessUnitsDataAsSelectOptions);
   const countries = useState(selectAllCountriesDataAsSelectOptions);
@@ -93,7 +93,7 @@ export const SearchAdvancedEmployeesFilterPanel = (filters, setFilters, currentG
 
   return (
     <FilterPanel
-      title="Search Care Members"
+      title="Search Employees"
       findByAllParameters={findByAllParameters}
       resetFilters={resetFilters}
     >

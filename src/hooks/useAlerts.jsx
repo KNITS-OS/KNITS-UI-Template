@@ -9,14 +9,14 @@ export const useAlerts = state => {
 
   useEffect(() => {
     if (state.isSuccess && saveSent) {
-      setAlert(() => <SuccessAlert>{successMessage}</SuccessAlert>);
+      setAlert(() => <SuccessAlert setAlert={setAlert}>{successMessage}</SuccessAlert>);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isSuccess]);
 
   useEffect(() => {
     if (state.error && saveSent) {
-      setAlert(() => <ErrorAlert>{state.error.message || "Error"}</ErrorAlert>);
+      setAlert(() => <ErrorAlert setAlert={setAlert}>{state.error.message || "Error"}</ErrorAlert>);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.error]);

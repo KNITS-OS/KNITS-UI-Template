@@ -6,7 +6,7 @@ export const useFeatureDisabledWarning = () => {
   const [alert, setAlert] = useState(null);
 
   const fireAlert = (message = "Feature under development") => {
-    setAlert(() => <WarningAlert>{message}</WarningAlert>);
+    setAlert(() => <WarningAlert setAlert={setAlert}>{message}</WarningAlert>);
   };
 
   return { alert, fireAlert };

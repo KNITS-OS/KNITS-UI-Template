@@ -25,7 +25,6 @@ export const toTurnoverBarChartUI = apiResponse => {
 };
 
 export const renderChart = response => {
-  const chartData = response.data; //necessary for undefined checking in ts
-  const barChart = toTurnoverBarChartUI(chartData);
+  const barChart = toTurnoverBarChartUI(response);
   return <Bar data={barChart.data} options={barChart.options} className="chart-canvas" />;
 };

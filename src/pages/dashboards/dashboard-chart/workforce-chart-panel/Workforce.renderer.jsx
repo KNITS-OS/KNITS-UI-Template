@@ -16,8 +16,7 @@ const toWorkforceLineChartUI = apiResponse => {
 };
 
 export const renderChart = response => {
-  const chartData = response.data;
-  const chart = toWorkforceLineChartUI(chartData);
+  const chart = toWorkforceLineChartUI(response);
   return (
     <Line data={chart.data} options={chart.options} id="chart-workforce" className="chart-canvas" />
   );

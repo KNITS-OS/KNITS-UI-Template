@@ -22,7 +22,6 @@ const toPieChartUI = apiResponse => {
 };
 
 export const renderChart = response => {
-  const chartData = response.data; //necessary for undefined checking in ts
-  const pieChart = toPieChartUI(chartData);
+  const pieChart = toPieChartUI(response);
   return <Pie data={pieChart.data} options={pieChart.options} className="chart-canvas" />;
 };

@@ -15,8 +15,7 @@ export const GroupDetailsPage = () => {
   const { id } = useParams();
   const groupId = parseInt(id);
   const navigate = useNavigate();
-
-  const [group, setGroup] = useState(groupsData.find(e => e.id === id));
+  const [group, setGroup] = useState(groupsData.find(e => e.id === groupId));
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 

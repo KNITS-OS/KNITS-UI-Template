@@ -29,37 +29,32 @@ import {
 } from "./mock-report-api";
 
 export const WorldOverviewPage = () => {
-  const data = getActiveMembersMapData();
-  const activeMap = useState(data);
-  let [activeMembersMap] = useState(data);
-  let [newMembersMap] = useState(data);
-  let [selfResignedMembersMap] = useState(data);
-  let [autoOffboardedMembersMap] = useState(data);
+  const [activeMembersMap] = useState(getActiveMembersMapData());
+  const [newMembersMap] = useState(getNewMembersMapData());
+  const [selfResignedMembersMap] = useState(getSelfResignedMembersMapData());
+  const [autoOffboardedMembersMap] = useState(getAutoOffboardedMembersMapData());
 
-  const [newMembers, setNewMembers] = useState(null);
-  const [activeMembers, setActiveMembers] = useState(null);
-  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState(null);
-  const [selfresignedMembers, setSelfresignedMembers] = useState(null);
+  const [activeMembers, setActiveMembers] = useState(0);
+  const [newMembers, setNewMembers] = useState(0);
+  const [selfResignedMembers, setSelfResignedMembers] = useState(0);
+  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState(0);
+
+  const [activeMap, setActiveMap] = useState(null);
 
   const onActiveMembersClick = () => {
-    const data = getActiveMembersMapData();
-    setActiveMembers(data);
-    console.log("data setActiveMembers 1234", data);
+    setActiveMap(activeMembersMap);
   };
 
   const onNewMembersClick = () => {
-    const data = getNewMembersMapData();
-    setNewMembers(data);
+    setActiveMap(newMembersMap);
   };
 
   const onSelfResignedClick = () => {
-    const data = getSelfResignedMembersMapData();
-    setSelfresignedMembers(data);
+    setActiveMap(selfResignedMembersMap);
   };
 
   const onAutoOffboardedClick = () => {
-    const data = getAutoOffboardedMembersMapData();
-    setAutoOffboardedMembers(data);
+    setActiveMap(autoOffboardedMembersMap);
   };
 
   return (
@@ -121,8 +116,8 @@ export const WorldOverviewPage = () => {
                       ? setNewMembers(newMembersMap[code])
                       : setNewMembers(0);
                     selfResignedMembersMap[code] != undefined
-                      ? setSelfresignedMembers(selfResignedMembersMap[code])
-                      : setSelfresignedMembers(0);
+                      ? setSelfResignedMembers(selfResignedMembersMap[code])
+                      : setSelfResignedMembers(0);
                     autoOffboardedMembersMap[code] != undefined
                       ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
                       : setAutoOffboardedMembers(0);
@@ -187,7 +182,7 @@ export const WorldOverviewPage = () => {
                             <CardTitle tag="h5" className="text-uppercase text-muted mb-0">
                               Self Resigned
                             </CardTitle>
-                            <span className="h2 font-weight-bold mb-0">{selfresignedMembers}</span>
+                            <span className="h2 font-weight-bold mb-0">{selfResignedMembers}</span>
                           </div>
                           <Col className="col-auto">
                             <div className="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -197,7 +192,7 @@ export const WorldOverviewPage = () => {
                         </Row>
                         <p className="mt-3 mb-0 text-sm">
                           <span className="text-danger mr-2">
-                            <i className="fa fa-arrow-up" /> {selfresignedMembers / 20}
+                            <i className="fa fa-arrow-up" /> {selfResignedMembers / 20}
                           </span>{" "}
                           <span className="text-nowrap">Since last year</span>
                         </p>
