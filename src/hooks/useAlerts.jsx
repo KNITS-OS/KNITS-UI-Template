@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 
 import { ErrorAlert, SuccessAlert } from "components/alerts";
 
-import { useAlert } from "context";
-
 export const useAlerts = state => {
-  const { alert, setAlert } = useAlert();
+  const [alert, setAlert] = useState(null);
   const [saveSent, setSaveSent] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 

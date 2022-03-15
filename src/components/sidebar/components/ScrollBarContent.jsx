@@ -11,7 +11,7 @@ import { CreateSidebarLinks, SidebarToggler } from ".";
 export const ScrollBarContent = ({ logo, collapseState, setCollapseState }) => {
   const { user } = useAuth();
 
-  const { userRole } = user;
+  const userRole = user.authRole;
 
   let navbarBrandProps;
 

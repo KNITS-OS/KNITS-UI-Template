@@ -4,7 +4,7 @@ import { Card, CardHeader, Collapse, Spinner } from "reactstrap";
 
 import { ReactTable } from "components/widgets";
 
-import { careMemberTableColumns, CARE_MEMBER_EDIT } from "pages/users";
+import { CARE_MEMBER_EDIT, employeesTableColumns } from "pages/users";
 
 export const CurrentMemberPanel = ({
   currentMembersCollapse,
@@ -48,7 +48,7 @@ export const CurrentMemberPanel = ({
         ) : (
           <ReactTable
             data={currentGroupMembers}
-            columns={careMemberTableColumns({
+            columns={employeesTableColumns({
               onDetailsButtonClick: onViewEmailDetails,
               onRemoveButtonClick: onRemoveMember,
             })}

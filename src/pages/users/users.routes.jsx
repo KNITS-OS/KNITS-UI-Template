@@ -1,17 +1,6 @@
-import { allAuthRoles, fromCountryManagerRole } from "../utils";
+import { allAuthRoles } from "../utils";
 
-import {
-  CARE_MEMBER_CREATE,
-  CARE_MEMBER_EDIT,
-  CARE_MEMBER_SEARCH,
-  EMPLOYEE_DETAILS,
-  EMPLOYEE_SEARCH,
-  CreateCareMemberPage,
-  EditCareMemberPage,
-  EmployeeDetailsPage,
-  SearchCareMembersPage,
-  SearchEmployeesPage,
-} from ".";
+import { EmployeeDetailsPage, EMPLOYEE_DETAILS, EMPLOYEE_SEARCH, SearchEmployeesPage } from ".";
 
 export const userMenu = [
   {
@@ -32,15 +21,6 @@ export const userMenu = [
         key: "Users/Employees",
         allowedRoles: [...allAuthRoles],
       },
-      {
-        path: CARE_MEMBER_SEARCH,
-        name: "Care Members",
-        miniName: "CM",
-        component: <SearchCareMembersPage />,
-        layout: "/admin",
-        key: "Users/Care Members",
-        allowedRoles: [...allAuthRoles],
-      },
     ],
   },
   {
@@ -52,25 +32,5 @@ export const userMenu = [
     name: `${EMPLOYEE_DETAILS}/:id`,
     key: `Users/${EMPLOYEE_DETAILS}/:id`,
     allowedRoles: [...allAuthRoles],
-  },
-  {
-    collapse: false,
-    global: true,
-    path: `${CARE_MEMBER_EDIT}/:id`,
-    component: <EditCareMemberPage />,
-    layout: "/admin",
-    name: `${CARE_MEMBER_EDIT}/:id`,
-    key: `Users/${CARE_MEMBER_EDIT}/:id`,
-    allowedRoles: [...allAuthRoles],
-  },
-  {
-    collapse: false,
-    global: true,
-    path: `${CARE_MEMBER_CREATE}/:id`,
-    component: <CreateCareMemberPage />,
-    layout: "/admin",
-    name: `${CARE_MEMBER_CREATE}/:id`,
-    key: `Users/${CARE_MEMBER_CREATE}/:id`,
-    allowedRoles: [...fromCountryManagerRole],
   },
 ];

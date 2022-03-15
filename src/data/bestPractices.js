@@ -1,4 +1,4 @@
-import { sampleBase64pdf } from ".";
+import { sampleBase64pdf } from "./mock-data-pdf-base64";
 
 export const bestPracticesData = [
   {

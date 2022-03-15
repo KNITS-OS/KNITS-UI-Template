@@ -2,9 +2,9 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
+import "variables/chartDefaults";
 import { AuthProvider } from "context";
 
-import "variables/chartDefaults";
 import { Router } from "./Router";
 
 import "./assets/css/argon-dashboard-pro-react.css";

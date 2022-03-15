@@ -14,7 +14,7 @@ export const SearchBestPracticesFilterPanel = ({ onSearch }) => {
 
   const [searchPublishDate, setSearchPublishDate] = useState(undefined);
 
-  const ratings = bestPracticeRatings;
+  const [ratings] = useState(bestPracticeRatings);
   const [ratingSelected, setRatingSelected] = useState();
 
   const resetFilters = () => {

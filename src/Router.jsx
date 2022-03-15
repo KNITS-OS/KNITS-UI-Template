@@ -11,8 +11,7 @@ import { Role } from "variables/app.consts";
 
 export const Router = () => {
   const { user } = useAuth();
-
-  const { userRole } = user;
+  const userRole = user.authRole;
 
   return (
     <Routes>

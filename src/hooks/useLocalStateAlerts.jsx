@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 
 import { ErrorAlert, SuccessAlert } from "components/alerts";
 
-import { useAlert } from "context";
-
-export const useLocalStateAlerts = (changedState?: any) => {
-  const { alert, setAlert } = useAlert();
-  // const [isLoading, setIsLoading] = useState(true);
+export const useLocalStateAlerts = changedState => {
+  const [alert, setAlert] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [saveSent, setSaveSent] = useState(false);
   const [successMessage, setSuccessMessage] = useState("Success");

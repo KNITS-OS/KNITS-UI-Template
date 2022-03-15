@@ -9,9 +9,8 @@ import { ReactTable } from "components/widgets";
 import { EMPLOYEE_DETAILS } from "pages/users";
 
 import { businessUnitsData, countriesData, employeesData } from "data";
-import { useLocalStateAlerts } from "hooks";
 
-import { employeesTableColumns, SearchEmployeesFilterPanel, SearchEmployeesModal } from ".";
+import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
@@ -23,7 +22,6 @@ export const SearchEmployeesPage = () => {
   const onSearchEmployees = filters => {
     console.log("filters", filters);
   };
-  const { alert, setIsSuccess, setSuccessMessage, setSaveSent } = useLocalStateAlerts();
   const onViewEmployeeDetails = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
@@ -38,7 +36,6 @@ export const SearchEmployeesPage = () => {
 
   return (
     <>
-      {alert}
       <BoxHeader />
       <Container className="mt--6" fluid>
         <Row>
@@ -62,13 +59,6 @@ export const SearchEmployeesPage = () => {
 
               <ReactTable
                 data={employees}
-                selectElement={
-                  <SearchEmployeesModal
-                    setIsSuccess={setIsSuccess}
-                    setSuccessMessage={setSuccessMessage}
-                    setSaveSent={setSaveSent}
-                  />
-                }
                 columns={employeesTableColumns({
                   onDetailsButtonClick: onViewEmployeeDetails,
                   onRemoveButtonClick: onDeleteEmployee,

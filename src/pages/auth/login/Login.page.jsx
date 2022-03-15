@@ -23,7 +23,7 @@ import { AuthHeader } from "components/headers";
 
 import { HOME } from "pages/home";
 
-import { useAuth } from "context";
+import { useAuth, regionalManagerUser } from "context";
 import { Role } from "variables/app.consts";
 
 export const LoginPage = () => {
@@ -38,16 +38,7 @@ export const LoginPage = () => {
 
   const handleSignIn = e => {
     e.preventDefault();
-    setUser({
-      fullName: "Gabriela Rios",
-      username: "gabriela.rios",
-      email: "gabriela.rios@kuehne-nagel.com",
-      jwtToken: "asdlasdloldfiadjadsfhueiy2839r7489fsdhfaiuehf328",
-      countryCode3: "BRA",
-      authRole: Role.RegionalManager,
-      role: "RegionalTransformationManager",
-      imageUrl: "https://i.pravatar.cc/300",
-    });
+    setUser(regionalManagerUser);
   };
 
   useEffect(() => {

@@ -11,15 +11,15 @@ export const AddNewMemberButton = ({
   setFilters,
   group,
 }) => {
-  const onCareMemberAdd = () => {
-    const careMemberIds = selectedFlatRows.map(careMember => careMember.id);
+  const onMemberAdd = () => {
+    const memberIds = selectedFlatRows.map(member => member.id);
 
-    setGroup({ ...group, members: [...group.members, ...careMemberIds] });
-    setCurrentGroupMembers(previousCareMembers => [...previousCareMembers, ...selectedFlatRows]);
+    setGroup({ ...group, members: [...group.members, ...memberIds] });
+    setCurrentGroupMembers(previousMembers => [...previousMembers, ...selectedFlatRows]);
     setFilters(oldFilters => {
       const oldGroupMembers = oldFilters.members || [];
 
-      return { ...oldFilters, members: [...oldGroupMembers, ...careMemberIds] };
+      return { ...oldFilters, members: [...oldGroupMembers, ...memberIds] };
     });
 
     setSuccessMessage("Member(s) added successfully");
@@ -32,7 +32,7 @@ export const AddNewMemberButton = ({
   };
 
   return (
-    <Button color="success" onClick={onCareMemberAdd}>
+    <Button color="success" onClick={onMemberAdd}>
       Add Members To Group
     </Button>
   );

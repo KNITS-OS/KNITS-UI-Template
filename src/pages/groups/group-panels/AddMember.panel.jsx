@@ -5,7 +5,7 @@ import { Card, Collapse, Spinner } from "reactstrap";
 import { AddNewMemberButton } from "components/buttons";
 import { ReactTable } from "components/widgets";
 
-import { careMemberTableColumns, SearchCareMemberFilterPanel } from "pages/users";
+import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
 import { useAuth } from "context";
 import { employeesData } from "data";
@@ -33,7 +33,7 @@ export const AddMemberPanel = ({
       {alert}
       <Collapse isOpen={addMemberCollapse}>
         <Card>
-          <SearchCareMemberFilterPanel
+          <SearchAdvancedEmployeesFilterPanel
             filters={filters}
             setFilters={setFilters}
             currentGroupMembers={currentGroupMembers}
@@ -57,7 +57,7 @@ export const AddMemberPanel = ({
                   group={group}
                 />
               }
-              columns={careMemberTableColumns({})}
+              columns={employeesTableColumns({})}
             />
           )}
         </Card>
