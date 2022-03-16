@@ -15,7 +15,7 @@
     "minify:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js src/assets/scss/argon-dashboard-pro-react.scss src/assets/css/argon-dashboard-pro-react.min.css --output-style compressed",
     "map:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js src/assets/scss/argon-dashboard-pro-react.scss src/assets/css/argon-dashboard-pro-react.css --source-map true",
     "build:scss": "npm run compile:scss && npm run minify:scss && npm run map:scss",
-    "json-server": "json-server --watch ./json-server-mock-data/db.js --port 8999 --delay 1000",
+    "json-server": "json-server --watch ./src/data/db.js --port 8999 --delay 1000",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
     "prepare": "husky install"
