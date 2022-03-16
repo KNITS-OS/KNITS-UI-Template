@@ -4,7 +4,7 @@ import { TwoMouseEventActionButtons } from "components/widgets";
 
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const bestPracticesTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
+export const documentsTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
   return [
     {
       accessor: "id",

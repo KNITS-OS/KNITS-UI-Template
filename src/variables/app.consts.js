@@ -8,7 +8,7 @@ export const SELECT_ALL_IDS = ids => {
 };
 export const DATE_FILTER_FORMAT = "DD/MM/YYYY";
 
-export const defaultBestPracticesTags = [
+export const defaultDocumentsTags = [
   { value: "Collaboration", label: "Collaboration" },
   { value: "Reflection", label: "Reflection" },
   { value: "Learning", label: "Learning" },
@@ -17,7 +17,7 @@ export const defaultBestPracticesTags = [
   { value: "Huddle", label: "Huddle" },
 ];
 
-export const bestPracticeRatings = [
+export const documentRatings = [
   { value: "1", label: "1" },
   { value: "2", label: "2" },
   { value: "3", label: "3" },
@@ -93,8 +93,8 @@ export const Permission = {
   Employee_read: 0,
   Employee_country_all: 1,
   Employee_write: 2,
-  BestPractice_read: 3,
-  BestPractice_write: 4,
+  Document_read: 3,
+  Document_write: 4,
   Group_read: 5,
   Group_write: 6,
   Group_country_all: 7,

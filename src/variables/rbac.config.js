@@ -5,7 +5,7 @@ export const AnonymousPermissions = [];
 export const SponsorPermissions = [
   ...AnonymousPermissions,
   Permission.Employee_read,
-  Permission.BestPractice_read,
+  Permission.Document_read,
 ];
 export const TrainerPermissions = [...SponsorPermissions];
 
@@ -13,7 +13,7 @@ export const AdvocatePermissions = [
   ...TrainerPermissions,
   Permission.Group_write,
   Permission.Group_read,
-  Permission.BestPractice_write,
+  Permission.Document_write,
 ];
 
 export const CountryManagerPermissions = [
