@@ -4,7 +4,7 @@ import { NavLink as NavLinkRRD } from "react-router-dom";
 import { Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
 import { useAuth } from "context";
-import { useSidebar } from "hooks/useSidebar";
+import { useSidebar } from "hooks";
 import { Role } from "variables/app.consts";
 
 import { getViewCollapseInitialState, activeRoute } from "..";
