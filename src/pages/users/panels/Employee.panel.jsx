@@ -27,6 +27,7 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }) => {
 
   const onSaveEmployee = () => {
     const employeeSaveRequest = {
+      ...employee,
       id: employee.id,
       onboardingDate: moment(onboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),

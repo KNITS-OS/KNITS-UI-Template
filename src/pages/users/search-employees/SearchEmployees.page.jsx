@@ -8,7 +8,7 @@ import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import { employeesData } from "data";
+import { employeeService } from "api";
 
 import {
   selectAllBusinessUnitsDataAsSelectOptions,
@@ -20,12 +20,14 @@ import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
 
-  const [employees] = useState(employeesData);
+  const [employees, setEmployees] = useState([]);
 
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
-  const onSearchEmployees = filters => {
-    console.log("filters", filters);
+  const onSearchEmployees = async filters => {
+    const queryParams = new URLSearchParams(filters);
+    const { data } = await employeeService.searchEmployees(queryParams);
+    setEmployees(data);
   };
   const onViewEmployeeDetails = e => {
     e.preventDefault();
@@ -33,10 +35,12 @@ export const SearchEmployeesPage = () => {
     navigate(`/admin${EMPLOYEE_DETAILS}/${id}`);
   };
 
-  const onDeleteEmployee = e => {
+  const onDeleteEmployee = async e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    console.log("delete employee", id);
+    await employeeService.deleteEmployee(id);
+
+    setEmployees(employees.filter(employee => employee.id !== parseInt(id)));
   };
 
   return (

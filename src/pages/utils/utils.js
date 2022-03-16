@@ -1,4 +1,5 @@
-import { businessUnitsData, countriesData, employeesData, groupsData } from "data";
+import { businessUnitsData, countriesData, groupsData } from "data";
+import employeesData from "data/employees";
 import { SELECT_ALL } from "variables/app.consts";
 
 export const toFileArray = filelist => {

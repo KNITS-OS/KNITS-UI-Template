@@ -15,17 +15,17 @@
 
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
 import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
-import { employeesData } from "data";
+import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 
 export const EmployeeDetailsPage = () => {
@@ -35,19 +35,33 @@ export const EmployeeDetailsPage = () => {
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [employee] = useState(employeesData.find(e => e.id === employeeId));
-
+  const [employee, setEmployee] = useState();
   const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
 
-  const onSaveEmployee = employeeRequest => {
-    const httpUpdateRequest = {
-      id: employeeRequest.id,
-      body: employeeRequest,
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      const { data } = await employeeService.getEmployeeById(employeeId);
+      setEmployee(data);
     };
-    console.log("httpUpdateRequest", httpUpdateRequest);
+    fetchEmployee();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!employee) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  const onSaveEmployee = async employeeRequest => {
+    const { data } = await employeeService.updateEmployee(employeeId, employeeRequest);
+    setEmployee(employee => ({ ...employee, ...data }));
     setSuccessMessage("Employee Updated");
-    setIsSuccess(true);
     setSaveSent(true);
+    setIsSuccess(true);
   };
 
   return (

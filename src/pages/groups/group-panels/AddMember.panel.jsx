@@ -7,7 +7,7 @@ import { ReactTable } from "components/widgets";
 
 import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
-import { employeesData } from "data";
+import employeesData from "data/employees";
 import { useLocalStateAlerts } from "hooks";
 
 export const AddMemberPanel = ({

@@ -1,4 +1,4 @@
-export const employeesData = [
+module.exports = [
   {
     id: 1,
     pdmId: 1,

@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
+    "json-server": "json-server --watch ./src/data/db.js --port 8999",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -15,7 +16,6 @@
     "minify:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js src/assets/scss/argon-dashboard-pro-react.scss src/assets/css/argon-dashboard-pro-react.min.css --output-style compressed",
     "map:scss": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js src/assets/scss/argon-dashboard-pro-react.scss src/assets/css/argon-dashboard-pro-react.css --source-map true",
     "build:scss": "npm run compile:scss && npm run minify:scss && npm run map:scss",
-    "json-server": "json-server --watch ./src/data/db.js --port 8999 --delay 1000",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
     "prepare": "husky install"
@@ -50,6 +50,7 @@
     "@fullcalendar/daygrid": "5.10.1",
     "@fullcalendar/interaction": "5.10.1",
     "@react-pdf/renderer": "^2.1.1",
+    "axios": "^0.26.1",
     "bootstrap": "^4.6.1",
     "chart.js": "^3.7.1",
     "classnames": "^2.3.1",

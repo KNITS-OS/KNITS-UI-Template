@@ -1,6 +1,7 @@
-import { employeesData, documentsData } from ".";
+const documentsData = require("./documents");
+const employeesData = require("./employees");
 
-export default () => ({
+module.exports = () => ({
   employee: employeesData,
   document: documentsData,
 });

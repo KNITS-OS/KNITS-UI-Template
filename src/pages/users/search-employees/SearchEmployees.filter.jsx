@@ -8,7 +8,6 @@ import { DateField, InputField, SelectField } from "components/widgets";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchEmployees }) => {
-  const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
 
   const [businessUnitSelected, setBusinessUnitSelected] = useState();
@@ -23,7 +22,6 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
 
   const resetFilters = () => {
     setSearchLastName("");
-    setSearchNewMembersOnly(false);
     setBusinessUnitSelected(null);
     setSearchHiringDate(undefined);
     setCountrySelected(null);
@@ -38,14 +36,14 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
     return Object.assign(
       {},
       searchLastName && searchLastName !== "" ? { lastName: searchLastName } : null,
-      businessUnitSelected ? { businessUnitId: parseInt(businessUnitSelected.value) } : null,
+      businessUnitSelected ? { businessUnit: businessUnitSelected.label } : null,
       countrySelected && countrySelected.value !== ""
-        ? { countryIso3: countrySelected.value }
+        ? { "office.countryiso3": countrySelected.value }
         : null,
-      searchHiringDate ? { hiringDateFrom: searchHiringDate.format(DATE_FILTER_FORMAT) } : null,
-      searchNewMembersOnly ? { newMembersOnly: searchNewMembersOnly } : null
+      searchHiringDate ? { startDate: searchHiringDate.format(DATE_FILTER_FORMAT) } : null
     );
   };
+
   return (
     <FilterPanel
       title="Search Employees"
@@ -96,23 +94,6 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
           />
         </Col>
         <Col md="1">&nbsp;</Col>
-      </Row>
-      <Row>
-        <Col md="9">&nbsp;</Col>
-        <Col md="3" style={{ zIndex: 0 }} class="d-flex justify-content-center align-items-center">
-          <div className="custom-control custom-control-alternative custom-checkbox">
-            <input
-              className="custom-control-input"
-              id="onlyNewMembers"
-              type="checkbox"
-              value={searchNewMembersOnly.toString()}
-              onClick={() => setSearchNewMembersOnly(!searchNewMembersOnly)}
-            />
-            <label className="custom-control-label" htmlFor="onlyNewMembers">
-              <span className="text-muted">Only Employees NOT in Care</span>
-            </label>
-          </div>
-        </Col>
       </Row>
     </FilterPanel>
   );
