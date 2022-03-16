@@ -4,16 +4,9 @@ import { Collapse, Nav, NavbarBrand, NavItem, NavLink } from "reactstrap";
 
 import { routes } from "routes";
 
-import { useAuth } from "context";
-import { Role } from "variables/app.consts";
-
 import { CreateSidebarLinks, SidebarToggler } from ".";
 
 export const ScrollBarContent = ({ logo, collapseState, setCollapseState }) => {
-  const { user } = useAuth();
-
-  const userRole = user?.authRole || Role.Anonymous;
-
   let navbarBrandProps;
 
   if (logo && logo.innerLink) {
@@ -43,7 +36,6 @@ export const ScrollBarContent = ({ logo, collapseState, setCollapseState }) => {
           <Nav navbar>
             <CreateSidebarLinks
               routes={routes}
-              userRole={userRole}
               collapseState={collapseState}
               setCollapseState={setCollapseState}
             />
