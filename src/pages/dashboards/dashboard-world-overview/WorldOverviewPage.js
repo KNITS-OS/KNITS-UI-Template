@@ -109,18 +109,20 @@ export const WorldOverviewPage = () => {
                     ],
                   }}
                   onRegionTipShow={function name(e, label, code) {
-                    activeMembersMap[code] != undefined
-                      ? setActiveMembers(activeMembersMap[code])
-                      : setActiveMembers(0);
-                    newMembersMap[code] != undefined
-                      ? setNewMembers(newMembersMap[code])
-                      : setNewMembers(0);
-                    selfResignedMembersMap[code] != undefined
-                      ? setSelfResignedMembers(selfResignedMembersMap[code])
-                      : setSelfResignedMembers(0);
-                    autoOffboardedMembersMap[code] != undefined
-                      ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
-                      : setAutoOffboardedMembers(0);
+                    if (activeMap !== null) {
+                      activeMembersMap[code] != undefined
+                        ? setActiveMembers(activeMembersMap[code])
+                        : setActiveMembers(0);
+                      newMembersMap[code] != undefined
+                        ? setNewMembers(newMembersMap[code])
+                        : setNewMembers(0);
+                      selfResignedMembersMap[code] != undefined
+                        ? setSelfResignedMembers(selfResignedMembersMap[code])
+                        : setSelfResignedMembers(0);
+                      autoOffboardedMembersMap[code] != undefined
+                        ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
+                        : setAutoOffboardedMembers(0);
+                    }
                   }}
                 />
                 <Row>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
@@ -14,7 +15,7 @@ import { groupsTableColumns } from ".";
 export const SearchGroupsPage = () => {
   const navigate = useNavigate();
 
-  const groups = groupsData;
+  const [groups] = useState(groupsData);
 
   const onViewGroupDetails = e => {
     const { id } = e.target;

@@ -22,10 +22,10 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
 
   const userRole = user?.authRole || Role.Anonymous;
 
-  const businessUnits = useState(selectAllBusinessUnitsDataAsSelectOptions);
-  const countries = useState(selectAllCountriesDataAsSelectOptions);
-  const roles = useState(selectAllRolesDataAsSelectOptions);
-  const groups = useState(selectAllGroupsDataAsSelectOptions);
+  const [businessUnits] = useState(selectAllBusinessUnitsDataAsSelectOptions);
+  const [countries] = useState(selectAllCountriesDataAsSelectOptions);
+  const [roles] = useState(selectAllRolesDataAsSelectOptions);
+  const [groups] = useState(selectAllGroupsDataAsSelectOptions);
 
   const [searchLastName, setSearchLastName] = useState("");
   const [searchOnBoardDateFrom, setSearchOnBoardDateFrom] = useState(undefined);
