@@ -5,11 +5,11 @@ import { Button, Col, Form, Row } from "reactstrap";
 
 import { InputField, DateField, SelectField } from "components/widgets";
 
-import { selectRoleByIdAsSelectOption, selectGroupsByIdsAsSelectValues } from "pages/utils";
+import { selectGroupsByIdsAsSelectValues } from "pages/utils";
 
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) => {
+export const EmployeePanel = ({ employee, groupOptions, onSave }) => {
   const [onboardingDate, setOnboardingDate] = useState(
     moment(employee?.onboardingDate, DATE_FILTER_FORMAT)
   );
@@ -18,10 +18,8 @@ export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) =
     moment(employee?.offboardingDate, DATE_FILTER_FORMAT)
   );
 
-  const employeeRole = selectRoleByIdAsSelectOption(employee.roleId);
   const employeeGroups = selectGroupsByIdsAsSelectValues(employee.groups || []);
 
-  const [roleId, setRoleId] = useState(employee.roleId);
   const [groups, setGroups] = useState(employee.groups || []);
 
   // state to know which group fields has the user selected
@@ -32,7 +30,6 @@ export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) =
       id: employee.id,
       onboardingDate: moment(onboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
-      roleId,
       groups,
     };
 
@@ -61,18 +58,6 @@ export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) =
           </Col>
         </Row>
         <Row>
-          <Col lg="6">
-            <SelectField
-              id="select-role"
-              label="Role"
-              options={roleOptions}
-              defaultValue={employeeRole}
-              onChange={item => {
-                const { value } = item;
-                setRoleId(parseInt(value));
-              }}
-            />
-          </Col>
           <Col lg="6">
             <SelectField
               id="select-group"

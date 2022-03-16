@@ -1,5 +1,3 @@
-import { allAuthRoles, fromAdvocateRole } from "../utils";
-
 import {
   CreateGroupPage,
   GroupDetailsPage,
@@ -17,7 +15,6 @@ export const groupMenu = [
     state: "groupCollapse",
     path: "GroupsMenu",
     key: "GroupsMenu",
-    allowedRoles: [...allAuthRoles],
     views: [
       {
         path: GROUP_CREATE,
@@ -26,7 +23,6 @@ export const groupMenu = [
         component: <CreateGroupPage />,
         layout: "/admin",
         key: "Groups/Create Group",
-        allowedRoles: [...fromAdvocateRole],
       },
       {
         path: GROUP_SEARCH,
@@ -35,7 +31,6 @@ export const groupMenu = [
         component: <SearchGroupsPage />,
         layout: "/admin",
         key: "Groups/Search Group",
-        allowedRoles: [...allAuthRoles],
       },
     ],
   },
@@ -47,6 +42,5 @@ export const groupMenu = [
     layout: "/admin",
     name: `${GROUP_DETAILS}/:id`,
     key: `Groups/${GROUP_DETAILS}/:id`,
-    allowedRoles: [...allAuthRoles],
   },
 ];

@@ -1,6 +1,5 @@
-import { businessUnitsData, countriesData, employeesData, careRolesData, groupsData } from "data";
-import { SELECT_ALL, Role } from "variables/app.consts";
-import { AuthorizationPolicies } from "variables/rbac.config";
+import { businessUnitsData, countriesData, employeesData, groupsData } from "data";
+import { SELECT_ALL } from "variables/app.consts";
 
 export const toFileArray = filelist => {
   if (!filelist || filelist.length === 0) {
@@ -32,34 +31,6 @@ export const toFormData = object => {
     formData.append(key, object[key]);
   }
   return formData;
-};
-
-export const toRoleEnum = role => {
-  switch (role) {
-    case "RegionalTransformationManager":
-      return Role.RegionalManager;
-    case "CountryTransformationManager":
-      return Role.CountryManager;
-    case "Advocate":
-      return Role.Advocate;
-    case "Trainer":
-      return Role.Trainer;
-    case "Sponsor":
-      return Role.Sponsor;
-
-    default:
-      throw Error("Illegal value for tole. Found: " + role);
-  }
-};
-
-const getPermissionForRole = role => {
-  return AuthorizationPolicies[role];
-};
-
-export const checkAuthorized = (role, required) => {
-  const permissions = getPermissionForRole(role);
-  const foundPermission = permissions.find(permission => permission === required);
-  return foundPermission ? true : false;
 };
 
 export const toBoolean = value => {
@@ -105,22 +76,6 @@ export const selectAllEmployeeDataAsSelectOptions = () => {
     return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
   });
   return [SELECT_ALL, ...employeesOptions];
-};
-
-export const selectRoleByIdAsSelectOption = id => {
-  const roleFound = careRolesData.find(role => role.id === id);
-
-  return {
-    value: `${roleFound.id}`,
-    label: roleFound.name,
-  };
-};
-
-export const selectAllRolesDataAsSelectOptions = () => {
-  const rolesOptions = careRolesData.map(role => {
-    return { value: `${role.id}`, label: role.name };
-  });
-  return [SELECT_ALL, ...rolesOptions];
 };
 
 export const selectGroupsByIdsAsSelectValues = ids => {

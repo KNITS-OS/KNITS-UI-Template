@@ -16,12 +16,12 @@ import remoteWorkImg from "assets/img/care/remote-work.png";
 
 import { useFeatureDisabledWarning } from "hooks";
 
-export const BestPracticeHighlightsPanel = ({ onViewDetailsClick }) => {
+export const DocumentHighlightsPanel = ({ onViewDetailsClick }) => {
   const { fireAlert } = useFeatureDisabledWarning();
   return (
     <Card>
       <CardHeader>
-        <h2 className="mb-0">Best Practices</h2>
+        <h2 className="mb-0">Documents</h2>
         <p className="text-sm mb-0">Highlighted</p>
       </CardHeader>
       <CardBody>

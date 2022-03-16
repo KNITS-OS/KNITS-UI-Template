@@ -5,16 +5,16 @@ import { Col, Row } from "reactstrap";
 import { FilterPanel } from "components/panels";
 import { InputField, DateField, SelectField } from "components/widgets";
 
-import { bestPracticeRatings, DATE_FILTER_FORMAT } from "variables/app.consts";
+import { documentRatings, DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const SearchBestPracticesFilterPanel = ({ onSearch }) => {
+export const SearchDocumentsFilterPanel = ({ onSearch }) => {
   const [searchAuthor, setSearchAuthor] = useState("");
   const [searchTag, setSearchTag] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
 
   const [searchPublishDate, setSearchPublishDate] = useState(undefined);
 
-  const [ratings] = useState(bestPracticeRatings);
+  const [ratings] = useState(documentRatings);
   const [ratingSelected, setRatingSelected] = useState();
 
   const resetFilters = () => {
@@ -43,7 +43,7 @@ export const SearchBestPracticesFilterPanel = ({ onSearch }) => {
 
   return (
     <FilterPanel
-      title="Search Best Practices"
+      title="Search Documents"
       findByAllParameters={findByAllParameters}
       resetFilters={resetFilters}
     >

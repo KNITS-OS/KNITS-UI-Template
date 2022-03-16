@@ -22,33 +22,33 @@ import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
-import { bestPracticesData } from "data";
+import { documentsData } from "data";
 
-import { BEST_PRACTICE_DETAILS } from "../best-practices.routes.const";
-import { BestPracticeHighlightsPanel } from "../panels";
+import { DocumentHighlightsPanel } from "../document-panels";
+import { DOCUMENT_DETAILS } from "../documents.routes.const";
 
-import { bestPracticesTableColumns, SearchBestPracticesFilterPanel } from ".";
+import { documentsTableColumns, SearchDocumentsFilterPanel } from ".";
 
-export const SearchBestPracticesPage = () => {
+export const SearchDocumentsPage = () => {
   const navigate = useNavigate();
 
   const [alert] = useState(null);
 
-  const [bestPractices] = useState(bestPracticesData);
+  const [documents] = useState(documentsData);
 
-  const onSearchBestPractices = filters => {
-    console.log("searchBestPractices", filters);
+  const onSearchDocuments = filters => {
+    console.log("searchDocuments", filters);
   };
 
-  const onDeleteBestPractice = e => {
+  const onDeleteDocument = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    console.log("deleteBestPractice", id);
+    console.log("deleteDocument", id);
   };
 
-  const onViewBestPracticeDetails = e => {
+  const onViewDocumentDetails = e => {
     const { id } = e.currentTarget;
-    navigate(`/admin${BEST_PRACTICE_DETAILS}/${id}`);
+    navigate(`/admin${DOCUMENT_DETAILS}/${id}`);
   };
 
   return (
@@ -58,13 +58,13 @@ export const SearchBestPracticesPage = () => {
       <Container className="mt--6" fluid>
         <Row className="justify-content-center">
           <Col className="card-wrapper" lg="12">
-            <BestPracticeHighlightsPanel onViewDetailsClick={onViewBestPracticeDetails} />
+            <DocumentHighlightsPanel onViewDetailsClick={onViewDocumentDetails} />
           </Col>
         </Row>
 
         <Row>
           <div className="col">
-            <SearchBestPracticesFilterPanel onSearch={onSearchBestPractices} />
+            <SearchDocumentsFilterPanel onSearch={onSearchDocuments} />
           </div>
         </Row>
 
@@ -76,10 +76,10 @@ export const SearchBestPracticesPage = () => {
               </CardHeader>
 
               <ReactTable
-                data={bestPractices}
-                columns={bestPracticesTableColumns({
-                  onDetailsButtonClick: onViewBestPracticeDetails,
-                  onRemoveButtonClick: onDeleteBestPractice,
+                data={documents}
+                columns={documentsTableColumns({
+                  onDetailsButtonClick: onViewDocumentDetails,
+                  onRemoveButtonClick: onDeleteDocument,
                 })}
               />
             </Card>

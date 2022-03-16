@@ -1,5 +1,3 @@
-import { allAuthRoles } from "../utils";
-
 import { EmployeeDetailsPage, EMPLOYEE_DETAILS, EMPLOYEE_SEARCH, SearchEmployeesPage } from ".";
 
 export const userMenu = [
@@ -10,7 +8,6 @@ export const userMenu = [
     state: "usersCollapse",
     path: "UsersMenu",
     key: "UsersMenu",
-    allowedRoles: [...allAuthRoles],
     views: [
       {
         path: EMPLOYEE_SEARCH,
@@ -19,7 +16,6 @@ export const userMenu = [
         component: <SearchEmployeesPage />,
         layout: "/admin",
         key: "Users/Employees",
-        allowedRoles: [...allAuthRoles],
       },
     ],
   },
@@ -31,6 +27,5 @@ export const userMenu = [
     layout: "/admin",
     name: `${EMPLOYEE_DETAILS}/:id`,
     key: `Users/${EMPLOYEE_DETAILS}/:id`,
-    allowedRoles: [...allAuthRoles],
   },
 ];

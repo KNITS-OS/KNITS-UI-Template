@@ -3,9 +3,7 @@ import { NavLink as NavLinkRRD } from "react-router-dom";
 
 import { Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
-import { useAuth } from "context";
 import { useSidebar } from "hooks";
-import { Role } from "variables/app.consts";
 
 import { getViewCollapseInitialState, activeRoute } from "..";
 
@@ -13,9 +11,6 @@ import { RouteIcon } from ".";
 
 export const CreateSidebarLinks = ({ routes, collapseState, setCollapseState }) => {
   const { toggleSidebar } = useSidebar();
-  const { user } = useAuth();
-
-  const userRole = user?.authRole || Role.Anonymous;
 
   /**
    * this is used on mobile devices, when a user navigates
@@ -31,7 +26,7 @@ export const CreateSidebarLinks = ({ routes, collapseState, setCollapseState }) 
     <>
       {routes
         // only take in routes that aren't global
-        .filter(route => !route.global && route.allowedRoles.includes(userRole))
+        .filter(route => !route.global)
         .map(route => {
           // route menus
           if (route.collapse && route.state && route.views) {
@@ -59,7 +54,6 @@ export const CreateSidebarLinks = ({ routes, collapseState, setCollapseState }) 
                   <Nav className="nav-sm flex-column">
                     <CreateSidebarLinks
                       routes={route.views}
-                      userRole={userRole}
                       collapseState={collapseState}
                       setCollapseState={setCollapseState}
                     />

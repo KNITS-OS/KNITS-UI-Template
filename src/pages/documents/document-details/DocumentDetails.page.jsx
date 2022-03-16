@@ -37,19 +37,17 @@ import {
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { huddle64pdf, bestPracticesData } from "data";
+import { huddle64pdf, documentsData } from "data";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-import { SEARCH_BEST_PRACTICE } from "../best-practices.routes.const";
+import { SEARCH_DOCUMENT } from "../documents.routes.const";
 
-export const BestPracticeDetailPage = () => {
+export const DocumentDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const bestPracticeId = parseInt(id);
+  const documentId = parseInt(id);
 
-  const [bestPractice] = useState(
-    bestPracticesData.find(bestPractice => bestPractice.id === bestPracticeId)
-  );
+  const [document] = useState(documentsData.find(document => document.id === documentId));
 
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -85,7 +83,7 @@ export const BestPracticeDetailPage = () => {
               <CardHeader>
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Best Practice Details</h3>
+                    <h3 className="mb-0">Document Details</h3>
                   </Col>
                 </Row>
                 <Row className="align-items-center py-4">
@@ -94,7 +92,7 @@ export const BestPracticeDetailPage = () => {
                       className="btn btn-primary"
                       color="primary"
                       href="#pablo"
-                      onClick={() => navigate(`/admin${SEARCH_BEST_PRACTICE}`)}
+                      onClick={() => navigate(`/admin${SEARCH_DOCUMENT}`)}
                     >
                       Back to Search
                     </Button>
@@ -103,14 +101,14 @@ export const BestPracticeDetailPage = () => {
               </CardHeader>
               <CardBody>
                 <Form>
-                  <h6 className="heading-small text-muted mb-4">Best Practice details</h6>
+                  <h6 className="heading-small text-muted mb-4">Document details</h6>
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="3">
                         <InputField
                           id="input-first-name"
                           label="Title"
-                          value={bestPractice?.title}
+                          value={document?.title}
                           type="text"
                           disabled={true}
                         />
@@ -119,7 +117,7 @@ export const BestPracticeDetailPage = () => {
                         <InputField
                           id="input-first-name"
                           label="Current Rating"
-                          value={bestPractice?.rating}
+                          value={document?.rating}
                           type="text"
                           disabled={true}
                         />
@@ -129,7 +127,7 @@ export const BestPracticeDetailPage = () => {
                         <InputField
                           id="author"
                           label="Author"
-                          value={bestPractice?.author}
+                          value={document?.author}
                           type="text"
                           disabled={true}
                         />
@@ -138,7 +136,7 @@ export const BestPracticeDetailPage = () => {
                         <InputField
                           id="publishDate"
                           label="Published On"
-                          value={moment(bestPractice?.publishDate, DATE_FILTER_FORMAT).format(
+                          value={moment(document?.publishDate, DATE_FILTER_FORMAT).format(
                             DATE_FILTER_FORMAT
                           )}
                           type="text"

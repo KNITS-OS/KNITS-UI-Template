@@ -8,37 +8,37 @@ import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
 import { toFileArray } from "pages/utils";
 
-import { defaultBestPracticesTags } from "variables/app.consts";
+import { defaultDocumentsTags } from "variables/app.consts";
 
-import { bestPracticeDefaultState } from "..";
+import { documentDefaultState } from "..";
 
-export const CreateBestPracticePage = () => {
-  const [bestPractice, setBestPractice] = useState(bestPracticeDefaultState);
+export const CreateDocumentPage = () => {
+  const [document, setDocument] = useState(documentDefaultState);
 
   const changeFileHandler = event => {
     if (event.currentTarget.files) {
-      setBestPractice({
-        ...bestPractice,
+      setDocument({
+        ...document,
         contentFiles: toFileArray(event.currentTarget.files),
       });
     }
   };
 
-  const onCreateBestPractice = () => {
-    console.log("create best practice", bestPractice);
+  const onCreateDocument = () => {
+    console.log("create document", document);
   };
 
   const onChangeSelectedTag = newValue => {
     const arrayOfOptions = newValue ? newValue : [];
     const newTags = arrayOfOptions.map(option => option.value);
-    const updatedTags = bestPractice.tags ? bestPractice.tags : [];
+    const updatedTags = document.tags ? document.tags : [];
 
     newTags.forEach(newTag => {
       if (!updatedTags.includes(newTag)) {
         updatedTags.push(newTag);
       }
     });
-    setBestPractice({ ...bestPractice, tags: updatedTags });
+    setDocument({ ...document, tags: updatedTags });
   };
 
   return (
@@ -53,7 +53,7 @@ export const CreateBestPracticePage = () => {
               <Col>
                 <Card>
                   <CardHeader>
-                    <h3 className="mb-0">Best Practices</h3>
+                    <h3 className="mb-0">Documents</h3>
                     <p className="text-sm mb-0">Create new</p>
                   </CardHeader>
                   <CardBody>
@@ -62,10 +62,10 @@ export const CreateBestPracticePage = () => {
                         <InputField
                           id="input-title"
                           label="Title"
-                          value={bestPractice.title}
+                          value={document.title}
                           onChange={e =>
-                            setBestPractice({
-                              ...bestPractice,
+                            setDocument({
+                              ...document,
                               title: e.target.value,
                             })
                           }
@@ -79,10 +79,10 @@ export const CreateBestPracticePage = () => {
                           label="Description"
                           type="textarea"
                           rows="5"
-                          value={bestPractice.description}
+                          value={document.description}
                           onChange={e =>
-                            setBestPractice({
-                              ...bestPractice,
+                            setDocument({
+                              ...document,
                               description: e.target.value,
                             })
                           }
@@ -98,7 +98,7 @@ export const CreateBestPracticePage = () => {
                           <CreatableSelect
                             id="select-tags"
                             isMulti
-                            options={defaultBestPracticesTags}
+                            options={defaultDocumentsTags}
                             onChange={onChangeSelectedTag}
                           />
                         </FormGroup>
@@ -109,10 +109,10 @@ export const CreateBestPracticePage = () => {
                         <InputField
                           id="input-image-url"
                           label="Image Url"
-                          value={bestPractice.imageUrl}
+                          value={document.imageUrl}
                           onChange={e =>
-                            setBestPractice({
-                              ...bestPractice,
+                            setDocument({
+                              ...document,
                               imageUrl: e.target.value,
                             })
                           }
@@ -126,12 +126,12 @@ export const CreateBestPracticePage = () => {
                     </Row>
                     <Row className="justify-content-center">
                       <Col md="10">
-                        <DisplayFiles files={bestPractice.contentFiles || []} />
+                        <DisplayFiles files={document.contentFiles || []} />
                       </Col>
                     </Row>
                     <Row className="mt-3 justify-content-center">
                       <Col md="10" className="d-flex" style={{ justifyContent: "right" }}>
-                        <Button color="primary" type="submit" onClick={onCreateBestPractice}>
+                        <Button color="primary" type="submit" onClick={onCreateDocument}>
                           Create
                         </Button>
                       </Col>

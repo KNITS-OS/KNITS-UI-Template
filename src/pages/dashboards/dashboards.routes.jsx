@@ -1,5 +1,3 @@
-import { fromCountryManagerRole } from "../utils";
-
 import { ChartsPage, WorldOverviewPage } from ".";
 
 export const dashboardMenu = [
@@ -10,7 +8,7 @@ export const dashboardMenu = [
     state: "dashboardCollapse",
     key: "DashboardMenu",
     path: "DashboardMenu",
-    allowedRoles: [...fromCountryManagerRole],
+
     views: [
       {
         path: "/statistics",
@@ -19,7 +17,6 @@ export const dashboardMenu = [
         component: <ChartsPage />,
         layout: "/admin",
         key: "Dashboard/Charts",
-        allowedRoles: [...fromCountryManagerRole],
       },
       {
         path: "/world-map",
@@ -28,7 +25,6 @@ export const dashboardMenu = [
         component: <WorldOverviewPage />,
         layout: "/admin",
         key: "Dashboard/World Map",
-        allowedRoles: [...fromCountryManagerRole],
       },
     ],
   },

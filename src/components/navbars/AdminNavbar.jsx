@@ -31,15 +31,10 @@ import {
 
 import placeholderPortrait from "assets/img/icons/common/Portrait_Placeholder.png";
 
-import { useAuth } from "context";
-
 export const AdminNavbar = ({ theme }) => {
-  const { user, setUser } = useAuth();
-
   const logOut = () => {
-    setUser(null);
+    console.log("logout");
   };
-
   return (
     <>
       <Navbar
@@ -57,14 +52,10 @@ export const AdminNavbar = ({ theme }) => {
                 <DropdownToggle className="nav-link pr-0" color="" tag="a">
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      {user?.imageUrl ? (
-                        <img alt="userImg" src={user?.imageUrl} />
-                      ) : (
-                        <img alt="placeholder" src={placeholderPortrait} />
-                      )}
+                      <img alt="placeholder" src={placeholderPortrait} />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
-                      <span className="mb-0 text-sm font-weight-bold">{user?.fullName}</span>
+                      <span className="mb-0 text-sm font-weight-bold">Username</span>
                     </Media>
                   </Media>
                 </DropdownToggle>

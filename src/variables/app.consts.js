@@ -8,7 +8,7 @@ export const SELECT_ALL_IDS = ids => {
 };
 export const DATE_FILTER_FORMAT = "DD/MM/YYYY";
 
-export const defaultBestPracticesTags = [
+export const defaultDocumentsTags = [
   { value: "Collaboration", label: "Collaboration" },
   { value: "Reflection", label: "Reflection" },
   { value: "Learning", label: "Learning" },
@@ -17,7 +17,7 @@ export const defaultBestPracticesTags = [
   { value: "Huddle", label: "Huddle" },
 ];
 
-export const bestPracticeRatings = [
+export const documentRatings = [
   { value: "1", label: "1" },
   { value: "2", label: "2" },
   { value: "3", label: "3" },
@@ -78,31 +78,3 @@ export const mode = "light";
 export const fonts = {
   base: "Open Sans",
 };
-
-export const Role = {
-  RegionalManager: 6,
-  CountryManager: 5,
-  Advocate: 4,
-  Trainer: 3,
-  Sponsor: 2,
-  Anonymous: 1,
-};
-Object.freeze(Role);
-
-export const Permission = {
-  Employee_read: 0,
-  Employee_country_all: 1,
-  Employee_write: 2,
-  BestPractice_read: 3,
-  BestPractice_write: 4,
-  Group_read: 5,
-  Group_write: 6,
-  Group_country_all: 7,
-  Group_user_all: 8,
-  Email_write: 9,
-  Email_country_all: 10,
-  Dashboard_worldview_read: 11,
-  Dashboard_statistics_read: 12,
-  Dashboard_statistics_country_all: 13,
-};
-Object.freeze(Permission);

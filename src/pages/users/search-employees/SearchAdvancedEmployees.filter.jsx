@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { Col, Row } from "reactstrap";
 
-import { WithAuthorization } from "components/authorization";
 import { FilterPanel } from "components/panels";
 import { DateField, InputField, SelectField } from "components/widgets";
 
@@ -10,21 +9,14 @@ import {
   selectAllBusinessUnitsDataAsSelectOptions,
   selectAllCountriesDataAsSelectOptions,
   selectAllGroupsDataAsSelectOptions,
-  selectAllRolesDataAsSelectOptions,
   selectLoggedUserDefaultCountryAsSelection,
 } from "pages/utils";
 
-import { useAuth } from "context";
-import { DATE_FILTER_FORMAT, Permission, Role } from "variables/app.consts";
+import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMembers }) => {
-  const { user } = useAuth();
-
-  const userRole = user?.authRole || Role.Anonymous;
-
   const [businessUnits] = useState(selectAllBusinessUnitsDataAsSelectOptions);
   const [countries] = useState(selectAllCountriesDataAsSelectOptions);
-  const [roles] = useState(selectAllRolesDataAsSelectOptions);
   const [groups] = useState(selectAllGroupsDataAsSelectOptions);
 
   const [searchLastName, setSearchLastName] = useState("");
@@ -35,7 +27,6 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
 
   const [businessUnitSelected, setBusinessUnitSelected] = useState();
   const [groupSelected, setGroupSelected] = useState();
-  const [roleSelected, setRoleSelected] = useState();
   const [countrySelected, setCountrySelected] = useState(selectLoggedUserDefaultCountryAsSelection);
   const [groupMembers, setGroupMembers] = useState(
     currentGroupMembers?.map(member => member.id) || []
@@ -53,10 +44,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
     setSearchOffboardingDateTo(undefined);
     setBusinessUnitSelected(null);
     setGroupSelected(null);
-    setRoleSelected(null);
-    if (userRole === Role.RegionalManager) {
-      setCountrySelected(null);
-    }
+    setCountrySelected(null);
   };
 
   const findByAllParameters = () => {
@@ -70,7 +58,6 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
       {},
       searchLastName && searchLastName !== "" ? { lastName: searchLastName } : null,
       groupSelected ? { groupId: parseInt(groupSelected.value) } : null,
-      roleSelected ? { roleId: parseInt(roleSelected.value) } : null,
       businessUnitSelected ? { businessUnitId: parseInt(businessUnitSelected.value) } : null,
       countrySelected && countrySelected.value !== ""
         ? { countryIso3: countrySelected.value }
@@ -98,17 +85,6 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
       resetFilters={resetFilters}
     >
       <Row>
-        <Col md="3">
-          <SelectField
-            id="select-role"
-            label="Role"
-            options={roles}
-            value={roleSelected}
-            onChange={item => {
-              setRoleSelected(item);
-            }}
-          />
-        </Col>
         <Col md="2">
           <SelectField
             id="select-businessUnits"
@@ -120,19 +96,17 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
             }}
           />
         </Col>
-        <WithAuthorization requires={Permission.Employee_country_all}>
-          <Col md="3">
-            <SelectField
-              id="select-country"
-              label="Country"
-              value={countrySelected}
-              options={countries}
-              onChange={item => {
-                setCountrySelected(item);
-              }}
-            />
-          </Col>
-        </WithAuthorization>
+        <Col md="3">
+          <SelectField
+            id="select-country"
+            label="Country"
+            value={countrySelected}
+            options={countries}
+            onChange={item => {
+              setCountrySelected(item);
+            }}
+          />
+        </Col>
 
         <Col md="3">
           <SelectField

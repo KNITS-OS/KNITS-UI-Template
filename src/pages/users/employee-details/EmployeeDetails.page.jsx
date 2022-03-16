@@ -23,7 +23,7 @@ import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactst
 import { BoxHeader } from "components/headers";
 
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
-import { selectAllGroupsDataAsSelectOptions, selectAllRolesDataAsSelectOptions } from "pages/utils";
+import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
 import { employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
@@ -38,7 +38,6 @@ export const EmployeeDetailsPage = () => {
   const [employee] = useState(employeesData.find(e => e.id === employeeId));
 
   const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
-  const [roleOptions] = useState(selectAllRolesDataAsSelectOptions());
 
   const onSaveEmployee = employeeRequest => {
     const httpUpdateRequest = {
@@ -81,7 +80,6 @@ export const EmployeeDetailsPage = () => {
                 <EmployeePanel
                   employee={employee}
                   groupOptions={groupOptions}
-                  roleOptions={roleOptions}
                   onSave={onSaveEmployee}
                 />
               </CardBody>
