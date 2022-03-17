@@ -20,12 +20,13 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
+import { employeeService } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
 import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
-import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 
 export const EmployeeDetailsPage = () => {

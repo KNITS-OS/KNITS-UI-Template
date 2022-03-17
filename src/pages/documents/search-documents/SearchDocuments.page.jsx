@@ -19,10 +19,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 
+import { documentService } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
-
-import { documentService } from "api";
 
 import { DocumentHighlightsPanel } from "../document-panels";
 import { DOCUMENT_DETAILS } from "../documents.routes.const";

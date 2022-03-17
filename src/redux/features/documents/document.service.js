@@ -1,4 +1,4 @@
-import { httpCommon, DOCUMENT_ROUTE } from "..";
+import { DOCUMENT_ROUTE, httpCommon } from "redux/app";
 
 const searchDocuments = queryParams => httpCommon.get(`${DOCUMENT_ROUTE}?${queryParams}`);
 

@@ -1,4 +1,4 @@
-import { httpCommon, EMPLOYEE_ROUTE } from "..";
+import { EMPLOYEE_ROUTE, httpCommon } from "redux/app";
 
 const searchEmployees = queryParams => httpCommon.get(`${EMPLOYEE_ROUTE}?${queryParams}`);
 

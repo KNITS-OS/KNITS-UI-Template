@@ -35,10 +35,11 @@ import {
   Spinner,
 } from "reactstrap";
 
+import { documentService } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { documentService } from "api";
 import { huddle64pdf } from "data";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 

@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
 
+import { employeeService } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
-
-import { employeeService } from "api";
 
 import {
   selectAllBusinessUnitsDataAsSelectOptions,

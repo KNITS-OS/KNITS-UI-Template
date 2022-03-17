@@ -1,8 +1,11 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import "variables/chartDefaults";
+
+import { store } from "redux/app";
 
 import { Router } from "./Router";
 
@@ -20,10 +23,12 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import "components/widgets/react-table/styles/reactTable.css";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <StrictMode>
-      <Router />
-    </StrictMode>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <StrictMode>
+        <Router />
+      </StrictMode>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );

@@ -3,12 +3,13 @@ import CreatableSelect from "react-select/creatable";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, FormGroup, Row } from "reactstrap";
 
+import { documentService } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
 import { toFileArray } from "pages/utils";
 
-import { documentService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { defaultDocumentsTags } from "variables/app.consts";
 
