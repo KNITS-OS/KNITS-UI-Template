@@ -44,6 +44,7 @@ module.exports = {
     "import/prefer-default-export": "off",
 
     "react/jsx-filename-extension": "off",
+    "no-case-declarations": "off",
 
     "react/function-component-definition": [
       "error",

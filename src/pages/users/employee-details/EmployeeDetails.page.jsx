@@ -16,16 +16,21 @@
 */
 
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
-import { employeeService } from "redux/features";
+import {
+  selectAllGroupsDataAsSelectOptions,
+  searchEmployee,
+  updateEmployee,
+  selectEmployeesState,
+} from "redux/features";
 
 import { BoxHeader } from "components/headers";
 
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
-import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
 import { useLocalStateAlerts } from "hooks";
 
@@ -33,23 +38,23 @@ export const EmployeeDetailsPage = () => {
   const { id } = useParams();
   const employeeId = parseInt(id);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [employee, setEmployee] = useState();
-  const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
+  const employeeState = useSelector(selectEmployeesState);
+  const [employee] = useState(employeeState.entity);
+
+  const groupOptions = useSelector(selectAllGroupsDataAsSelectOptions);
 
   useEffect(() => {
-    const fetchEmployee = async () => {
-      const { data } = await employeeService.getEmployeeById(employeeId);
-      setEmployee(data);
-    };
-    fetchEmployee();
-
+    dispatch(searchEmployee(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!employee) {
+  console.log("employee 1234", employee);
+
+  if (employeeState.isLoading || !employee) {
     return (
       <div className="text-center">
         <Spinner />
@@ -58,8 +63,11 @@ export const EmployeeDetailsPage = () => {
   }
 
   const onSaveEmployee = async employeeRequest => {
-    const { data } = await employeeService.updateEmployee(employeeId, employeeRequest);
-    setEmployee(employee => ({ ...employee, ...data }));
+    const body = {
+      ...employee,
+      ...employeeRequest,
+    };
+    dispatch(updateEmployee(employeeId, body));
     setSuccessMessage("Employee Updated");
     setSaveSent(true);
     setIsSuccess(true);

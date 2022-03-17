@@ -1,7 +1,7 @@
 // All simple ISO 3166 country data
 // including: 2-character, 3-character, full country name and numeric code.
 // Sorted alphabetical by country name (special characters on bottom)
-export const countriesData = [
+module.exports = [
   { code: "AF", code3: "AFG", name: "Afghanistan", number: "004" },
   { code: "AL", code3: "ALB", name: "Albania", number: "008" },
   { code: "DZ", code3: "DZA", name: "Algeria", number: "012" },

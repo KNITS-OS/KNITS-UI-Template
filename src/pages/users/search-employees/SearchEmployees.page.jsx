@@ -1,33 +1,34 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
 
-import { employeeService } from "redux/features";
+import {
+  deleteEmployee,
+  searchEmployees,
+  selectAllBusinessUnitsDataAsSelectOptions,
+  selectAllCountriesDataAsSelectOptions,
+  selectAllEmployeesData,
+} from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import {
-  selectAllBusinessUnitsDataAsSelectOptions,
-  selectAllCountriesDataAsSelectOptions,
-} from "../../utils";
-
 import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const employees = useSelector(selectAllEmployeesData);
 
-  const [employees, setEmployees] = useState([]);
+  const businessUnits = useSelector(selectAllBusinessUnitsDataAsSelectOptions);
+  const countries = useSelector(selectAllCountriesDataAsSelectOptions);
 
-  const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
-  const countries = selectAllCountriesDataAsSelectOptions();
   const onSearchEmployees = async filters => {
     const queryParams = new URLSearchParams(filters);
-    const { data } = await employeeService.searchEmployees(queryParams);
-    setEmployees(data);
+    dispatch(searchEmployees(queryParams));
   };
   const onViewEmployeeDetails = e => {
     e.preventDefault();
@@ -38,9 +39,8 @@ export const SearchEmployeesPage = () => {
   const onDeleteEmployee = async e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    await employeeService.deleteEmployee(id);
 
-    setEmployees(employees.filter(employee => employee.id !== parseInt(id)));
+    dispatch(deleteEmployee(id));
   };
 
   return (
@@ -51,7 +51,6 @@ export const SearchEmployeesPage = () => {
           <div className="col">
             <SearchEmployeesFilterPanel
               onSearchEmployees={onSearchEmployees}
-              // jobTitle={jobTitles}
               countries={countries}
               businessUnits={businessUnits}
             />

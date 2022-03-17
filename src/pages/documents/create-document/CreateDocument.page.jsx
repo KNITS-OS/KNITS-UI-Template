@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import CreatableSelect from "react-select/creatable";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, FormGroup, Row } from "reactstrap";
 
-import { documentService } from "redux/features";
+import { createDocument } from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { InputField, FileInput, DisplayFiles } from "components/widgets";
@@ -16,6 +17,8 @@ import { defaultDocumentsTags } from "variables/app.consts";
 import { documentDefaultState } from "..";
 
 export const CreateDocumentPage = () => {
+  const dispatch = useDispatch();
+
   const [document, setDocument] = useState(documentDefaultState);
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
@@ -29,8 +32,7 @@ export const CreateDocumentPage = () => {
   };
 
   const onCreateDocument = async () => {
-    // JSON server automatically adds ID to the document
-    await documentService.createDocument(document);
+    dispatch(createDocument(document));
     setSuccessMessage("Document Created");
     setSaveSent(true);
     setIsSuccess(true);

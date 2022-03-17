@@ -1,7 +1,3 @@
-import { businessUnitsData, countriesData, groupsData } from "data";
-import employeesData from "data/employees";
-import { SELECT_ALL } from "variables/app.consts";
-
 export const toFileArray = filelist => {
   if (!filelist || filelist.length === 0) {
     return [];
@@ -39,66 +35,4 @@ export const toBoolean = value => {
     return false;
   }
   return [true, "true", "True", "TRUE", "1", 1].includes(value);
-};
-
-export const selectAllBusinessUnitsDataAsSelectOptions = () => {
-  const businessUnitOptions = businessUnitsData.map(businessUnit => {
-    return { value: `${businessUnit.id}`, label: businessUnit.name };
-  });
-  return [SELECT_ALL, ...businessUnitOptions];
-};
-
-export const selectAllCountriesDataAsSelectOptions = () => {
-  const countryOptions = countriesData.map(country => {
-    return { value: `${country.code3}`, label: country.name };
-  });
-  return [SELECT_ALL, ...countryOptions];
-};
-
-export const selectLoggedUserDefaultCountryAsSelection = userCountry => {
-  const countriesAsSelections = selectAllCountriesDataAsSelectOptions();
-  const countrySelectOption = countriesAsSelections.find(
-    countryOption => countryOption.value === userCountry
-  );
-  return countrySelectOption;
-};
-
-export const selectCountryByIsoCodeAsSelectOption = code => {
-  const countryFound = countriesData.find(country => country.code3 === code);
-
-  return {
-    value: countryFound.code3,
-    label: countryFound.name,
-  };
-};
-
-export const selectAllEmployeeDataAsSelectOptions = () => {
-  const employeesOptions = employeesData.map(employee => {
-    return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
-  });
-  return [SELECT_ALL, ...employeesOptions];
-};
-
-export const selectGroupsByIdsAsSelectValues = ids => {
-  const groups = groupsData.filter(group => ids.includes(group.id));
-  const groupsOptions = groups.map(group => {
-    return { value: `${group.id}`, label: group.name };
-  });
-  return [...groupsOptions];
-};
-
-export const selectAllGroupsDataAsSelectOptions = () => {
-  const groupsOptions = groupsData.map(group => {
-    return { value: `${group.id}`, label: group.name };
-  });
-  return [SELECT_ALL, ...groupsOptions];
-};
-
-export const selectGroupMembers = groupId => {
-  const group = groupsData.find(group => group.id === groupId);
-  const employees = employeesData;
-
-  return Object.keys(employees)
-    .map(key => employees[parseInt(key)])
-    .filter(employee => group?.members.includes(employee.id));
 };

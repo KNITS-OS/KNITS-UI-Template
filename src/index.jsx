@@ -3,11 +3,10 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
-import "variables/chartDefaults";
-
 import { store } from "redux/app";
 
 import { Router } from "./Router";
+import "variables/chartDefaults";
 
 import "./assets/css/argon-dashboard-pro-react.css";
 import "./assets/css/site.css";

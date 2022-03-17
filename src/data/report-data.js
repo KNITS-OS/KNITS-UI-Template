@@ -1,4 +1,6 @@
-export const memberTurnoverReport = [
+const countriesData = require("./countries");
+
+const memberTurnoverReport = [
   { month: "January", onboarded: 46, offboarded: 15 },
   { month: "February", onboarded: 28, offboarded: 12 },
   { month: "March", onboarded: 38, offboarded: 10 },
@@ -8,7 +10,7 @@ export const memberTurnoverReport = [
   { month: "July", onboarded: 33, offboarded: 15 },
 ];
 
-export const workforceReport = [
+const workforceReport = [
   { label: "January", value: 199 },
   { label: "February", value: 202 },
   { label: "March", value: 185 },
@@ -18,12 +20,12 @@ export const workforceReport = [
   { label: "July", value: 234 },
 ];
 
-export const distributionByGenderReport = [
+const distributionByGenderReport = [
   { label: "Male", value: 320 },
   { label: "Female", value: 306 },
 ];
 
-export const distributionByRoleReport = [
+const distributionByRoleReport = [
   { label: "Regional Transformation Manager", value: 17 },
   { label: "Country Transformation Manager", value: 28 },
   { label: "Advocate", value: 60 },
@@ -31,7 +33,7 @@ export const distributionByRoleReport = [
   { label: "Sponsor", value: 45 },
 ];
 
-export const distributionByBusinessUnitReport = [
+const distributionByBusinessUnitReport = [
   { label: "Road Logistics", value: 44 },
   { label: "Air Logistics", value: 26 },
   { label: "Sea Logistics", value: 47 },
@@ -47,7 +49,7 @@ export const distributionByBusinessUnitReport = [
   { label: "National Management", value: 14 },
 ];
 
-export const distributionBySeniorityReport = [
+const distributionBySeniorityReport = [
   { label: "Up to 1", value: 45 },
   { label: "1-2", value: 58 },
   { label: "2-3", value: 33 },
@@ -55,7 +57,7 @@ export const distributionBySeniorityReport = [
   { label: "5+", value: 28 },
 ];
 
-export const distributionByAgeReport = [
+const distributionByAgeReport = [
   { label: "Up to 20", value: 26 },
   { label: "21-25", value: 89 },
   { label: "26-30", value: 56 },
@@ -63,3 +65,56 @@ export const distributionByAgeReport = [
   { label: "36-40", value: 25 },
   { label: "41+", value: 5 },
 ];
+
+const randomMembersFromBase = (base, deltaGen) => {
+  const delta = Math.round(deltaGen * Math.random());
+  return base + delta;
+};
+
+const newMembersMapData = () => {
+  return getRandomMapData(countriesData, 20, 10);
+};
+
+const activeMembersMapData = () => {
+  return getRandomMapData(countriesData, 50, 20);
+};
+
+const selfResignedMembersMapData = () => {
+  return getRandomMapData(countriesData, 0, 5);
+};
+
+const autoOffboardedMembersMapData = () => {
+  return getRandomMapData(countriesData, 10, 10);
+};
+
+const getRandomMapData = (countryListAllIsoData, base, deltaGen) => {
+  const generatedData = {};
+  countryListAllIsoData.map(country => {
+    generatedData[country.code] = randomMembersFromBase(base, deltaGen);
+  });
+  return generatedData;
+};
+
+// const getRandomMapData = (countryListAllIsoData, base, deltaGen) => {
+//   const generatedData = [];
+//   countryListAllIsoData.map(country => {
+//     generatedData.push({
+//       [country.code]: randomMembersFromBase(base, deltaGen),
+//     });
+//   });
+//   return generatedData;
+// };
+
+module.exports = {
+  memberTurnoverReport,
+  workforceReport,
+  distributionByGenderReport,
+  distributionByRoleReport,
+  distributionByBusinessUnitReport,
+  distributionBySeniorityReport,
+  distributionByAgeReport,
+  newMembersMapData,
+  activeMembersMapData,
+  autoOffboardedMembersMapData,
+  selfResignedMembersMapData,
+};

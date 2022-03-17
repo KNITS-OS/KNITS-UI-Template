@@ -1,4 +1,4 @@
-export * from "./businessUnits";
+export * from "./business-units";
 export * from "./countries";
 export * from "./employees";
 export * from "./groups";

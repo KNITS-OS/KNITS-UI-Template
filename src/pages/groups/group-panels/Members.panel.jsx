@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import { Button, ButtonGroup, Col, Row } from "reactstrap";
 
-import { selectGroupMembers } from "pages/utils";
+import { selectGroupMembers } from "redux/features";
 
 import { AddMemberPanel, CurrentMemberPanel } from ".";
 
@@ -10,7 +11,7 @@ export const MembersPanel = ({ group, setGroup }) => {
   const [currentMembersCollapse, setCurrentMembersCollapse] = useState(false);
   const [addMemberCollapse, setAddMemberCollapse] = useState(false);
 
-  const groupMembers = selectGroupMembers(group.id);
+  const groupMembers = useSelector(selectGroupMembers(group.id));
   const [currentGroupMembers, setCurrentGroupMembers] = useState(groupMembers || []);
 
   const toggleCurrentMembers = () => {

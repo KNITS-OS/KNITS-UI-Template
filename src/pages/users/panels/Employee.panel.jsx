@@ -1,11 +1,12 @@
 import moment from "moment";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import { Button, Col, Form, Row } from "reactstrap";
 
-import { InputField, DateField, SelectField } from "components/widgets";
+import { selectGroupsByIdsAsSelectValues } from "redux/features";
 
-import { selectGroupsByIdsAsSelectValues } from "pages/utils";
+import { InputField, DateField, SelectField } from "components/widgets";
 
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
@@ -18,7 +19,7 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }) => {
     moment(employee?.offboardingDate, DATE_FILTER_FORMAT)
   );
 
-  const employeeGroups = selectGroupsByIdsAsSelectValues(employee.groups || []);
+  const employeeGroups = useSelector(selectGroupsByIdsAsSelectValues(employee.groups || []));
 
   const [groups, setGroups] = useState(employee.groups || []);
 

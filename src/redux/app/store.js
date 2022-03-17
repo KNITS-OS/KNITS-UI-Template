@@ -1,13 +1,36 @@
-import { applyMiddleware, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
-import { rootReducer } from "./utils";
+import {
+  worldOverviewReducer,
+  countryReducer,
+  businessUnitReducer,
+  groupReducer,
+  documentReducer,
+  employeeReducer,
+} from "redux/features";
 
 const middleware = [thunk];
 
+// const rootReducer = combineReducers({
+//   employee: employeeReducer,
+//   document: documentReducer,
+//   businessUnit: businessUnitReducer,
+//   group: groupReducer,
+//   country: countryReducer,
+//   worldOverview: worldOverviewReducer,
+// });
+
 export const store = createStore(
-  rootReducer,
+  combineReducers({
+    employee: employeeReducer,
+    document: documentReducer,
+    businessUnit: businessUnitReducer,
+    group: groupReducer,
+    country: countryReducer,
+    worldOverview: worldOverviewReducer,
+  }),
   composeWithDevTools(applyMiddleware(...middleware, logger))
 );

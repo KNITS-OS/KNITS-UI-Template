@@ -1,4 +1,4 @@
-export const groupsData = [
+module.exports = [
   {
     id: 1,
     name: "Blue For Green",
