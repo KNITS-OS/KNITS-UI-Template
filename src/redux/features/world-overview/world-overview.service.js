@@ -3,13 +3,9 @@ import {
   REPORT_AUTO_OFFBOARDED_MEMBERS_ROUTE,
   REPORT_NEW_MEMBERS_ROUTE,
   REPORT_SELF_RESIGNED_MEMBERS_ROUTE,
-  REPORT_STATISTICS_MAP_ROUTE,
   httpCommon,
 } from "redux/app";
 
-const getAllMapStatistics = () => {
-  return httpCommon.get(`${REPORT_STATISTICS_MAP_ROUTE}`);
-};
 const getNewMembersMapData = () => {
   return httpCommon.get(`${REPORT_NEW_MEMBERS_ROUTE}`);
 };
@@ -24,7 +20,6 @@ const getSelfResignedMembersMapData = () => {
   return httpCommon.get(`${REPORT_SELF_RESIGNED_MEMBERS_ROUTE}`);
 };
 export const worldOverviewService = {
-  getAllMapStatistics,
   getNewMembersMapData,
   getAutoOffboardedMembersMapData,
   getActiveMembersMapData,
