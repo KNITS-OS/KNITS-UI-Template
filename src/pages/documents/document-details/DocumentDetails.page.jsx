@@ -15,10 +15,10 @@
 
 */
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack"; //this will optimize load with webworker
 import Rating from "react-rating";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -36,7 +36,7 @@ import {
   Spinner,
 } from "reactstrap";
 
-import { selectDocumentsState, searchDocument } from "redux/features";
+import { selectDocumentById } from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
@@ -44,28 +44,17 @@ import { InputField } from "components/widgets";
 import { huddle64pdf } from "data";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-import { SEARCH_DOCUMENT } from "../documents.routes.const";
+import { DOCUMENT_SEARCH } from "../documents.routes.const";
 
-export const DocumentDetailPage = () => {
+export const DocumentDetailsPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { id } = useParams();
   const documentId = parseInt(id);
-  const documentState = useSelector(selectDocumentsState);
 
-  const [document] = useState(documentState.entity);
+  const document = useSelector(selectDocumentById(documentId));
 
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-
-  useEffect(() => {
-    const fetchDocument = async () => {
-      dispatch(searchDocument(documentId));
-    };
-    fetchDocument();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (!document) {
     return (
@@ -115,7 +104,7 @@ export const DocumentDetailPage = () => {
                       className="btn btn-primary"
                       color="primary"
                       href="#pablo"
-                      onClick={() => navigate(`/admin${SEARCH_DOCUMENT}`)}
+                      onClick={() => navigate(`/admin${DOCUMENT_SEARCH}`)}
                     >
                       Back to Search
                     </Button>
@@ -131,7 +120,7 @@ export const DocumentDetailPage = () => {
                         <InputField
                           id="input-first-name"
                           label="Title"
-                          value={document?.title}
+                          value={document.title}
                           type="text"
                           disabled={true}
                         />
@@ -140,7 +129,7 @@ export const DocumentDetailPage = () => {
                         <InputField
                           id="input-first-name"
                           label="Current Rating"
-                          value={document?.rating}
+                          value={document.rating}
                           type="text"
                           disabled={true}
                         />
@@ -150,7 +139,7 @@ export const DocumentDetailPage = () => {
                         <InputField
                           id="author"
                           label="Author"
-                          value={document?.author}
+                          value={document.author}
                           type="text"
                           disabled={true}
                         />
@@ -159,7 +148,7 @@ export const DocumentDetailPage = () => {
                         <InputField
                           id="publishDate"
                           label="Published On"
-                          value={moment(document?.publishDate, DATE_FILTER_FORMAT).format(
+                          value={moment(document.publishDate, DATE_FILTER_FORMAT).format(
                             DATE_FILTER_FORMAT
                           )}
                           type="text"

@@ -24,12 +24,14 @@ import careLogo from "assets/img/brand/CareLogoMin.png";
 import { routes } from "routes";
 
 import {
-  selectAllCountryData,
-  selectAllBusinessUnitData,
-  selectAllGroupsData,
-  findAllCountries,
   findAllBusinessUnits,
-  findAllGroups,
+  findAllCountries,
+  selectAllBusinessUnitData,
+  selectAllCountryData,
+  selectAllGroupData,
+  searchGroups,
+  searchEmployees,
+  selectAllEmployeeData,
 } from "redux/features";
 
 import { AdminFooter } from "components/footers";
@@ -52,26 +54,29 @@ export const AdminLayout = () => {
   const [isCountryDataLoaded, setIsCountryDataLoaded] = useState(false);
   const [isBusinessUnitsDataLoaded, setIsBusinessUnitsDataLoaded] = useState(false);
   const [isGroupsDataLoaded, setIsGroupsDataLoaded] = useState(false);
+  const [isEmployeesDataLoaded, setIsEmployeesDataLoaded] = useState(false);
 
   const countries = useSelector(selectAllCountryData);
   const businessUnits = useSelector(selectAllBusinessUnitData);
-  const groups = useSelector(selectAllGroupsData);
+  const groups = useSelector(selectAllGroupData);
+  const employees = useSelector(selectAllEmployeeData);
 
   useEffect(() => {
     dispatch(findAllCountries());
     dispatch(findAllBusinessUnits());
-    dispatch(findAllGroups());
+    dispatch(searchGroups());
+    dispatch(searchEmployees({}));
   }, [dispatch]);
 
   useEffect(() => {
-    if (countries || countries.length > 0) {
+    if (countries && countries.length > 0) {
       setIsCountryDataLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countries]);
 
   useEffect(() => {
-    if (businessUnits || businessUnits.length > 0) {
+    if (businessUnits && businessUnits.length > 0) {
       setIsBusinessUnitsDataLoaded(true);
     }
 
@@ -79,18 +84,36 @@ export const AdminLayout = () => {
   }, [businessUnits]);
 
   useEffect(() => {
-    if (groups || groups.length > 0) {
+    if (groups && groups.length > 0) {
       setIsGroupsDataLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groups]);
 
   useEffect(() => {
-    if (isCountryDataLoaded && isBusinessUnitsDataLoaded && isGroupsDataLoaded) {
+    if (employees && employees.length > 0) {
+      setIsEmployeesDataLoaded(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [employees]);
+
+  useEffect(() => {
+    if (
+      isCountryDataLoaded &&
+      isBusinessUnitsDataLoaded &&
+      isGroupsDataLoaded &&
+      isEmployeesDataLoaded
+    ) {
       setIsDataLoadingCompleted(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCountryDataLoaded, isBusinessUnitsDataLoaded, isGroupsDataLoaded, isDataLoadingCompleted]);
+  }, [
+    isCountryDataLoaded,
+    isBusinessUnitsDataLoaded,
+    isGroupsDataLoaded,
+    isEmployeesDataLoaded,
+    isDataLoadingCompleted,
+  ]);
 
   const getNavbarTheme = () => {
     return location.pathname.indexOf("admin/alternative-dashboard") === -1 ? "dark" : "light";

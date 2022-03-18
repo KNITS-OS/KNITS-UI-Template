@@ -29,6 +29,7 @@ const initialState = {
 
 export const documentReducer = (documentState = initialState, action = {}) => {
   const { type, payload } = action;
+  const { entities, entity } = documentState;
 
   let updatedDocuments = [];
   let documentsToKeep = [];
@@ -44,8 +45,8 @@ export const documentReducer = (documentState = initialState, action = {}) => {
         isLoading: true,
         isSuccess: false,
         error: {},
-        entities: [],
-        entity: null,
+        entities,
+        entity,
       };
 
     case SEARCH_DOCUMENT_ERROR:
@@ -58,8 +59,8 @@ export const documentReducer = (documentState = initialState, action = {}) => {
         isLoading: false,
         isSuccess: false,
         error: payload,
-        entities: [],
-        entity: null,
+        entities,
+        entity,
       };
 
     case CREATE_DOCUMENT_COMPLETE:
@@ -86,7 +87,7 @@ export const documentReducer = (documentState = initialState, action = {}) => {
         isSuccess: true,
         error: {},
         entities: payload,
-        entity: null,
+        entity,
       };
 
     case SEARCH_DOCUMENTS_BY_IDS_COMPLETE:
@@ -95,7 +96,7 @@ export const documentReducer = (documentState = initialState, action = {}) => {
         isSuccess: true,
         error: {},
         entities: payload,
-        entity: null,
+        entity,
       };
 
     case UPDATE_DOCUMENT_COMPLETE:
@@ -118,14 +119,14 @@ export const documentReducer = (documentState = initialState, action = {}) => {
       };
 
     case DELETE_DOCUMENT_COMPLETE:
-      documentsToKeep = documentState.entities.filter(({ id }) => id !== payload.id);
+      documentsToKeep = documentState.entities.filter(({ id }) => id !== parseInt(payload.id));
 
       return {
         isLoading: false,
         isSuccess: true,
         error: {},
         entities: documentsToKeep,
-        entity: null,
+        entity,
       };
 
     default:

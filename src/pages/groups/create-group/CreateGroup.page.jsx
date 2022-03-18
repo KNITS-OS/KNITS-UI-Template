@@ -1,16 +1,20 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { Container } from "reactstrap";
 
+import { createGroup } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 
-import { CREATE_ENTITY_ID } from "variables/app.consts";
+import { useLocalStateAlerts } from "hooks";
 
 import { EditGroupPanel } from "..";
 
 export const CreateGroupPage = () => {
+  const dispatch = useDispatch();
+
   const initialState = {
-    id: CREATE_ENTITY_ID,
     name: "",
     description: "",
     members: [],
@@ -18,9 +22,14 @@ export const CreateGroupPage = () => {
   };
 
   const [group, setGroup] = useState(initialState);
+  const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const onCreateGroup = () => {
-    console.log("create group", group);
+    dispatch(createGroup(group));
+
+    setSuccessMessage("Group Created");
+    setSaveSent(true);
+    setIsSuccess(true);
   };
   return (
     <>

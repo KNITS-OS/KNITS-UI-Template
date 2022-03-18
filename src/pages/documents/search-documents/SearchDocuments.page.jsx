@@ -39,9 +39,7 @@ export const SearchDocumentsPage = () => {
   const documents = useSelector(selectAllDocumentsData);
 
   const onSearchDocuments = async filters => {
-    const queryParams = new URLSearchParams(filters);
-
-    dispatch(searchDocuments(queryParams));
+    dispatch(searchDocuments(filters));
   };
 
   const onViewDocumentDetails = e => {

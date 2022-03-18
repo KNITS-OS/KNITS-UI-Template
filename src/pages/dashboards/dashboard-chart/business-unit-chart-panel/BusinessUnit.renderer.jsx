@@ -36,6 +36,6 @@ const toPieChartUI = apiResponse => {
 };
 
 export const renderChart = response => {
-  const pieChart = toPieChartUI(response);
+  const pieChart = toPieChartUI(response.data);
   return <Pie data={pieChart.data} options={pieChart.options} className="chart-canvas" />;
 };

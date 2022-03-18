@@ -1,5 +1,4 @@
 // these have to be in sync with the data/db.js file
-
 export const EMPLOYEE_ROUTE = "/employee";
 export const DOCUMENT_ROUTE = "/document";
 export const COUNTRY_ROUTE = "/country";

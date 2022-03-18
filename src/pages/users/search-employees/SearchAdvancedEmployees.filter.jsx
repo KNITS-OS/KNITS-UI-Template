@@ -49,8 +49,9 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
 
   const findByAllParameters = () => {
     const filters = parametersToFilter();
+    const memberFilterArray = groupMembers.map(memberId => `id_ne=${memberId}`).join("&");
 
-    setFilters(filters);
+    setFilters({ ...filters, ...memberFilterArray });
   };
 
   const parametersToFilter = () => {
@@ -73,8 +74,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
         : null,
       searchOffboardingDateTo
         ? { offboardingDateTo: searchOffboardingDateTo.format(DATE_FILTER_FORMAT) }
-        : null,
-      groupMembers ? { members: groupMembers } : null
+        : null
     );
   };
 

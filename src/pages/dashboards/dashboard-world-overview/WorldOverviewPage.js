@@ -16,45 +16,58 @@
 */
 import { useState } from "react";
 import { VectorMap } from "react-jvectormap";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
 
+import {
+  selectCurrentMapData,
+  selectActiveMembersReportsData,
+  selectNewMembersReportsData,
+  selectSelfResignedMembersReportsData,
+  selectAutoOffboardedMembersReportsData,
+  fetchActiveMembersReport,
+  fetchNewMembersReport,
+  fetchSelfResignedMembersReport,
+  fetchAutoOffboardedMembersReport,
+} from "redux/features";
+
 import { MapsHeader } from "components/headers";
 
-import {
-  getActiveMembersMapData,
-  getAutoOffboardedMembersMapData,
-  getNewMembersMapData,
-  getSelfResignedMembersMapData,
-} from "./mock-report-api";
-
 export const WorldOverviewPage = () => {
-  const [activeMembersMap] = useState(getActiveMembersMapData());
-  const [newMembersMap] = useState(getNewMembersMapData());
-  const [selfResignedMembersMap] = useState(getSelfResignedMembersMapData());
-  const [autoOffboardedMembersMap] = useState(getAutoOffboardedMembersMapData());
+  const dispatch = useDispatch();
 
-  const [activeMembers, setActiveMembers] = useState(0);
-  const [newMembers, setNewMembers] = useState(0);
-  const [selfResignedMembers, setSelfResignedMembers] = useState(0);
-  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState(0);
+  const activeMap = useSelector(selectCurrentMapData);
+  let activeMembersMap = useSelector(selectActiveMembersReportsData);
+  let newMembersMap = useSelector(selectNewMembersReportsData);
+  let selfResignedMembersMap = useSelector(selectSelfResignedMembersReportsData);
+  let autoOffboardedMembersMap = useSelector(selectAutoOffboardedMembersReportsData);
 
-  const [activeMap, setActiveMap] = useState(null);
+  const [newMembers, setNewMembers] = useState(null);
+  const [activeMembers, setActiveMembers] = useState(null);
+  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState(null);
+  const [selfResignedMembers, setSelfResignedMembers] = useState(null);
 
-  const onActiveMembersClick = () => {
-    setActiveMap(activeMembersMap);
+  const mapFilterClick = (e, fnApiCall) => {
+    e.preventDefault();
+    dispatch(fnApiCall());
+    fnApiCall();
   };
 
-  const onNewMembersClick = () => {
-    setActiveMap(newMembersMap);
+  const onActiveMembersClick = e => {
+    mapFilterClick(e, fetchActiveMembersReport);
   };
 
-  const onSelfResignedClick = () => {
-    setActiveMap(selfResignedMembersMap);
+  const onNewMembersClick = e => {
+    mapFilterClick(e, fetchNewMembersReport);
   };
 
-  const onAutoOffboardedClick = () => {
-    setActiveMap(autoOffboardedMembersMap);
+  const onSelfResignedClick = e => {
+    mapFilterClick(e, fetchSelfResignedMembersReport);
+  };
+
+  const onAutoOffboardedClick = e => {
+    mapFilterClick(e, fetchAutoOffboardedMembersReport);
   };
 
   return (
@@ -109,20 +122,20 @@ export const WorldOverviewPage = () => {
                     ],
                   }}
                   onRegionTipShow={function name(e, label, code) {
-                    if (activeMap !== null) {
-                      activeMembersMap[code] != undefined
-                        ? setActiveMembers(activeMembersMap[code])
-                        : setActiveMembers(0);
-                      newMembersMap[code] != undefined
-                        ? setNewMembers(newMembersMap[code])
-                        : setNewMembers(0);
-                      selfResignedMembersMap[code] != undefined
-                        ? setSelfResignedMembers(selfResignedMembersMap[code])
-                        : setSelfResignedMembers(0);
-                      autoOffboardedMembersMap[code] != undefined
-                        ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
-                        : setAutoOffboardedMembers(0);
-                    }
+                    // if (activeMap !== null) {
+                    activeMembersMap[code] != undefined
+                      ? setActiveMembers(activeMembersMap[code])
+                      : setActiveMembers(0);
+                    newMembersMap[code] != undefined
+                      ? setNewMembers(newMembersMap[code])
+                      : setNewMembers(0);
+                    selfResignedMembersMap[code] != undefined
+                      ? setSelfResignedMembers(selfResignedMembersMap[code])
+                      : setSelfResignedMembers(0);
+                    autoOffboardedMembersMap[code] != undefined
+                      ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
+                      : setAutoOffboardedMembers(0);
+                    // }
                   }}
                 />
                 <Row>

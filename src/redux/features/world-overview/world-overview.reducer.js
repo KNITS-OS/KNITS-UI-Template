@@ -70,14 +70,15 @@ const toCacheKey = actionType => {
 
 export const worldOverviewReducer = (worldOverviewState = initialState, action = {}) => {
   const { type, payload } = action;
+  const { entities, entity } = worldOverviewState;
   switch (type) {
     case FETCH_ACTIVE_MEMBERS_REPORT_LOADING:
     case FETCH_NEW_MEMBERS_REPORT_LOADING:
     case FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING:
     case FETCH_SELF_RESIGNED_MEMBERS_REPORT_LOADING:
       return {
-        entities: [],
-        entity: null,
+        entities,
+        entity,
         isLoading: true,
         isSuccess: false,
         error: {},
@@ -88,8 +89,8 @@ export const worldOverviewReducer = (worldOverviewState = initialState, action =
     case FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_ERROR:
     case FETCH_SELF_RESIGNED_MEMBERS_REPORT_ERROR:
       return {
-        entities: [],
-        entity: null,
+        entities,
+        entity,
         isLoading: false,
         isSuccess: false,
         error: payload,
@@ -106,12 +107,11 @@ export const worldOverviewReducer = (worldOverviewState = initialState, action =
         ) {
           report.data = action.payload;
         }
-        console.log("report", report);
         return report;
       });
       return {
         entities: updatedReports,
-        entity: null,
+        entity,
         isLoading: false,
         isSuccess: true,
       };

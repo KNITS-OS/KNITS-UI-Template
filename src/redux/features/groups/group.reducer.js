@@ -35,6 +35,7 @@ const initialState = {
 
 export const groupReducer = (groupState = initialState, action = {}) => {
   const { type, payload } = action;
+  const { entities, entity } = groupState;
 
   let updatedGroups = [];
   let groupsToKeep = [];
@@ -55,8 +56,8 @@ export const groupReducer = (groupState = initialState, action = {}) => {
         isLoading: true,
         isSuccess: false,
         error: {},
-        entities: [],
-        entity: null,
+        entities,
+        entity,
       };
 
     case SEARCH_GROUP_ERROR:
@@ -71,8 +72,8 @@ export const groupReducer = (groupState = initialState, action = {}) => {
         isLoading: false,
         isSuccess: false,
         error: payload,
-        entities: [],
-        entity: null,
+        entities,
+        entity,
       };
 
     case CREATE_GROUP_COMPLETE:
@@ -122,7 +123,7 @@ export const groupReducer = (groupState = initialState, action = {}) => {
       };
 
     case DELETE_GROUP_COMPLETE:
-      groupsToKeep = groupState.entities.filter(({ id }) => id !== payload.id);
+      groupsToKeep = groupState.entities.filter(({ id }) => id !== parseInt(payload.id));
 
       return {
         isLoading: false,

@@ -1,5 +1,3 @@
-const sampleBase64pdf = require("./mock-data-pdf-base64");
-
 module.exports = [
   {
     id: 1,
@@ -21,7 +19,9 @@ module.exports = [
     publishDate: "13/02/2022",
     rating: 1,
     tags: ["Service Actions"],
-    contentUrl: sampleBase64pdf,
+    // contentUrl: sampleBase64pdf,
+    contentUrl:
+      "https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-types",
   },
   {
     id: 3,

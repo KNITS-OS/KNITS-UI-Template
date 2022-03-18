@@ -8,7 +8,7 @@ import {
   searchEmployees,
   selectAllBusinessUnitsDataAsSelectOptions,
   selectAllCountriesDataAsSelectOptions,
-  selectAllEmployeesData,
+  selectAllEmployeeData,
 } from "redux/features";
 
 import { BoxHeader } from "components/headers";
@@ -21,14 +21,13 @@ import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const employees = useSelector(selectAllEmployeesData);
+  const employees = useSelector(selectAllEmployeeData);
 
   const businessUnits = useSelector(selectAllBusinessUnitsDataAsSelectOptions);
   const countries = useSelector(selectAllCountriesDataAsSelectOptions);
 
   const onSearchEmployees = async filters => {
-    const queryParams = new URLSearchParams(filters);
-    dispatch(searchEmployees(queryParams));
+    dispatch(searchEmployees(filters));
   };
   const onViewEmployeeDetails = e => {
     e.preventDefault();

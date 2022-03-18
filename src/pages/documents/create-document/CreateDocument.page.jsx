@@ -14,10 +14,19 @@ import { toFileArray } from "pages/utils";
 import { useLocalStateAlerts } from "hooks";
 import { defaultDocumentsTags } from "variables/app.consts";
 
-import { documentDefaultState } from "..";
-
 export const CreateDocumentPage = () => {
   const dispatch = useDispatch();
+  const documentDefaultState = {
+    title: "",
+    description: "",
+    author: "",
+    publishDate: new Date().toLocaleString(),
+    rating: 0,
+    tags: [],
+    imageUrl: "",
+    contentUrl: "",
+    contentFiles: [],
+  };
 
   const [document, setDocument] = useState(documentDefaultState);
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();

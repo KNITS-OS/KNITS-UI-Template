@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 
+import { selectGroupById, updateGroup } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { groupsData } from "data";
 import { useFeatureDisabledWarning, useLocalStateAlerts } from "hooks";
 
 import { MembersPanel } from "..";
@@ -14,28 +16,29 @@ import { MembersPanel } from "..";
 export const GroupDetailsPage = () => {
   const { id } = useParams();
   const groupId = parseInt(id);
+
   const navigate = useNavigate();
-  const [group, setGroup] = useState(groupsData.find(e => e.id === groupId));
+  const dispatch = useDispatch();
+
+  const groupState = useSelector(selectGroupById(groupId));
+  const [group, setGroup] = useState(groupState);
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
-
   const { fireAlert } = useFeatureDisabledWarning();
 
   const onSaveGroup = () => {
-    console.log("update group", groupId, group);
+    dispatch(updateGroup(groupId, group));
+
     setSuccessMessage("Group Updated");
-    setIsSuccess(true);
     setSaveSent(true);
+    setIsSuccess(true);
   };
 
   const onToggleGroupActive = () => {
     fireAlert();
-
-    console.log("toggle group active", groupId, group);
   };
   const onDeleteGroup = () => {
     fireAlert();
-    console.log("delete group", groupId);
   };
 
   return (

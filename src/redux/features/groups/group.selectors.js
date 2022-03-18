@@ -2,24 +2,24 @@ import { createSelector } from "reselect";
 
 import { SELECT_ALL_IDS } from "variables/app.consts";
 
-import { selectAllEmployeesData } from "../employees";
+import { selectAllEmployeeData } from "../employees";
 
 export const selectGroupState = rootState => rootState.group;
 
-export const selectAllGroupsData = createSelector(
+export const selectAllGroupData = createSelector(
   [selectGroupState],
   groupState => groupState.entities
 );
 
 export const selectGroupById = id =>
   createSelector(
-    [selectAllGroupsData], //array of input selectors
+    [selectAllGroupData], //array of input selectors
     groups => groups.find(group => group.id === id) //arg
   );
 
 export const selectGroupsByIds = ids =>
   createSelector(
-    [selectAllGroupsData], //array of input selectors
+    [selectAllGroupData], //array of input selectors
     groups => groups.filter(group => ids.includes(group.id))
   );
 
@@ -31,7 +31,7 @@ export const selectGroupsByIdsAsSelectValues = ids =>
     return [...groupOptions];
   });
 
-export const selectAllGroupsDataAsSelectOptions = createSelector([selectAllGroupsData], groups => {
+export const selectAllGroupsDataAsSelectOptions = createSelector([selectAllGroupData], groups => {
   const groupOptions = groups.map(group => {
     return { value: `${group.id}`, label: group.name };
   });
@@ -41,8 +41,8 @@ export const selectAllGroupsDataAsSelectOptions = createSelector([selectAllGroup
 export const selectGroupMembers = groupId =>
   createSelector(
     [
-      () => selectGroupById(groupId), // select the current group
-      selectAllEmployeesData,
+      selectGroupById(groupId), // select the current group
+      state => selectAllEmployeeData(state),
     ],
     (group, employees) => {
       return Object.keys(employees)

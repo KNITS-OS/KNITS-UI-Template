@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Card, Collapse } from "reactstrap";
+
+import { searchEmployees, selectAllEmployeeData } from "redux/features";
 
 import { AddNewMemberButton } from "components/buttons";
 import { ReactTable } from "components/widgets";
 
 import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
-import employeesData from "data/employees";
 import { useLocalStateAlerts } from "hooks";
 
 export const AddMemberPanel = ({
@@ -17,15 +19,18 @@ export const AddMemberPanel = ({
   currentGroupMembers,
   setCurrentGroupMembers,
 }) => {
+  const dispatch = useDispatch();
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
+  const memberFilterArray = currentGroupMembers.map(member => `id_ne=${member.id}`).join("&");
+  const [filters, setFilters] = useState(memberFilterArray);
+  const employees = useSelector(selectAllEmployeeData);
 
-  const [filters, setFilters] = useState({
-    members: currentGroupMembers.map(member => member.id),
-  });
+  useEffect(() => {
+    dispatch(searchEmployees(filters));
 
-  console.log("add member panel filters: ", filters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters]);
 
-  const [employeesResultSet] = useState(employeesData);
   return (
     <>
       {alert}
@@ -37,7 +42,7 @@ export const AddMemberPanel = ({
           />
 
           <ReactTable
-            data={employeesResultSet}
+            data={employees}
             selectElement={
               <AddNewMemberButton
                 setGroup={setGroup}

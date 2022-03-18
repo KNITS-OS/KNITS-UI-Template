@@ -25,6 +25,6 @@ export const toTurnoverBarChartUI = apiResponse => {
 };
 
 export const renderChart = response => {
-  const barChart = toTurnoverBarChartUI(response);
+  const barChart = toTurnoverBarChartUI(response.data);
   return <Bar data={barChart.data} options={barChart.options} className="chart-canvas" />;
 };

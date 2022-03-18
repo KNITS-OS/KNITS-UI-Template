@@ -14,23 +14,16 @@ import {
 
 const middleware = [thunk];
 
-// const rootReducer = combineReducers({
-//   employee: employeeReducer,
-//   document: documentReducer,
-//   businessUnit: businessUnitReducer,
-//   group: groupReducer,
-//   country: countryReducer,
-//   worldOverview: worldOverviewReducer,
-// });
+const rootReducer = combineReducers({
+  employee: employeeReducer,
+  document: documentReducer,
+  businessUnit: businessUnitReducer,
+  group: groupReducer,
+  country: countryReducer,
+  worldOverview: worldOverviewReducer,
+});
 
 export const store = createStore(
-  combineReducers({
-    employee: employeeReducer,
-    document: documentReducer,
-    businessUnit: businessUnitReducer,
-    group: groupReducer,
-    country: countryReducer,
-    worldOverview: worldOverviewReducer,
-  }),
+  rootReducer,
   composeWithDevTools(applyMiddleware(...middleware, logger))
 );

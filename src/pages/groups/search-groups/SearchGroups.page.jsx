@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
 
+import { deleteGroup, selectAllGroupData } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
-
-import { groupsData } from "data";
 
 import { GROUP_DETAILS } from "..";
 
@@ -14,8 +14,9 @@ import { groupsTableColumns } from ".";
 
 export const SearchGroupsPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [groups] = useState(groupsData);
+  const groups = useSelector(selectAllGroupData);
 
   const onViewGroupDetails = e => {
     const { id } = e.target;
@@ -24,7 +25,7 @@ export const SearchGroupsPage = () => {
 
   const onDeleteGroup = e => {
     const { id } = e.target;
-    console.log("delete group", id);
+    dispatch(deleteGroup(id));
   };
 
   return (

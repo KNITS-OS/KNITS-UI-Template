@@ -26,6 +26,7 @@ const initialState = {
 
 export const employeeReducer = (employeeState = initialState, action = {}) => {
   const { type, payload } = action;
+  const { entities, entity } = employeeState;
 
   let updatedEmployees = [];
   let employeesToKeep = [];
@@ -40,8 +41,8 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
         isLoading: true,
         isSuccess: false,
         error: {},
-        entities: [],
-        entity: null,
+        entities,
+        entity,
       };
 
     case SEARCH_EMPLOYEE_ERROR:
@@ -53,8 +54,8 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
         isLoading: false,
         isSuccess: false,
         error: payload,
-        entities: [],
-        entity: null,
+        entities,
+        entity,
       };
 
     case SEARCH_EMPLOYEE_COMPLETE:
@@ -72,7 +73,7 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
         isSuccess: true,
         error: {},
         entities: payload,
-        entity: null,
+        entity,
       };
 
     case SEARCH_EMPLOYEES_BY_IDS_COMPLETE:
@@ -81,7 +82,7 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
         isSuccess: true,
         error: {},
         entities: payload,
-        entity: null,
+        entity,
       };
 
     case UPDATE_EMPLOYEE_COMPLETE:
@@ -104,14 +105,14 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
       };
 
     case DELETE_EMPLOYEE_COMPLETE:
-      employeesToKeep = employeeState.entities.filter(({ id }) => id !== payload.id);
+      employeesToKeep = employeeState.entities.filter(({ id }) => id !== parseInt(payload.id));
 
       return {
         isLoading: false,
         isSuccess: true,
         error: {},
         entities: employeesToKeep,
-        entity: null,
+        entity,
       };
 
     default:

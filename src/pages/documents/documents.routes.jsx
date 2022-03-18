@@ -1,21 +1,16 @@
-import {
-  DocumentDetailPage,
-  DOCUMENT_DETAILS,
-  CreateDocumentPage,
-  NEW_DOCUMENT,
-  SearchDocumentsPage,
-  SEARCH_DOCUMENT,
-} from ".";
+import { CreateDocumentPage } from "./create-document";
+import { DocumentDetailsPage } from "./document-details";
+import { DOCUMENT_DETAILS, DOCUMENT_SEARCH, NEW_DOCUMENT } from "./documents.routes.const";
+import { SearchDocumentsPage } from "./search-documents";
 
 export const documentsMenu = [
   {
     collapse: true,
     name: "Documents",
-    icon: "ni ni-compass-04  text-primary",
+    icon: "ni ni-compass-04 text-primary",
     state: "documentsCollapse",
     key: "DocumentsMenu",
     path: "DocumentsMenu",
-
     views: [
       {
         path: NEW_DOCUMENT,
@@ -26,12 +21,12 @@ export const documentsMenu = [
         key: "Document/Create New",
       },
       {
-        path: SEARCH_DOCUMENT,
+        path: DOCUMENT_SEARCH,
         name: "Search",
         miniName: "S",
         component: <SearchDocumentsPage />,
         layout: "/admin",
-        key: "Document/Search",
+        key: `Document/${DOCUMENT_SEARCH}`,
       },
     ],
   },
@@ -39,7 +34,7 @@ export const documentsMenu = [
     collapse: false,
     global: true,
     path: `${DOCUMENT_DETAILS}/:id`,
-    component: <DocumentDetailPage />,
+    component: <DocumentDetailsPage />,
     layout: "/admin",
     key: `Document/${DOCUMENT_DETAILS}/:id`,
   },

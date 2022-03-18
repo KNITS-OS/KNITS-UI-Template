@@ -1,7 +1,4 @@
 import {
-  LIST_GROUPS_LOADING,
-  LIST_GROUPS_ERROR,
-  LIST_GROUPS_COMPLETE,
   ADD_EMPLOYEE_TO_GROUP_COMPLETE,
   ADD_EMPLOYEE_TO_GROUP_ERROR,
   ADD_EMPLOYEE_TO_GROUP_LOADING,
@@ -29,27 +26,6 @@ import {
 } from "redux/app";
 
 import { groupService } from ".";
-
-export const findAllGroups = () => async dispatch => {
-  try {
-    dispatch({
-      type: LIST_GROUPS_LOADING,
-      payload: LIST_GROUPS_LOADING,
-    });
-
-    const { data } = await groupService.findAll();
-
-    dispatch({
-      type: LIST_GROUPS_COMPLETE,
-      payload: data,
-    });
-  } catch (err) {
-    dispatch({
-      type: LIST_GROUPS_ERROR,
-      payload: err.message,
-    });
-  }
-};
 
 export const createGroup = body => async dispatch => {
   try {
@@ -97,7 +73,7 @@ export const searchGroups = () => async dispatch => {
       payload: SEARCH_GROUPS_LOADING,
     });
 
-    const { data } = await groupService.getAllGroups();
+    const { data } = await groupService.findAll();
 
     dispatch({
       type: SEARCH_GROUPS_COMPLETE,
@@ -117,13 +93,11 @@ export const updateGroup = (id, body) => async dispatch => {
       type: UPDATE_GROUP_LOADING,
       payload: UPDATE_GROUP_LOADING,
     });
-
     const { data } = await groupService.updateGroup(id, body);
 
     dispatch({
       type: UPDATE_GROUP_COMPLETE,
-      payload: id,
-      data,
+      payload: data,
     });
   } catch (err) {
     dispatch({ type: UPDATE_GROUP_ERROR, payload: err.message });

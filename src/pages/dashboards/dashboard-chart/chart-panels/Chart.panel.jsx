@@ -1,6 +1,6 @@
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Spinner } from "reactstrap";
 
-export const ChartPanel = ({ chart, title, subTitle }) => {
+export const ChartPanel = ({ isLoading, chart, alert, title, subTitle }) => {
   return (
     <Card>
       <CardHeader>
@@ -8,7 +8,17 @@ export const ChartPanel = ({ chart, title, subTitle }) => {
         <h5 className="h3 mb-0">{subTitle}</h5>
       </CardHeader>
       <CardBody>
-        <div className="chart">{chart}</div>
+        <div className="chart">
+          {isLoading ? (
+            <>
+              <Spinner />
+            </>
+          ) : chart ? (
+            chart
+          ) : (
+            alert
+          )}
+        </div>
       </CardBody>
     </Card>
   );
