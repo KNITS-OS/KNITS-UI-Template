@@ -15,7 +15,6 @@
 
 */
 
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -23,9 +22,8 @@ import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from
 
 import {
   selectAllGroupsDataAsSelectOptions,
-  searchEmployee,
+  selectEmployeeById,
   updateEmployee,
-  selectEmployeesState,
 } from "redux/features";
 
 import { BoxHeader } from "components/headers";
@@ -42,19 +40,11 @@ export const EmployeeDetailsPage = () => {
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const employeeState = useSelector(selectEmployeesState);
-  const [employee] = useState(employeeState.entity);
+  const employee = useSelector(selectEmployeeById(employeeId));
 
   const groupOptions = useSelector(selectAllGroupsDataAsSelectOptions);
 
-  useEffect(() => {
-    dispatch(searchEmployee(id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  console.log("employee 1234", employee);
-
-  if (employeeState.isLoading || !employee) {
+  if (!employee) {
     return (
       <div className="text-center">
         <Spinner />

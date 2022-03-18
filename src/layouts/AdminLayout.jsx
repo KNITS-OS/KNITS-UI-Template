@@ -48,6 +48,7 @@ export const AdminLayout = () => {
   useScrollToTop(mainContentRef);
 
   const [isDataLoadingCompleted, setIsDataLoadingCompleted] = useState(false);
+
   const [isCountryDataLoaded, setIsCountryDataLoaded] = useState(false);
   const [isBusinessUnitsDataLoaded, setIsBusinessUnitsDataLoaded] = useState(false);
   const [isGroupsDataLoaded, setIsGroupsDataLoaded] = useState(false);
@@ -57,32 +58,32 @@ export const AdminLayout = () => {
   const groups = useSelector(selectAllGroupsData);
 
   useEffect(() => {
-    if (!countries || countries.length == 0) {
-      dispatch(findAllCountries());
-    } else {
+    dispatch(findAllCountries());
+    dispatch(findAllBusinessUnits());
+    dispatch(findAllGroups());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (countries || countries.length > 0) {
       setIsCountryDataLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countries, isCountryDataLoaded]);
+  }, [countries]);
 
   useEffect(() => {
-    if (!businessUnits || businessUnits.length == 0) {
-      dispatch(findAllBusinessUnits());
-    } else {
+    if (businessUnits || businessUnits.length > 0) {
       setIsBusinessUnitsDataLoaded(true);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [businessUnits, isBusinessUnitsDataLoaded]);
+  }, [businessUnits]);
 
   useEffect(() => {
-    if (!groups || groups.length == 0) {
-      dispatch(findAllGroups());
-    } else {
+    if (groups || groups.length > 0) {
       setIsGroupsDataLoaded(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [groups, isGroupsDataLoaded]);
+  }, [groups]);
 
   useEffect(() => {
     if (isCountryDataLoaded && isBusinessUnitsDataLoaded && isGroupsDataLoaded) {
