@@ -1,2 +1,2 @@
-export * from "./WorldOverviewPage.js";
+export * from "./WorldOverviewPage";
 export * from "./mock-report-api";
