@@ -36,7 +36,9 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
   const [businessUnitSelected, setBusinessUnitSelected] = useState();
   const [groupSelected, setGroupSelected] = useState();
   const [roleSelected, setRoleSelected] = useState();
-  const [countrySelected, setCountrySelected] = useState(selectLoggedUserDefaultCountryAsSelection);
+  const [countrySelected, setCountrySelected] = useState(
+    selectLoggedUserDefaultCountryAsSelection(user.countryCode3)
+  );
   const [groupMembers, setGroupMembers] = useState(
     currentGroupMembers?.map(member => member.id) || []
   );
