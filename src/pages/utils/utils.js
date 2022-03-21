@@ -92,12 +92,12 @@ export const selectLoggedUserDefaultCountryAsSelection = userCountry => {
 };
 
 export const selectCountryByIsoCodeAsSelectOption = code => {
-  const countryFound = countriesData.find(country => country.code3 === code);
+  const country = countriesData.find(country => country.code3 === code);
 
-  return {
-    value: countryFound.code3,
-    label: countryFound.name,
-  };
+  if (country) {
+    return [{ value: `${country.code3}`, label: country.name }];
+  }
+  return [];
 };
 
 export const selectAllEmployeeDataAsSelectOptions = () => {
@@ -108,12 +108,12 @@ export const selectAllEmployeeDataAsSelectOptions = () => {
 };
 
 export const selectRoleByIdAsSelectOption = id => {
-  const roleFound = careRolesData.find(role => role.id === id);
+  const role = careRolesData.find(role => role.id === id);
 
-  return {
-    value: `${roleFound.id}`,
-    label: roleFound.name,
-  };
+  if (role) {
+    return [{ value: `${role.id}`, label: role.name }];
+  }
+  return [];
 };
 
 export const selectAllRolesDataAsSelectOptions = () => {
