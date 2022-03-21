@@ -1,9 +1,9 @@
 import { Alert } from "reactstrap";
 
-export const renderAlert = response => {
+export const renderChartErrorAlert = () => {
   return (
     <Alert className="danger">
-      <strong>Error</strong> {response.message}
+      <strong>Error</strong>
     </Alert>
   );
 };

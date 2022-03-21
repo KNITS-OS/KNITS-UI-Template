@@ -1,4 +1,5 @@
 export * from "./Charts.page";
+export * from "./Chart.renderers";
 export * from "./chart-panels";
 export * from "./turnover-chart-panel";
 export * from "./workforce-chart-panel";

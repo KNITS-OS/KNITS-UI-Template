@@ -64,12 +64,12 @@ export const selectLoggedUserDefaultCountryAsSelection = userCountry => {
 };
 
 export const selectCountryByIsoCodeAsSelectOption = code => {
-  const countryFound = countriesData.find(country => country.code3 === code);
+  const country = countriesData.find(country => country.code3 === code);
 
-  return {
-    value: countryFound.code3,
-    label: countryFound.name,
-  };
+  if (country) {
+    return [{ value: `${country.code3}`, label: country.name }];
+  }
+  return [];
 };
 
 export const selectAllEmployeeDataAsSelectOptions = () => {

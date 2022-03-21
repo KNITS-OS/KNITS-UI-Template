@@ -9,7 +9,6 @@ import {
   selectAllBusinessUnitsDataAsSelectOptions,
   selectAllCountriesDataAsSelectOptions,
   selectAllGroupsDataAsSelectOptions,
-  selectLoggedUserDefaultCountryAsSelection,
 } from "pages/utils";
 
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
@@ -27,7 +26,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
 
   const [businessUnitSelected, setBusinessUnitSelected] = useState();
   const [groupSelected, setGroupSelected] = useState();
-  const [countrySelected, setCountrySelected] = useState(selectLoggedUserDefaultCountryAsSelection);
+  const [countrySelected, setCountrySelected] = useState();
   const [groupMembers, setGroupMembers] = useState(
     currentGroupMembers?.map(member => member.id) || []
   );
