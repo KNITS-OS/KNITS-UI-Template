@@ -2,9 +2,8 @@ export interface EmployeeSaveRequest {
   id: number;
   onboardingDate: string;
   offboardingDate: string;
-  employeeId: number;
   roleId?: number;
-  groupIds?: number[];
+  groups?: number[];
 }
 
 export interface GroupSaveRequest {

@@ -1,5 +1,5 @@
 import { businessUnitsData, countriesData, employeesData, careRolesData, groupsData } from "data";
-import { Role, Permission } from "types";
+import { Role, Permission, SelectOption } from "types";
 import { SELECT_ALL } from "variables/app.consts";
 import { AuthorizationPolicies } from "variables/rbac.config";
 
@@ -70,61 +70,61 @@ export const toBoolean = (value: string | number | boolean | null | undefined): 
   return [true, "true", "True", "TRUE", "1", 1].includes(value);
 };
 
-export const selectAllBusinessUnitsDataAsSelectOptions = () => {
+export const selectAllBusinessUnitsDataAsSelectOptions = (): SelectOption[] => {
   const businessUnitOptions = businessUnitsData.map(businessUnit => {
     return { value: `${businessUnit.id}`, label: businessUnit.name };
   });
   return [SELECT_ALL, ...businessUnitOptions];
 };
 
-export const selectAllCountriesDataAsSelectOptions = () => {
+export const selectAllCountriesDataAsSelectOptions = (): SelectOption[] => {
   const countryOptions = countriesData.map(country => {
     return { value: `${country.code3}`, label: country.name };
   });
   return [SELECT_ALL, ...countryOptions];
 };
 
-export const selectLoggedUserDefaultCountryAsSelection = (userCountry: string) => {
+export const selectLoggedUserDefaultCountryAsSelection = (userCountry: string): SelectOption => {
   const countriesAsSelections = selectAllCountriesDataAsSelectOptions();
   const countrySelectOption = countriesAsSelections.find(
     countryOption => countryOption.value === userCountry
   );
-  return countrySelectOption;
+  return countrySelectOption as SelectOption;
 };
 
-export const selectCountryByIsoCodeAsSelectOption = (code: string) => {
-  const countryFound = countriesData.find(country => country.code3 === code);
+export const selectCountryByIsoCodeAsSelectOption = (code: string): SelectOption[] => {
+  const country = countriesData.find(country => country.code3 === code);
 
-  return {
-    value: countryFound?.code3,
-    label: countryFound?.name,
-  };
+  if (country) {
+    return [{ value: `${country.code3}`, label: country.name }];
+  }
+  return [];
 };
 
-export const selectAllEmployeeDataAsSelectOptions = () => {
+export const selectAllEmployeeDataAsSelectOptions = (): SelectOption[] => {
   const employeesOptions = employeesData.map(employee => {
     return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
   });
   return [SELECT_ALL, ...employeesOptions];
 };
 
-export const selectRoleByIdAsSelectOption = (id: number) => {
-  const roleFound = careRolesData.find(role => role.id === id);
+export const selectRoleByIdAsSelectOption = (id: number): SelectOption[] => {
+  const role = careRolesData.find(role => role.id === id);
 
-  return {
-    value: `${roleFound?.id}`,
-    label: roleFound?.name,
-  };
+  if (role) {
+    return [{ value: `${role.id}`, label: role.name }];
+  }
+  return [];
 };
 
-export const selectAllRolesDataAsSelectOptions = () => {
+export const selectAllRolesDataAsSelectOptions = (): SelectOption[] => {
   const rolesOptions = careRolesData.map(role => {
     return { value: `${role.id}`, label: role.name };
   });
   return [SELECT_ALL, ...rolesOptions];
 };
 
-export const selectGroupsByIdsAsSelectValues = (ids: number[]) => {
+export const selectGroupsByIdsAsSelectValues = (ids: number[]): SelectOption[] => {
   const groups = groupsData.filter(group => ids.includes(group.id));
   const groupsOptions = groups.map(group => {
     return { value: `${group.id}`, label: group.name };
@@ -132,7 +132,7 @@ export const selectGroupsByIdsAsSelectValues = (ids: number[]) => {
   return [...groupsOptions];
 };
 
-export const selectAllGroupsDataAsSelectOptions = () => {
+export const selectAllGroupsDataAsSelectOptions = (): SelectOption[] => {
   const groupsOptions = groupsData.map(group => {
     return { value: `${group.id}`, label: group.name };
   });

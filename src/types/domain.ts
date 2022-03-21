@@ -31,8 +31,8 @@ export interface Employee extends Domain {
   };
   onboardingDate: string | null;
   offboardingDate: string | null;
-  groups?: number[];
-  roleId?: number;
+  groups: number[];
+  roleId: number;
 }
 
 export interface CareRole extends Domain {

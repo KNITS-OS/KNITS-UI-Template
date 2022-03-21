@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { useState } from "react";
 
 import { Button, Col, Form, Row } from "reactstrap";
@@ -7,28 +7,40 @@ import { InputField, DateField, SelectField } from "components/widgets";
 
 import { selectRoleByIdAsSelectOption, selectGroupsByIdsAsSelectValues } from "pages/utils";
 
+import { Employee, EmployeeSaveRequest, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) => {
-  const [onboardingDate, setOnboardingDate] = useState(
+interface onSaveFunction {
+  (employeeRequest: EmployeeSaveRequest): void;
+}
+
+interface Props {
+  employee: Employee;
+  groupOptions: SelectOption[];
+  roleOptions: SelectOption[];
+  onSave: onSaveFunction;
+}
+
+export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }: Props) => {
+  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>(
     moment(employee?.onboardingDate, DATE_FILTER_FORMAT)
   );
 
-  const [offboardingDate, setOffboardingDate] = useState(
+  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>(
     moment(employee?.offboardingDate, DATE_FILTER_FORMAT)
   );
 
   const employeeRole = selectRoleByIdAsSelectOption(employee.roleId);
   const employeeGroups = selectGroupsByIdsAsSelectValues(employee.groups || []);
 
-  const [roleId, setRoleId] = useState(employee.roleId);
-  const [groups, setGroups] = useState(employee.groups || []);
+  const [roleId, setRoleId] = useState<number | undefined>(employee.roleId);
+  const [groups, setGroups] = useState<number[]>(employee.groups || []);
 
   // state to know which group fields has the user selected
-  const [currentGroupSelections, setCurrentGroupSelections] = useState([]);
+  const [currentGroupSelections, setCurrentGroupSelections] = useState<SelectOption[]>([]);
 
   const onSaveEmployee = () => {
-    const employeeSaveRequest = {
+    const employeeSaveRequest: EmployeeSaveRequest = {
       id: employee.id,
       onboardingDate: moment(onboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
@@ -68,7 +80,7 @@ export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) =
               options={roleOptions}
               defaultValue={employeeRole}
               onChange={item => {
-                const { value } = item;
+                const { value } = item as SelectOption;
                 setRoleId(parseInt(value));
               }}
             />
@@ -81,7 +93,7 @@ export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) =
               defaultValue={employeeGroups}
               isMulti={true}
               isOptionDisabled={option => {
-                const { label } = option;
+                const { label } = option as SelectOption;
                 // if user has selected ALL field then other fields will be disabled
                 if (currentGroupSelections.some(selection => selection.label === "ALL")) {
                   return true;
@@ -95,7 +107,7 @@ export const EmployeePanel = ({ employee, groupOptions, roleOptions, onSave }) =
                 // return true to disable field
               }}
               onChange={items => {
-                const selections = items;
+                const selections = items as SelectOption[];
                 setCurrentGroupSelections(selections);
                 // if there is an "ALL" selection in the list (data will be 1,2,3,12,etc)
                 // split and return an array of numbers

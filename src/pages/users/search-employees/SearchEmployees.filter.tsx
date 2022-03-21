@@ -1,3 +1,4 @@
+import { Moment } from "moment";
 import { useState } from "react";
 
 import { Col, Row } from "reactstrap";
@@ -9,22 +10,36 @@ import { DateField, InputField, SelectField } from "components/widgets";
 import { selectLoggedUserDefaultCountryAsSelection } from "pages/utils";
 
 import { useAuth } from "context";
-import { Permission, Role } from "types";
+import { EmployeeQueryFilters, Permission, Role, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchEmployees }) => {
+interface onSearchEmployeesFunction {
+  (employeeSearchRequest: EmployeeQueryFilters): void;
+}
+
+interface Props {
+  countries: SelectOption[];
+  businessUnits: SelectOption[];
+  onSearchEmployees: onSearchEmployeesFunction;
+}
+
+export const SearchEmployeesFilterPanel = ({
+  businessUnits,
+  countries,
+  onSearchEmployees,
+}: Props) => {
   const { user } = useAuth();
   const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
 
-  const [businessUnitSelected, setBusinessUnitSelected] = useState();
-  const [countrySelected, setCountrySelected] = useState(
+  const [businessUnitSelected, setBusinessUnitSelected] = useState<SelectOption | null>();
+  const [countrySelected, setCountrySelected] = useState<SelectOption | null>(
     selectLoggedUserDefaultCountryAsSelection(user.countryCode3)
   );
 
-  const [searchHiringDate, setSearchHiringDate] = useState();
+  const [searchHiringDate, setSearchHiringDate] = useState<Moment | undefined>();
 
-  const onChangeSearchLastName = e => {
+  const onChangeSearchLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchLastName = e.target.value;
     setSearchLastName(searchLastName);
   };
@@ -82,7 +97,7 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
             value={businessUnitSelected}
             options={businessUnits}
             onChange={item => {
-              setBusinessUnitSelected(item);
+              setBusinessUnitSelected(item as SelectOption);
             }}
           />
         </Col>
@@ -94,7 +109,7 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
               value={countrySelected}
               options={countries}
               onChange={item => {
-                setCountrySelected(item);
+                setCountrySelected(item as SelectOption);
               }}
             />
           </Col>

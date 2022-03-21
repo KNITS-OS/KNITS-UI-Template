@@ -27,25 +27,22 @@ import { selectAllGroupsDataAsSelectOptions, selectAllRolesDataAsSelectOptions }
 
 import { employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
+import { Employee, EmployeeSaveRequest } from "types";
 
 export const EmployeeDetailsPage = () => {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const employeeId = parseInt(id);
   const navigate = useNavigate();
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [employee] = useState(employeesData.find(e => e.id === employeeId));
+  const [employee] = useState(employeesData.find(e => e.id === employeeId) as Employee);
 
   const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
   const [roleOptions] = useState(selectAllRolesDataAsSelectOptions());
 
-  const onSaveEmployee = employeeRequest => {
-    const httpUpdateRequest = {
-      id: employeeRequest.id,
-      body: employeeRequest,
-    };
-    console.log("httpUpdateRequest", httpUpdateRequest);
+  const onSaveEmployee = (employeeRequest: EmployeeSaveRequest) => {
+    console.log("httpUpdateRequest", employeeRequest);
     setSuccessMessage("Employee Updated");
     setIsSuccess(true);
     setSaveSent(true);

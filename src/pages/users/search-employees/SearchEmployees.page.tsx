@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
@@ -9,6 +9,7 @@ import { ReactTable } from "components/widgets";
 import { EMPLOYEE_DETAILS } from "pages/users";
 
 import { employeesData } from "data";
+import { EmployeeQueryFilters } from "types";
 
 import {
   selectAllBusinessUnitsDataAsSelectOptions,
@@ -24,16 +25,16 @@ export const SearchEmployeesPage = () => {
 
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
-  const onSearchEmployees = filters => {
+  const onSearchEmployees = (filters: EmployeeQueryFilters) => {
     console.log("filters", filters);
   };
-  const onViewEmployeeDetails = e => {
+  const onViewEmployeeDetails = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
     navigate(`/admin${EMPLOYEE_DETAILS}/${id}`);
   };
 
-  const onDeleteEmployee = e => {
+  const onDeleteEmployee = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
     console.log("delete employee", id);
