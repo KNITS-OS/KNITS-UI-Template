@@ -110,8 +110,6 @@ export const WorldOverviewPage = () => {
                     ],
                   }}
                   onRegionTipShow={function name(e: any, label: any, code: string) {
-                    console.log("code 1234", activeMembersMap[code]);
-
                     if (activeMap !== null) {
                       activeMembersMap[code] != undefined
                         ? setActiveMembers(activeMembersMap[code])
