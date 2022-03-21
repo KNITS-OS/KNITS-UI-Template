@@ -1,4 +1,4 @@
-export interface CareMemberSaveRequest {
+export interface EmployeeSaveRequest {
   id: number;
   onboardingDate: string;
   offboardingDate: string;
@@ -53,7 +53,7 @@ export interface DocumentsQueryFilters {
   publishDate?: string;
 }
 
-export interface CareMemberQueryFilters {
+export interface AdvancedEmployeeQueryFilters {
   businessUnitId?: number;
   countryIso3?: string;
   roleId?: number;

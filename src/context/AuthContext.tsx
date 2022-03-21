@@ -1,6 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
-import { Role } from "types";
+import { Principal, Role } from "types";
+
+type InitialContextType = {
+  user: Principal;
+  setUser: Dispatch<SetStateAction<Principal>>;
+};
+
+type ProviderProps = {
+  children: React.ReactNode;
+};
 
 export const regionalManagerUser = {
   fullName: "Gabriela Rios",
@@ -22,15 +31,17 @@ export const anonymousUser = {
   countryCode3: "",
 };
 
-const initAuthContext = {
+const initAuthContext: InitialContextType = {
   user: anonymousUser,
+  setUser: () => {},
 };
 
 const AuthContext = createContext(initAuthContext);
 
 export const useAuth = () => useContext(AuthContext);
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+
+export const AuthProvider = ({ children }: ProviderProps) => {
+  const [user, setUser] = useState<Principal>(anonymousUser);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

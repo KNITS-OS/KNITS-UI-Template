@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 
 import { ErrorAlert, SuccessAlert } from "components/alerts";
 
+import { AlertType } from "types";
+
 export const useLocalStateAlerts = () => {
-  const [alert, setAlert] = useState();
+  const [alert, setAlert] = useState<AlertType>();
   const [isSuccess, setIsSuccess] = useState(false);
   const [saveSent, setSaveSent] = useState(false);
   const [successMessage, setSuccessMessage] = useState("Success");

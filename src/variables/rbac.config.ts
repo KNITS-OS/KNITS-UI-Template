@@ -7,7 +7,6 @@ export const AnonymousPermissions: Permission[] = [];
 export const SponsorPermissions: Permission[] = [
   ...AnonymousPermissions,
   Permission.Employee_read,
-  Permission.CareMember_read,
   Permission.Document_read,
 ];
 export const TrainerPermissions: Permission[] = [...SponsorPermissions];
@@ -21,7 +20,7 @@ export const AdvocatePermissions: Permission[] = [
 
 export const CountryManagerPermissions: Permission[] = [
   ...AdvocatePermissions,
-  Permission.CareMember_write,
+  Permission.Employee_write,
   Permission.Email_write,
   Permission.Dashboard_worldview_read,
   Permission.Dashboard_statistics_read,
@@ -29,7 +28,7 @@ export const CountryManagerPermissions: Permission[] = [
 
 export const RegionalManagerPermissions: Permission[] = [
   ...CountryManagerPermissions,
-  Permission.CareMember_country_all,
+  Permission.Employee_country_all,
   Permission.Dashboard_statistics_country_all,
   Permission.Email_country_all,
   Permission.Employee_country_all,

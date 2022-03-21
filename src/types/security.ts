@@ -8,11 +8,9 @@ export enum Role {
 }
 
 export enum Permission {
-  Employee_read,
   Employee_country_all,
-  CareMember_read,
-  CareMember_write,
-  CareMember_country_all,
+  Employee_read,
+  Employee_write,
   Document_read,
   Document_write,
   Group_read,

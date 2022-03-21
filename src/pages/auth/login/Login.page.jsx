@@ -15,7 +15,6 @@ import {
   Container,
   Row,
   Col,
-  Alert,
   InputGroupAddon,
 } from "reactstrap";
 
@@ -53,9 +52,9 @@ export const LoginPage = () => {
       <AuthHeader title="Welcome to Kn Care" lead="Please login" />
 
       <Container className="mt--8 pb-5">
-        {user !== null && user.authRole === Role.Anonymous && (
+        {/* {user !== null && user.authRole === Role.Anonymous && (
           <Alert color="warning">Login Failed! Email or Password was wrong.</Alert>
-        )}
+        )} */}
         <Row className="justify-content-center">
           <Col lg="5" md="7">
             <Card className="bg-secondary border-0 mb-0">

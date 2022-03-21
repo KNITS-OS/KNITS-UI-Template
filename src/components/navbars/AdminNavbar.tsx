@@ -31,13 +31,18 @@ import {
 
 import placeholderPortrait from "assets/img/icons/common/Portrait_Placeholder.png";
 
-import { useAuth } from "context";
+import { anonymousUser, useAuth } from "context";
+import { Theme } from "types";
 
-export const AdminNavbar = ({ theme }) => {
+interface Props {
+  theme: Theme;
+}
+
+export const AdminNavbar = ({ theme }: Props) => {
   const { user, setUser } = useAuth();
 
   const logOut = () => {
-    setUser(null);
+    setUser(anonymousUser);
   };
 
   return (

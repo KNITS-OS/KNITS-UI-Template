@@ -1,6 +1,13 @@
 import { Button, Card, CardBody, CardHeader, Col, FormGroup, Row } from "reactstrap";
 
-export const FilterPanel = ({ title, children, findByAllParameters, resetFilters }) => {
+interface Props {
+  title: string;
+  findByAllParameters: () => void;
+  resetFilters: () => void;
+  children?: React.ReactNode;
+}
+
+export const FilterPanel = ({ title, children, findByAllParameters, resetFilters }: Props) => {
   return (
     <Card>
       <CardHeader>

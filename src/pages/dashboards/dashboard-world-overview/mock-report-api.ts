@@ -1,6 +1,11 @@
-const { countriesData } = require("data");
+import { countriesData } from "data";
+import { Country } from "types";
 
-const randomMembersFromBase = (base, deltaGen) => {
+declare type Values = {
+  [key: string]: string | number;
+};
+
+const randomMembersFromBase = (base: number, deltaGen: number) => {
   const delta = Math.round(deltaGen * Math.random());
   return base + delta;
 };
@@ -21,8 +26,12 @@ export const getAutoOffboardedMembersMapData = () => {
   return getRandomMapData(countriesData, 10, 10);
 };
 
-const getRandomMapData = (countryListAllIsoData, base, deltaGen) => {
-  const generatedData = {};
+const getRandomMapData = (
+  countryListAllIsoData: Country[],
+  base: number,
+  deltaGen: number
+): Values => {
+  const generatedData: Values = {};
   countryListAllIsoData.map(country => {
     generatedData[country.code] = randomMembersFromBase(base, deltaGen);
   });
