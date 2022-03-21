@@ -110,7 +110,11 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
       </Row>
       <Row>
         <Col md="9">&nbsp;</Col>
-        <Col md="3" style={{ zIndex: 0 }} class="d-flex justify-content-center align-items-center">
+        <Col
+          md="3"
+          style={{ zIndex: 0 }}
+          className="d-flex justify-content-center align-items-center"
+        >
           <div className="custom-control custom-control-alternative custom-checkbox">
             <input
               className="custom-control-input"
