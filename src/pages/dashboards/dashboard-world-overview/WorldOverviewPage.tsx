@@ -26,7 +26,8 @@ import {
   getAutoOffboardedMembersMapData,
   getNewMembersMapData,
   getSelfResignedMembersMapData,
-} from "./mock-report-api";
+  MapValues,
+} from ".";
 
 export const WorldOverviewPage = () => {
   const [activeMembersMap] = useState(getActiveMembersMapData());
@@ -34,12 +35,12 @@ export const WorldOverviewPage = () => {
   const [selfResignedMembersMap] = useState(getSelfResignedMembersMapData());
   const [autoOffboardedMembersMap] = useState(getAutoOffboardedMembersMapData());
 
-  const [activeMembers, setActiveMembers] = useState(0);
-  const [newMembers, setNewMembers] = useState(0);
-  const [selfResignedMembers, setSelfResignedMembers] = useState(0);
-  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState(0);
+  const [activeMembers, setActiveMembers] = useState<number>(0);
+  const [newMembers, setNewMembers] = useState<number>(0);
+  const [selfResignedMembers, setSelfResignedMembers] = useState<number>(0);
+  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState<number>(0);
 
-  const [activeMap, setActiveMap] = useState(null);
+  const [activeMap, setActiveMap] = useState<MapValues | null>(null);
 
   const onActiveMembersClick = () => {
     setActiveMap(activeMembersMap);
@@ -108,7 +109,9 @@ export const WorldOverviewPage = () => {
                       },
                     ],
                   }}
-                  onRegionTipShow={function name(e, label, code) {
+                  onRegionTipShow={function name(e: any, label: any, code: string) {
+                    console.log("code 1234", activeMembersMap[code]);
+
                     if (activeMap !== null) {
                       activeMembersMap[code] != undefined
                         ? setActiveMembers(activeMembersMap[code])

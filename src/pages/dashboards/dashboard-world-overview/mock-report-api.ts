@@ -1,8 +1,8 @@
 import { countriesData } from "data";
 import { Country } from "types";
 
-declare type Values = {
-  [key: string]: string | number;
+export type MapValues = {
+  [key: string]: number;
 };
 
 const randomMembersFromBase = (base: number, deltaGen: number) => {
@@ -30,8 +30,8 @@ const getRandomMapData = (
   countryListAllIsoData: Country[],
   base: number,
   deltaGen: number
-): Values => {
-  const generatedData: Values = {};
+): MapValues => {
+  const generatedData: MapValues = {};
   countryListAllIsoData.map(country => {
     generatedData[country.code] = randomMembersFromBase(base, deltaGen);
   });
