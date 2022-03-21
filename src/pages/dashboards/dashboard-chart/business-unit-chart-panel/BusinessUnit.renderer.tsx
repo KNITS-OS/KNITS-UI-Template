@@ -1,9 +1,9 @@
 import { Pie } from "react-chartjs-2";
 
+import { Chart, IPieChart } from "types";
 import { ThemeColors } from "variables/app.consts";
 
 import { pieDataTemplate, pieOptionsTemplate } from "..";
-import { Chart, IPieChart } from "types";
 
 const toPieChartUI = (response: Chart[]): IPieChart => {
   const template = pieDataTemplate({

@@ -1,7 +1,8 @@
 import { Line } from "react-chartjs-2";
 
-import { lineDataTemplate, lineOptionsTemplate } from "..";
 import { Chart, ILineChart } from "types";
+
+import { lineDataTemplate, lineOptionsTemplate } from "..";
 
 const toWorkforceLineChartUI = (response: Chart[]): ILineChart => {
   const template = lineDataTemplate({ label: "Members" });

@@ -1,9 +1,9 @@
 import { Bar } from "react-chartjs-2";
 
+import { TurnoverChart, IBarChart } from "types";
 import { ThemeColors } from "variables/app.consts";
 
 import { barDataTemplate, barOptionsTemplate } from "..";
-import { TurnoverChart, IBarChart } from "types";
 
 export const toTurnoverBarChartUI = (response: TurnoverChart[]): IBarChart => {
   const template = barDataTemplate({
