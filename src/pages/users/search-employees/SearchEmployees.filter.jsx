@@ -9,7 +9,8 @@ import { DateField, InputField, SelectField } from "components/widgets";
 import { selectLoggedUserDefaultCountryAsSelection } from "pages/utils";
 
 import { useAuth } from "context";
-import { DATE_FILTER_FORMAT, Permission, Role } from "variables/app.consts";
+import { Permission, Role } from "types";
+import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchEmployees }) => {
   const { user } = useAuth();

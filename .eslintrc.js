@@ -21,17 +21,10 @@ module.exports = {
     react: { version: "detect" },
     "import/resolver": {
       node: {
-        extensions: [".js", ".jsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
         moduleDirectory: ["node_modules", "src/"],
       },
-      // "babel-plugin-root-import": {
-      //   rootPathPrefix: "",
-      //   rootPathSuffix: "src",
-      // },
     },
-    // "import/resolver": {
-    //   "babel-module": { allowExistingDirectories: true },
-    // },
   },
   extends: [
     "eslint:recommended",
@@ -47,7 +40,7 @@ module.exports = {
   ],
   rules: {
     "react/react-in-jsx-scope": "off",
-    "import/export": "off",
+    // "import/export": "off",
 
     "import/prefer-default-export": "off",
 

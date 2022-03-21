@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { Role } from "../variables/app.consts";
+import { Role } from "types";
 
 export const regionalManagerUser = {
   fullName: "Gabriela Rios",

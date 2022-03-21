@@ -24,7 +24,7 @@ import { AuthHeader } from "components/headers";
 import { HOME } from "pages/home";
 
 import { useAuth, regionalManagerUser } from "context";
-import { Role } from "variables/app.consts";
+import { Role } from "types";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
