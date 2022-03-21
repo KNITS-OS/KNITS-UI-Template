@@ -2,9 +2,19 @@ import { Button, Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 
 import { InputField } from "components/widgets";
 
+import { Group } from "types";
+
 import { MembersPanel } from ".";
 
-export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }) => {
+interface Props {
+  group: Group;
+  setGroup: React.Dispatch<React.SetStateAction<Group>>;
+  onSave: (group: Group) => void;
+  isLoading?: boolean;
+  onBackToSearchClick?: () => void;
+}
+
+export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }: Props) => {
   const { name, description } = group;
 
   return (

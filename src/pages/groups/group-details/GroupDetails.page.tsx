@@ -8,14 +8,15 @@ import { InputField } from "components/widgets";
 
 import { groupsData } from "data";
 import { useFeatureDisabledWarning, useLocalStateAlerts } from "hooks";
+import { Group } from "types";
 
 import { MembersPanel } from "..";
 
 export const GroupDetailsPage = () => {
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const groupId = parseInt(id);
   const navigate = useNavigate();
-  const [group, setGroup] = useState(groupsData.find(e => e.id === groupId));
+  const [group, setGroup] = useState(groupsData.find(e => e.id === groupId) as Group);
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
@@ -80,9 +81,9 @@ export const GroupDetailsPage = () => {
                         <InputField
                           id="input-group-name"
                           label="Group Name"
-                          value={group.name}
+                          value={group?.name}
                           type="text"
-                          onChange={e =>
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setGroup({
                               ...group,
                               name: e.target.value,
@@ -97,9 +98,9 @@ export const GroupDetailsPage = () => {
                         <InputField
                           id="input-group-description"
                           label="Group Description"
-                          value={group.description}
+                          value={group?.description}
                           type="text"
-                          onChange={e =>
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setGroup({
                               ...group,
                               description: e.target.value,

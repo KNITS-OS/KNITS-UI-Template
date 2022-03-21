@@ -4,6 +4,7 @@ import { Container } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 
+import { Group } from "types";
 import { CREATE_ENTITY_ID } from "variables/app.consts";
 
 import { EditGroupPanel } from "..";
@@ -17,7 +18,7 @@ export const CreateGroupPage = () => {
     active: true,
   };
 
-  const [group, setGroup] = useState(initialState);
+  const [group, setGroup] = useState<Group>(initialState);
 
   const onCreateGroup = () => {
     console.log("create group", group);

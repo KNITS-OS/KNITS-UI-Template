@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Collapse } from "reactstrap";
@@ -6,21 +7,30 @@ import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS, employeesTableColumns } from "pages/users";
 
+import { Employee, Group } from "types";
+
+interface Props {
+  currentMembersCollapse: boolean;
+  currentGroupMembers: Employee[];
+  setGroup: React.Dispatch<React.SetStateAction<Group>>;
+  setCurrentGroupMembers: React.Dispatch<React.SetStateAction<Employee[]>>;
+}
+
 export const CurrentMemberPanel = ({
   currentMembersCollapse,
   currentGroupMembers,
   setGroup,
   setCurrentGroupMembers,
-}) => {
+}: Props) => {
   const navigate = useNavigate();
 
-  const onViewMemberDetails = e => {
-    const { id } = e.currentTarget;
+  const onViewMemberDetails = (e: MouseEvent<HTMLButtonElement>) => {
+    const { id } = e.currentTarget as HTMLButtonElement;
     navigate(`/admin${EMPLOYEE_DETAILS}/${id}`);
   };
 
-  const onRemoveMember = e => {
-    const { id } = e.currentTarget;
+  const onRemoveMember = (e: MouseEvent<HTMLButtonElement>) => {
+    const { id } = e.currentTarget as HTMLButtonElement;
     const newGroupMembers = currentGroupMembers.filter(member => member.id !== parseInt(id));
     setCurrentGroupMembers(prevState => prevState.filter(member => member.id !== parseInt(id)));
     setGroup(prevState => ({

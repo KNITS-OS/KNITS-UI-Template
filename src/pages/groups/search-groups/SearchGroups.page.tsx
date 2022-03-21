@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
@@ -17,13 +17,13 @@ export const SearchGroupsPage = () => {
 
   const [groups] = useState(groupsData);
 
-  const onViewGroupDetails = e => {
-    const { id } = e.target;
+  const onViewGroupDetails = (e: MouseEvent<HTMLButtonElement>) => {
+    const { id } = e.target as HTMLElement;
     navigate(`/admin${GROUP_DETAILS}/${id}`);
   };
 
-  const onDeleteGroup = e => {
-    const { id } = e.target;
+  const onDeleteGroup = (e: MouseEvent<HTMLButtonElement>) => {
+    const { id } = e.target as HTMLElement;
     console.log("delete group", id);
   };
 

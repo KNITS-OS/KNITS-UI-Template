@@ -38,6 +38,7 @@ import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
 import { huddle64pdf, documentsData } from "data";
+import { Document as DocumentType } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 import { SEARCH_DOCUMENT } from "../documents.routes.const";
@@ -47,7 +48,9 @@ export const DocumentDetailPage = () => {
   const { id } = useParams() as { id: string };
   const documentId = parseInt(id);
 
-  const [document] = useState(documentsData.find(document => document.id === documentId));
+  const [document] = useState(
+    documentsData.find(document => document.id === documentId) as DocumentType
+  );
 
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);

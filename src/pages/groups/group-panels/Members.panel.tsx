@@ -4,9 +4,16 @@ import { Button, ButtonGroup, Col, Row } from "reactstrap";
 
 import { selectGroupMembers } from "pages/utils";
 
+import { Group } from "types";
+
 import { AddMemberPanel, CurrentMemberPanel } from ".";
 
-export const MembersPanel = ({ group, setGroup }) => {
+interface Props {
+  group: Group;
+  setGroup: React.Dispatch<React.SetStateAction<Group>>;
+}
+
+export const MembersPanel = ({ group, setGroup }: Props) => {
   const [currentMembersCollapse, setCurrentMembersCollapse] = useState(false);
   const [addMemberCollapse, setAddMemberCollapse] = useState(false);
 

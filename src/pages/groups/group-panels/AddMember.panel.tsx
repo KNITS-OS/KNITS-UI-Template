@@ -10,6 +10,15 @@ import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages
 import { useAuth } from "context";
 import { employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
+import { Group, Employee, AdvancedEmployeeQueryFilters } from "types";
+
+interface Props {
+  group: Group;
+  setGroup: (group: Group) => void;
+  addMemberCollapse: boolean;
+  currentGroupMembers: Employee[];
+  setCurrentGroupMembers: React.Dispatch<React.SetStateAction<Employee[]>>;
+}
 
 export const AddMemberPanel = ({
   group,
@@ -17,11 +26,11 @@ export const AddMemberPanel = ({
   addMemberCollapse,
   currentGroupMembers,
   setCurrentGroupMembers,
-}) => {
+}: Props) => {
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const { user } = useAuth();
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<AdvancedEmployeeQueryFilters>({
     countryIso3: user.countryCode3,
     members: currentGroupMembers.map(member => member.id),
   });

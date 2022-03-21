@@ -1,6 +1,9 @@
-import { TwoMouseEventActionButtons } from "components/widgets";
+import { TwoMouseEventActionButtons, IDefaultActionButtons } from "components/widgets";
 
-export const employeesTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
+export const employeesTableColumns = ({
+  onDetailsButtonClick,
+  onRemoveButtonClick,
+}: IDefaultActionButtons) => {
   return [
     {
       accessor: "id",
