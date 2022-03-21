@@ -24,13 +24,14 @@ export const anonymousUser = {
 
 const initAuthContext = {
   user: anonymousUser,
+  setUser: () => {},
 };
 
 const AuthContext = createContext(initAuthContext);
 
 export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(anonymousUser);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
