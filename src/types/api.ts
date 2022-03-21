@@ -77,14 +77,6 @@ export interface TurnoverChart {
   onboarded: number;
   offboarded: number;
 }
-
-export interface ApiResponse<T> {
-  isError: boolean;
-  message: string;
-  code?: number;
-  data?: T;
-}
-
 export interface LoginBody {
   email: string;
   password: string;

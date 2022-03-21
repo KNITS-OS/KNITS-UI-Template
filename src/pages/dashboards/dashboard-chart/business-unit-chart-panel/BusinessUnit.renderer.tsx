@@ -3,8 +3,9 @@ import { Pie } from "react-chartjs-2";
 import { ThemeColors } from "variables/app.consts";
 
 import { pieDataTemplate, pieOptionsTemplate } from "..";
+import { Chart, IPieChart } from "types";
 
-const toPieChartUI = apiResponse => {
+const toPieChartUI = (response: Chart[]): IPieChart => {
   const template = pieDataTemplate({
     label: "BusinessUnit",
     backgroundColor: [
@@ -24,7 +25,7 @@ const toPieChartUI = apiResponse => {
     ],
   });
 
-  apiResponse.forEach(record => {
+  response.forEach(record => {
     template.labels?.push(record.label);
     template.datasets[0].data.push(record.value);
   });
@@ -35,7 +36,7 @@ const toPieChartUI = apiResponse => {
   };
 };
 
-export const renderChart = response => {
+export const renderChart = (response: Chart[]) => {
   const pieChart = toPieChartUI(response);
   return <Pie data={pieChart.data} options={pieChart.options} className="chart-canvas" />;
 };
