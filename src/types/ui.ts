@@ -20,7 +20,7 @@ export interface IRoute {
   allowedRoles: Role[];
 }
 
-export type AlertType = null | React.ReactNode;
+export type AlertType = React.ReactNode | null;
 
 export interface SelectOption {
   value: string;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const useSidebar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState();
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
   const toggleSidebar = () => {
     if (document.body.classList.contains("g-sidenav-pinned")) {
