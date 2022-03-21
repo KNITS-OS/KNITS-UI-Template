@@ -44,20 +44,20 @@ import { SEARCH_DOCUMENT } from "../documents.routes.const";
 
 export const DocumentDetailPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const documentId = parseInt(id);
 
   const [document] = useState(documentsData.find(document => document.id === documentId));
 
-  const [numPages, setNumPages] = useState(null);
+  const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
+  const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
     setPageNumber(1);
   };
 
-  const changePage = offset => {
+  const changePage = (offset: number) => {
     setPageNumber(prevPageNumber => prevPageNumber + offset);
   };
 

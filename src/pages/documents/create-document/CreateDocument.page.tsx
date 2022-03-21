@@ -8,18 +8,19 @@ import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
 import { toFileArray } from "pages/utils";
 
+import { SelectOption, Document } from "types";
 import { defaultDocumentsTags } from "variables/app.consts";
 
 import { documentDefaultState } from "..";
 
 export const CreateDocumentPage = () => {
-  const [document, setDocument] = useState(documentDefaultState);
+  const [document, setDocument] = useState<Document>(documentDefaultState);
 
-  const changeFileHandler = event => {
-    if (event.currentTarget.files) {
+  const changeFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files) {
       setDocument({
         ...document,
-        contentFiles: toFileArray(event.currentTarget.files),
+        contentFiles: toFileArray(e.currentTarget.files),
       });
     }
   };
@@ -28,8 +29,8 @@ export const CreateDocumentPage = () => {
     console.log("create document", document);
   };
 
-  const onChangeSelectedTag = newValue => {
-    const arrayOfOptions = newValue ? newValue : [];
+  const onChangeSelectedTag = (newValue: any) => {
+    const arrayOfOptions = newValue ? (newValue as SelectOption[]) : [];
     const newTags = arrayOfOptions.map(option => option.value);
     const updatedTags = document.tags ? document.tags : [];
 

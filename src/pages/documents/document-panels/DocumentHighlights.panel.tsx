@@ -1,3 +1,5 @@
+import { MouseEvent } from "react";
+
 import {
   Card,
   CardHeader,
@@ -16,7 +18,11 @@ import remoteWorkImg from "assets/img/care/remote-work.png";
 
 import { useFeatureDisabledWarning } from "hooks";
 
-export const DocumentHighlightsPanel = ({ onViewDetailsClick }) => {
+interface Props {
+  onViewDetailsClick: (e: MouseEvent<HTMLButtonElement>) => void;
+}
+
+export const DocumentHighlightsPanel = ({ onViewDetailsClick }: Props) => {
   const { fireAlert } = useFeatureDisabledWarning();
   return (
     <Card>

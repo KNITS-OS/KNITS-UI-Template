@@ -1,3 +1,4 @@
+import { Moment } from "moment";
 import { useState } from "react";
 
 import { Col, Row } from "reactstrap";
@@ -5,17 +6,26 @@ import { Col, Row } from "reactstrap";
 import { FilterPanel } from "components/panels";
 import { InputField, DateField, SelectField } from "components/widgets";
 
+import { DocumentsQueryFilters, SelectOption } from "types";
 import { documentRatings, DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const SearchDocumentsFilterPanel = ({ onSearch }) => {
+interface onSearchFunction {
+  (searchRequest: DocumentsQueryFilters): void;
+}
+
+interface Props {
+  onSearch: onSearchFunction;
+}
+
+export const SearchDocumentsFilterPanel = ({ onSearch }: Props) => {
   const [searchAuthor, setSearchAuthor] = useState("");
   const [searchTag, setSearchTag] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
 
-  const [searchPublishDate, setSearchPublishDate] = useState(undefined);
+  const [searchPublishDate, setSearchPublishDate] = useState<Moment | undefined>(undefined);
 
-  const [ratings] = useState(documentRatings);
-  const [ratingSelected, setRatingSelected] = useState();
+  const [ratings] = useState<SelectOption[]>(documentRatings);
+  const [ratingSelected, setRatingSelected] = useState<SelectOption | null>();
 
   const resetFilters = () => {
     setSearchAuthor("");
@@ -89,7 +99,7 @@ export const SearchDocumentsFilterPanel = ({ onSearch }) => {
             value={ratingSelected}
             options={ratings}
             onChange={item => {
-              setRatingSelected(item);
+              setRatingSelected(item as SelectOption);
             }}
           />
         </Col>

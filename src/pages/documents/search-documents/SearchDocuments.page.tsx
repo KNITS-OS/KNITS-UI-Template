@@ -14,7 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
@@ -23,6 +23,7 @@ import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
 import { documentsData } from "data";
+import { DocumentsQueryFilters } from "types";
 
 import { DocumentHighlightsPanel } from "../document-panels";
 import { DOCUMENT_DETAILS } from "../documents.routes.const";
@@ -36,17 +37,17 @@ export const SearchDocumentsPage = () => {
 
   const [documents] = useState(documentsData);
 
-  const onSearchDocuments = filters => {
+  const onSearchDocuments = (filters: DocumentsQueryFilters) => {
     console.log("searchDocuments", filters);
   };
 
-  const onDeleteDocument = e => {
+  const onDeleteDocument = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
     console.log("deleteDocument", id);
   };
 
-  const onViewDocumentDetails = e => {
+  const onViewDocumentDetails = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.currentTarget;
     navigate(`/admin${DOCUMENT_DETAILS}/${id}`);
   };
