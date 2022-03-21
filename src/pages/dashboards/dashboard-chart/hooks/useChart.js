@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { renderAlert } from "../Chart.renderers";
+import { renderChartErrorAlert } from "..";
 
 export const useChart = (asyncFunction, renderChart) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +10,7 @@ export const useChart = (asyncFunction, renderChart) => {
   const fetchDataAsync = async () => {
     const httpResponse = await asyncFunction();
     if (httpResponse.isError) {
-      setAlert(renderAlert(httpResponse));
+      setAlert(renderChartErrorAlert(httpResponse));
     } else {
       setChart(renderChart(httpResponse));
     }

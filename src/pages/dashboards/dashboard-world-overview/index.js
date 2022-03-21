@@ -1,1 +1,1 @@
-export * from "./WorldOverviewPage.js";
+export * from "./WorldOverviewPage";
