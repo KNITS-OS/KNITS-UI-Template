@@ -35,7 +35,7 @@ export const LoginPage = () => {
   const [email, setEmail] = useState("gabriela.rios@kuehne-nagel.com");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = e => {
+  const handleSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setUser(regionalManagerUser);
   };
