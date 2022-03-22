@@ -19,9 +19,7 @@ export const AddMemberPanel = ({
 }) => {
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [filters, setFilters] = useState({
-    members: currentGroupMembers.map(member => member.id),
-  });
+  const [filters, setFilters] = useState({});
 
   const [employees, setEmployees] = useState([]);
 
@@ -32,8 +30,12 @@ export const AddMemberPanel = ({
   };
 
   useEffect(() => {
-    onSearchEmployees(filters);
-  }, [filters]);
+    onSearchEmployees({
+      ...filters,
+      members: currentGroupMembers.map(member => `id_ne=${member.id}`).join("&"),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentGroupMembers, filters]);
 
   return (
     <>
