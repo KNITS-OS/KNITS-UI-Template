@@ -21,12 +21,17 @@ export const AddMemberPanel = ({
 }) => {
   const dispatch = useDispatch();
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
-  const memberFilterArray = currentGroupMembers.map(member => `id_ne=${member.id}`).join("&");
-  const [filters, setFilters] = useState(memberFilterArray);
+  const [filters, setFilters] = useState({});
+
   const employees = useSelector(selectAllEmployeeData);
 
   useEffect(() => {
-    dispatch(searchEmployees(filters));
+    dispatch(
+      searchEmployees({
+        ...filters,
+        members: currentGroupMembers.map(member => `id_ne=${member.id}`).join("&"),
+      })
+    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);

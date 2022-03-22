@@ -17,10 +17,10 @@ export const AddNewMemberButton = ({
     setGroup({ ...group, members: [...group.members, ...memberIds] });
     setCurrentGroupMembers(previousMembers => [...previousMembers, ...selectedFlatRows]);
     setFilters(oldFilters => {
-      const allMembers = group.members;
-      allMembers.push(...memberIds);
-      const memberFilter = allMembers.map(memberId => `id_ne=${memberId}`).join("&");
-      return { ...oldFilters, ...memberFilter };
+      return {
+        ...oldFilters,
+        members: (oldFilters.members, memberIds.map(id => `id_ne=${id}`).join("&")),
+      };
     });
 
     setSuccessMessage("Member(s) added successfully");
