@@ -44,7 +44,8 @@ export const SearchDocumentsFilterPanel = ({ onSearch }: Props) => {
     return Object.assign(
       {},
       searchAuthor && searchAuthor !== "" ? { author: searchAuthor } : null,
-      searchTag && searchTag !== "" ? { tag: searchTag } : null,
+      // https://github.com/typicode/json-server/issues/654#issuecomment-339098881
+      searchTag && searchTag !== "" ? { tags_like: searchTag } : null,
       searchTitle && searchTitle !== "" ? { title: searchTitle } : null,
       searchPublishDate ? { publishDate: searchPublishDate.format(DATE_FILTER_FORMAT) } : null,
       ratingSelected ? { rating: parseInt(ratingSelected.value) } : null

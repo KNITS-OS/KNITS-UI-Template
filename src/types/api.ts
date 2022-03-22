@@ -62,7 +62,7 @@ export interface AdvancedEmployeeQueryFilters {
   onboardDateTo?: string;
   offboardingDateFrom?: string;
   offboardingDateTo?: string;
-  members?: number[];
+  members?: string;
 }
 
 export interface Chart {

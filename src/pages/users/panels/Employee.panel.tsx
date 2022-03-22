@@ -7,11 +7,11 @@ import { InputField, DateField, SelectField } from "components/widgets";
 
 import { selectGroupsByIdsAsSelectValues } from "pages/utils";
 
-import { Employee, EmployeeSaveRequest, SelectOption } from "types";
+import { Employee, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 interface onSaveFunction {
-  (employeeRequest: EmployeeSaveRequest): void;
+  (updatedEmployee: Employee): void;
 }
 
 interface Props {
@@ -37,14 +37,14 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }: Props) => {
   const [currentGroupSelections, setCurrentGroupSelections] = useState<SelectOption[]>([]);
 
   const onSaveEmployee = () => {
-    const employeeSaveRequest: EmployeeSaveRequest = {
-      id: employee.id,
+    const newEmployee: Employee = {
+      ...employee,
       onboardingDate: moment(onboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       groups,
     };
 
-    onSave(employeeSaveRequest);
+    onSave(newEmployee);
   };
   return (
     <Form>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Card, Collapse } from "reactstrap";
 
@@ -7,7 +7,7 @@ import { ReactTable } from "components/widgets";
 
 import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
-import { employeesData } from "data";
+import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { Group, Employee, AdvancedEmployeeQueryFilters } from "types";
 
@@ -28,13 +28,24 @@ export const AddMemberPanel = ({
 }: Props) => {
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [filters, setFilters] = useState<AdvancedEmployeeQueryFilters>({
-    members: currentGroupMembers.map(member => member.id),
-  });
+  const [filters, setFilters] = useState<AdvancedEmployeeQueryFilters>({});
 
-  console.log("add member panel filters: ", filters);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
-  const [employeesResultSet] = useState(employeesData);
+  const onSearchEmployees = async (filters: AdvancedEmployeeQueryFilters) => {
+    const queryParams = new URLSearchParams(filters as any);
+    const { data } = await employeeService.searchEmployees(queryParams);
+    setEmployees(data);
+  };
+
+  useEffect(() => {
+    onSearchEmployees({
+      ...filters,
+      members: currentGroupMembers.map(member => `id_ne=${member.id}`).join("&"),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentGroupMembers, filters]);
+
   return (
     <>
       {alert}
@@ -46,7 +57,7 @@ export const AddMemberPanel = ({
           />
 
           <ReactTable
-            data={employeesResultSet}
+            data={employees}
             selectElement={
               <AddNewMemberButton
                 setGroup={setGroup}

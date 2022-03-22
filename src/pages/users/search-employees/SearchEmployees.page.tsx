@@ -8,8 +8,8 @@ import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import { employeesData } from "data";
-import { EmployeeQueryFilters } from "types";
+import { employeeService } from "api";
+import { Employee, EmployeeQueryFilters } from "types";
 
 import {
   selectAllBusinessUnitsDataAsSelectOptions,
@@ -21,23 +21,29 @@ import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
 
-  const [employees] = useState(employeesData);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
-  const onSearchEmployees = (filters: EmployeeQueryFilters) => {
-    console.log("filters", filters);
+
+  const onSearchEmployees = async (filters: EmployeeQueryFilters) => {
+    const queryParams = new URLSearchParams(filters as any);
+    const { data } = await employeeService.searchEmployees(queryParams);
+    setEmployees(data);
   };
+
   const onViewEmployeeDetails = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
     navigate(`/admin${EMPLOYEE_DETAILS}/${id}`);
   };
 
-  const onDeleteEmployee = (e: MouseEvent<HTMLButtonElement>) => {
+  const onDeleteEmployee = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    console.log("delete employee", id);
+
+    await employeeService.deleteEmployee(parseInt(id));
+    setEmployees(employees.filter(employee => employee.id !== parseInt(id)));
   };
 
   return (
@@ -48,7 +54,6 @@ export const SearchEmployeesPage = () => {
           <div className="col">
             <SearchEmployeesFilterPanel
               onSearchEmployees={onSearchEmployees}
-              // jobTitle={jobTitles}
               countries={countries}
               businessUnits={businessUnits}
             />

@@ -53,14 +53,14 @@ export const SearchEmployeesFilterPanel = ({
     return Object.assign(
       {},
       searchLastName && searchLastName !== "" ? { lastName: searchLastName } : null,
-      businessUnitSelected ? { businessUnitId: parseInt(businessUnitSelected.value) } : null,
+      businessUnitSelected ? { businessUnit: businessUnitSelected.label } : null,
       countrySelected && countrySelected.value !== ""
-        ? { countryIso3: countrySelected.value }
+        ? { "office.countryiso3": countrySelected.value }
         : null,
-      searchHiringDate ? { hiringDateFrom: searchHiringDate.format(DATE_FILTER_FORMAT) } : null,
-      searchNewMembersOnly ? { newMembersOnly: searchNewMembersOnly } : null
+      searchHiringDate ? { startDate: searchHiringDate.format(DATE_FILTER_FORMAT) } : null
     );
   };
+
   return (
     <FilterPanel
       title="Search Employees"

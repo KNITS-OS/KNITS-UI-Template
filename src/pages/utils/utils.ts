@@ -1,5 +1,6 @@
-import { businessUnitsData, countriesData, employeesData, groupsData } from "data";
-import { SelectOption } from "types";
+import { employeeService } from "api";
+import { businessUnitsData, countriesData, groupsData } from "data";
+import { Employee, SelectOption } from "types";
 import { SELECT_ALL } from "variables/app.consts";
 
 export const toFileArray = (filelist: FileList | null): File[] => {
@@ -64,13 +65,6 @@ export const selectCountryByIsoCodeAsSelectOption = (code: string): SelectOption
   return [];
 };
 
-export const selectAllEmployeeDataAsSelectOptions = (): SelectOption[] => {
-  const employeesOptions = employeesData.map(employee => {
-    return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
-  });
-  return [SELECT_ALL, ...employeesOptions];
-};
-
 export const selectGroupsByIdsAsSelectValues = (ids: number[]): SelectOption[] => {
   const groups = groupsData.filter(group => ids.includes(group.id));
   const groupsOptions = groups.map(group => {
@@ -86,11 +80,14 @@ export const selectAllGroupsDataAsSelectOptions = (): SelectOption[] => {
   return [SELECT_ALL, ...groupsOptions];
 };
 
-export const selectGroupMembers = (groupId: number) => {
+export const selectGroupMembers = async (groupId: number) => {
   const group = groupsData.find(group => group.id === groupId);
-  const employees = employeesData;
 
-  return Object.keys(employees)
-    .map(key => employees[parseInt(key)])
+  const { data: allEmployees } = await employeeService.findAllEmployees();
+
+  const groupMembers: Employee[] = Object.keys(allEmployees)
+    .map(key => allEmployees[parseInt(key)])
     .filter(employee => group?.members.includes(employee.id));
+
+  return groupMembers;
 };

@@ -22,8 +22,8 @@ import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
-import { documentsData } from "data";
-import { DocumentsQueryFilters } from "types";
+import { documentService } from "api";
+import { DocumentsQueryFilters, Document } from "types";
 
 import { DocumentHighlightsPanel } from "../document-panels";
 import { DOCUMENT_DETAILS } from "../documents.routes.const";
@@ -35,21 +35,25 @@ export const SearchDocumentsPage = () => {
 
   const [alert] = useState(null);
 
-  const [documents] = useState(documentsData);
+  const [documents, setDocuments] = useState<Document[]>([]);
 
-  const onSearchDocuments = (filters: DocumentsQueryFilters) => {
-    console.log("searchDocuments", filters);
-  };
-
-  const onDeleteDocument = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const { id } = e.currentTarget;
-    console.log("deleteDocument", id);
+  const onSearchDocuments = async (filters: DocumentsQueryFilters) => {
+    const queryParams = new URLSearchParams(filters as any);
+    const { data } = await documentService.searchDocuments(queryParams);
+    setDocuments(data);
   };
 
   const onViewDocumentDetails = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.currentTarget;
     navigate(`/admin${DOCUMENT_DETAILS}/${id}`);
+  };
+
+  const onDeleteDocument = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const { id } = e.currentTarget;
+    await documentService.deleteDocument(parseInt(id));
+
+    setDocuments(documents.filter(document => document.id !== parseInt(id)));
   };
 
   return (

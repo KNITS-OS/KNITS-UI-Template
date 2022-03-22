@@ -8,6 +8,8 @@ import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
 import { toFileArray } from "pages/utils";
 
+import { documentService } from "api";
+import { useLocalStateAlerts } from "hooks";
 import { SelectOption, Document } from "types";
 import { defaultDocumentsTags } from "variables/app.consts";
 
@@ -15,6 +17,7 @@ import { documentDefaultState } from "..";
 
 export const CreateDocumentPage = () => {
   const [document, setDocument] = useState<Document>(documentDefaultState);
+  const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const changeFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
@@ -25,8 +28,12 @@ export const CreateDocumentPage = () => {
     }
   };
 
-  const onCreateDocument = () => {
-    console.log("create document", document);
+  const onCreateDocument = async () => {
+    // JSON server automatically adds ID to the document
+    await documentService.createDocument(document);
+    setSuccessMessage("Document Created");
+    setSaveSent(true);
+    setIsSuccess(true);
   };
 
   const onChangeSelectedTag = (newValue: any) => {

@@ -15,19 +15,19 @@
 
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
 import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
-import { employeesData } from "data";
+import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
-import { Employee, EmployeeSaveRequest } from "types";
+import { Employee } from "types";
 
 export const EmployeeDetailsPage = () => {
   const { id } = useParams() as { id: string };
@@ -36,12 +36,35 @@ export const EmployeeDetailsPage = () => {
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [employee] = useState(employeesData.find(e => e.id === employeeId) as Employee);
+  const [employee, setEmployee] = useState<Employee>();
 
   const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
 
-  const onSaveEmployee = (employeeRequest: EmployeeSaveRequest) => {
-    console.log("httpUpdateRequest", employeeRequest);
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      const { data } = await employeeService.getEmployeeById(employeeId);
+      setEmployee(data);
+    };
+    fetchEmployee();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!employee) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  const onSaveEmployee = async (updatedEmployee: Employee) => {
+    const { data } = await employeeService.updateEmployee({
+      id: employeeId,
+      body: updatedEmployee,
+    });
+    setEmployee(employee => ({ ...employee, ...data }));
+
     setSuccessMessage("Employee Updated");
     setIsSuccess(true);
     setSaveSent(true);
