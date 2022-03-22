@@ -104,7 +104,7 @@ export const documentReducer = (documentState = initialState, action = {}) => {
         if (document.id === payload.id) {
           return {
             ...document,
-            ...payload,
+            ...payload.data,
           };
         }
         return document;

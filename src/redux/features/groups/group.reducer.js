@@ -108,7 +108,7 @@ export const groupReducer = (groupState = initialState, action = {}) => {
         if (group.id === payload.id) {
           return {
             ...group,
-            ...payload,
+            ...payload.data,
           };
         }
         return group;

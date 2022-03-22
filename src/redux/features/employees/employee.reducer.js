@@ -90,7 +90,7 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
         if (employee.id === payload.id) {
           return {
             ...employee,
-            ...payload,
+            ...payload.data,
           };
         }
         return employee;
