@@ -50,7 +50,7 @@ export const SearchDocumentsPage = () => {
   const onDeleteDocument = async e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    await documentService.deleteDocument(id);
+    await documentService.deleteDocument(parseInt(id));
 
     setDocuments(documents.filter(document => document.id !== parseInt(id)));
   };

@@ -6,14 +6,11 @@ const getDocumentById = id => httpCommon.get(`${DOCUMENT_ROUTE}/${id}`);
 
 const createDocument = body => httpCommon.post(`${DOCUMENT_ROUTE}`, body);
 
-const updateDocument = (id, body) => httpCommon.put(`${DOCUMENT_ROUTE}/${id}`, body);
-
 const deleteDocument = id => httpCommon.delete(`${DOCUMENT_ROUTE}/${id}`);
 
 export const documentService = {
   searchDocuments,
   getDocumentById,
   createDocument,
-  updateDocument,
   deleteDocument,
 };

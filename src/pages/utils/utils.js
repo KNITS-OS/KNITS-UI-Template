@@ -1,5 +1,5 @@
+import { employeeService } from "api";
 import { businessUnitsData, countriesData, groupsData } from "data";
-import employeesData from "data/employees";
 import { SELECT_ALL } from "variables/app.consts";
 
 export const toFileArray = filelist => {
@@ -72,13 +72,6 @@ export const selectCountryByIsoCodeAsSelectOption = code => {
   return [];
 };
 
-export const selectAllEmployeeDataAsSelectOptions = () => {
-  const employeesOptions = employeesData.map(employee => {
-    return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
-  });
-  return [SELECT_ALL, ...employeesOptions];
-};
-
 export const selectGroupsByIdsAsSelectValues = ids => {
   const groups = groupsData.filter(group => ids.includes(group.id));
   const groupsOptions = groups.map(group => {
@@ -94,11 +87,14 @@ export const selectAllGroupsDataAsSelectOptions = () => {
   return [SELECT_ALL, ...groupsOptions];
 };
 
-export const selectGroupMembers = groupId => {
+export const selectGroupMembers = async groupId => {
   const group = groupsData.find(group => group.id === groupId);
-  const employees = employeesData;
 
-  return Object.keys(employees)
-    .map(key => employees[parseInt(key)])
+  const { data: allEmployees } = await employeeService.findAllEmployees();
+
+  const groupMembers = Object.keys(allEmployees)
+    .map(key => allEmployees[parseInt(key)])
     .filter(employee => group?.members.includes(employee.id));
+
+  return groupMembers;
 };

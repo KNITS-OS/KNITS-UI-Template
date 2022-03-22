@@ -56,9 +56,13 @@ export const EmployeeDetailsPage = () => {
     );
   }
 
-  const onSaveEmployee = async employeeRequest => {
-    const { data } = await employeeService.updateEmployee(employeeId, employeeRequest);
+  const onSaveEmployee = async updatedEmployee => {
+    const { data } = await employeeService.updateEmployee({
+      id: employeeId,
+      body: updatedEmployee,
+    });
     setEmployee(employee => ({ ...employee, ...data }));
+
     setSuccessMessage("Employee Updated");
     setSaveSent(true);
     setIsSuccess(true);

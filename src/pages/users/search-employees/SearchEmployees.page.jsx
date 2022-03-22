@@ -24,11 +24,13 @@ export const SearchEmployeesPage = () => {
 
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
+
   const onSearchEmployees = async filters => {
     const queryParams = new URLSearchParams(filters);
     const { data } = await employeeService.searchEmployees(queryParams);
     setEmployees(data);
   };
+
   const onViewEmployeeDetails = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
@@ -38,8 +40,8 @@ export const SearchEmployeesPage = () => {
   const onDeleteEmployee = async e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    await employeeService.deleteEmployee(id);
 
+    await employeeService.deleteEmployee(parseInt(id));
     setEmployees(employees.filter(employee => employee.id !== parseInt(id)));
   };
 
@@ -51,7 +53,6 @@ export const SearchEmployeesPage = () => {
           <div className="col">
             <SearchEmployeesFilterPanel
               onSearchEmployees={onSearchEmployees}
-              // jobTitle={jobTitles}
               countries={countries}
               businessUnits={businessUnits}
             />

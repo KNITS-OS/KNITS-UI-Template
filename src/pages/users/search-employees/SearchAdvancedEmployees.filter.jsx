@@ -57,9 +57,9 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
       {},
       searchLastName && searchLastName !== "" ? { lastName: searchLastName } : null,
       groupSelected ? { groupId: parseInt(groupSelected.value) } : null,
-      businessUnitSelected ? { businessUnitId: parseInt(businessUnitSelected.value) } : null,
+      businessUnitSelected ? { businessUnit: businessUnitSelected.label } : null,
       countrySelected && countrySelected.value !== ""
-        ? { countryIso3: countrySelected.value }
+        ? { "office.countryiso3": countrySelected.value }
         : null,
       searchOnBoardDateFrom
         ? { onboardDateFrom: searchOnBoardDateFrom.format(DATE_FILTER_FORMAT) }

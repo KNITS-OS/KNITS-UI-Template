@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Card, Collapse } from "reactstrap";
 
@@ -7,7 +7,7 @@ import { ReactTable } from "components/widgets";
 
 import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
-import employeesData from "data/employees";
+import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 
 export const AddMemberPanel = ({
@@ -23,9 +23,18 @@ export const AddMemberPanel = ({
     members: currentGroupMembers.map(member => member.id),
   });
 
-  console.log("add member panel filters: ", filters);
+  const [employees, setEmployees] = useState([]);
 
-  const [employeesResultSet] = useState(employeesData);
+  const onSearchEmployees = async filters => {
+    const queryParams = new URLSearchParams(filters);
+    const { data } = await employeeService.searchEmployees(queryParams);
+    setEmployees(data);
+  };
+
+  useEffect(() => {
+    onSearchEmployees(filters);
+  }, [filters]);
+
   return (
     <>
       {alert}
@@ -37,7 +46,7 @@ export const AddMemberPanel = ({
           />
 
           <ReactTable
-            data={employeesResultSet}
+            data={employees}
             selectElement={
               <AddNewMemberButton
                 setGroup={setGroup}

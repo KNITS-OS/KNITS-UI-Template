@@ -26,15 +26,14 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }) => {
   const [currentGroupSelections, setCurrentGroupSelections] = useState([]);
 
   const onSaveEmployee = () => {
-    const employeeSaveRequest = {
+    const newEmployee = {
       ...employee,
-      id: employee.id,
       onboardingDate: moment(onboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       groups,
     };
 
-    onSave(employeeSaveRequest);
+    onSave(newEmployee);
   };
   return (
     <Form>
