@@ -25,8 +25,8 @@ export const GroupDetailsPage = () => {
   const onSaveGroup = () => {
     console.log("update group", groupId, group);
     setSuccessMessage("Group Updated");
-    setIsSuccess(true);
     setSaveSent(true);
+    setIsSuccess(true);
   };
 
   const onToggleGroupActive = () => {

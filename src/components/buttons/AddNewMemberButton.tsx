@@ -40,8 +40,8 @@ export const AddNewMemberButton = ({
     });
 
     setSuccessMessage("Member(s) added successfully");
-    setIsSuccess(true);
     setSaveSent(true);
+    setIsSuccess(true);
 
     if (toggleAllRowsSelected) {
       toggleAllRowsSelected();
