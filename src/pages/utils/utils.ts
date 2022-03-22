@@ -1,7 +1,7 @@
 import { employeeService } from "api";
 import { businessUnitsData, countriesData, groupsData } from "data";
 import { Employee, SelectOption } from "types";
-import { SELECT_ALL } from "variables/app.consts";
+import { SELECT_ALL, SELECT_ALL_IDS } from "variables/app.consts";
 
 export const toFileArray = (filelist: FileList | null): File[] => {
   if (!filelist || filelist.length === 0) {
@@ -77,7 +77,7 @@ export const selectAllGroupsDataAsSelectOptions = (): SelectOption[] => {
   const groupsOptions = groupsData.map(group => {
     return { value: `${group.id}`, label: group.name };
   });
-  return [SELECT_ALL, ...groupsOptions];
+  return [SELECT_ALL_IDS(groupsData.map(group => group.id)), ...groupsOptions];
 };
 
 export const selectGroupMembers = async (groupId: number) => {
