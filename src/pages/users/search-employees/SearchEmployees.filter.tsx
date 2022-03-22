@@ -24,7 +24,6 @@ export const SearchEmployeesFilterPanel = ({
   countries,
   onSearchEmployees,
 }: Props) => {
-  const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
 
   const [businessUnitSelected, setBusinessUnitSelected] = useState<SelectOption | null>();
@@ -39,7 +38,6 @@ export const SearchEmployeesFilterPanel = ({
 
   const resetFilters = () => {
     setSearchLastName("");
-    setSearchNewMembersOnly(false);
     setBusinessUnitSelected(null);
     setSearchHiringDate(undefined);
   };
@@ -111,27 +109,6 @@ export const SearchEmployeesFilterPanel = ({
           />
         </Col>
         <Col md="1">&nbsp;</Col>
-      </Row>
-      <Row>
-        <Col md="9">&nbsp;</Col>
-        <Col
-          md="3"
-          style={{ zIndex: 0 }}
-          className="d-flex justify-content-center align-items-center"
-        >
-          <div className="custom-control custom-control-alternative custom-checkbox">
-            <input
-              className="custom-control-input"
-              id="onlyNewMembers"
-              type="checkbox"
-              value={searchNewMembersOnly.toString()}
-              onClick={() => setSearchNewMembersOnly(!searchNewMembersOnly)}
-            />
-            <label className="custom-control-label" htmlFor="onlyNewMembers">
-              <span className="text-muted">Only Employees NOT in Care</span>
-            </label>
-          </div>
-        </Col>
       </Row>
     </FilterPanel>
   );
