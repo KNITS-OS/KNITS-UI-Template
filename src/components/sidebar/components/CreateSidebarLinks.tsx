@@ -3,9 +3,8 @@ import { NavLink as NavLinkRRD } from "react-router-dom";
 
 import { Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
-import { useAuth } from "context";
 import { useSidebar } from "hooks";
-import { IRoute, Role } from "types";
+import { IRoute } from "types";
 
 import { getViewCollapseInitialState, activeRoute, CollapseType } from "..";
 
@@ -19,9 +18,6 @@ interface Props {
 
 export const CreateSidebarLinks = ({ routes, collapseState, setCollapseState }: Props) => {
   const { toggleSidebar } = useSidebar();
-  const { user } = useAuth();
-
-  const userRole = user?.authRole || Role.Anonymous;
 
   /**
    * this is used on mobile devices, when a user navigates
@@ -37,7 +33,7 @@ export const CreateSidebarLinks = ({ routes, collapseState, setCollapseState }: 
     <>
       {routes
         // only take in routes that aren't global
-        .filter(route => !route.global && route.allowedRoles.includes(userRole))
+        .filter(route => !route.global)
         .map(route => {
           // route menus
           if (route.collapse && route.state && route.views) {

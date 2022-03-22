@@ -1,7 +1,6 @@
 import { ChartData, ChartOptions } from "chart.js";
 import { ReactNode } from "react";
 
-import { Role } from "./security";
 export type LayoutType = "/admin" | "/auth" | "/rtl";
 export type Theme = "light" | "dark";
 export interface IRoute {
@@ -17,7 +16,6 @@ export interface IRoute {
   layout?: LayoutType;
   redirect?: string;
   key: string;
-  allowedRoles: Role[];
 }
 
 export type AlertType = React.ReactNode | null;

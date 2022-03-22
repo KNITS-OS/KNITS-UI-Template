@@ -7,7 +7,6 @@ import { ReactTable } from "components/widgets";
 
 import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
-import { useAuth } from "context";
 import { employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
 import { Group, Employee, AdvancedEmployeeQueryFilters } from "types";
@@ -29,9 +28,7 @@ export const AddMemberPanel = ({
 }: Props) => {
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const { user } = useAuth();
   const [filters, setFilters] = useState<AdvancedEmployeeQueryFilters>({
-    countryIso3: user.countryCode3,
     members: currentGroupMembers.map(member => member.id),
   });
 

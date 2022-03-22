@@ -1,5 +1,3 @@
-import { Role } from "./security";
-
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface Domain {}
 export interface Employee extends Domain {
@@ -33,12 +31,6 @@ export interface Employee extends Domain {
   offboardingDate: string | null;
   groups: number[];
   roleId: number;
-}
-
-export interface CareRole extends Domain {
-  id: number;
-  name: string;
-  role?: Role;
 }
 
 export interface BusinessUnit extends Domain {
@@ -85,16 +77,6 @@ export interface Country extends Domain {
   number: string;
 }
 
-export interface Principal extends Domain {
-  fullName: string;
-  username: string;
-  email: string;
-  jwtToken: string;
-  countryCode3: string;
-  authRole: Role;
-  role: string;
-  imageUrl?: string;
-}
 export interface WorldOverviewCachedReports extends Domain {
   reportName: string;
   data: WorldDataReport;

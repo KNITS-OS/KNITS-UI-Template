@@ -1,7 +1,5 @@
 import { IRoute } from "types";
 
-import { allAuthRoles } from "../utils";
-
 import { HOME, HomePage } from ".";
 
 export const homeMenu: IRoute[] = [
@@ -13,6 +11,5 @@ export const homeMenu: IRoute[] = [
     layout: "/admin",
     name: `${HOME}`,
     key: `Home/${HOME}`,
-    allowedRoles: [...allAuthRoles],
   },
 ];

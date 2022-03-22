@@ -3,14 +3,10 @@ import { useState } from "react";
 
 import { Col, Row } from "reactstrap";
 
-import { WithAuthorization } from "components/authorization";
 import { FilterPanel } from "components/panels";
 import { DateField, InputField, SelectField } from "components/widgets";
 
-import { selectLoggedUserDefaultCountryAsSelection } from "pages/utils";
-
-import { useAuth } from "context";
-import { EmployeeQueryFilters, Permission, Role, SelectOption } from "types";
+import { EmployeeQueryFilters, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 interface onSearchEmployeesFunction {
@@ -28,14 +24,11 @@ export const SearchEmployeesFilterPanel = ({
   countries,
   onSearchEmployees,
 }: Props) => {
-  const { user } = useAuth();
   const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
 
   const [businessUnitSelected, setBusinessUnitSelected] = useState<SelectOption | null>();
-  const [countrySelected, setCountrySelected] = useState<SelectOption | null>(
-    selectLoggedUserDefaultCountryAsSelection(user.countryCode3)
-  );
+  const [countrySelected, setCountrySelected] = useState<SelectOption | null>();
 
   const [searchHiringDate, setSearchHiringDate] = useState<Moment | undefined>();
 
@@ -49,9 +42,6 @@ export const SearchEmployeesFilterPanel = ({
     setSearchNewMembersOnly(false);
     setBusinessUnitSelected(null);
     setSearchHiringDate(undefined);
-    if (user.authRole === Role.RegionalManager) {
-      setCountrySelected(null);
-    }
   };
 
   const findByAllParameters = () => {
@@ -101,19 +91,17 @@ export const SearchEmployeesFilterPanel = ({
             }}
           />
         </Col>
-        <WithAuthorization requires={Permission.Employee_country_all}>
-          <Col md="3">
-            <SelectField
-              id="select-country"
-              label="Country"
-              value={countrySelected}
-              options={countries}
-              onChange={item => {
-                setCountrySelected(item as SelectOption);
-              }}
-            />
-          </Col>
-        </WithAuthorization>
+        <Col md="3">
+          <SelectField
+            id="select-country"
+            label="Country"
+            value={countrySelected}
+            options={countries}
+            onChange={item => {
+              setCountrySelected(item as SelectOption);
+            }}
+          />
+        </Col>
         <Col md="2">
           <DateField
             id="date-hire-from"

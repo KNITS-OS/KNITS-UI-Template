@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
 import "variables/chartDefaults";
-import { AuthProvider } from "context";
 
 import { Router } from "./Router";
 
@@ -23,9 +22,7 @@ import "components/widgets/react-table/styles/reactTable.css";
 ReactDOM.render(
   <BrowserRouter>
     <StrictMode>
-      <AuthProvider>
-        <Router />
-      </AuthProvider>
+      <Router />
     </StrictMode>
   </BrowserRouter>,
   document.getElementById("root")

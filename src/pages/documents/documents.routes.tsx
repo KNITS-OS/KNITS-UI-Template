@@ -1,7 +1,5 @@
 import { IRoute } from "types";
 
-import { allAuthRoles, fromAdvocateRole } from "../utils";
-
 import {
   DocumentDetailPage,
   DOCUMENT_DETAILS,
@@ -19,7 +17,7 @@ export const documentsMenu: IRoute[] = [
     state: "documentsCollapse",
     key: "DocumentsMenu",
     path: "DocumentsMenu",
-    allowedRoles: [...allAuthRoles],
+
     views: [
       {
         path: NEW_DOCUMENT,
@@ -28,7 +26,6 @@ export const documentsMenu: IRoute[] = [
         component: <CreateDocumentPage />,
         layout: "/admin",
         key: "Document/Create New",
-        allowedRoles: [...fromAdvocateRole],
       },
       {
         path: SEARCH_DOCUMENT,
@@ -37,7 +34,6 @@ export const documentsMenu: IRoute[] = [
         component: <SearchDocumentsPage />,
         layout: "/admin",
         key: "Document/Search",
-        allowedRoles: [...allAuthRoles],
       },
     ],
   },
@@ -48,6 +44,5 @@ export const documentsMenu: IRoute[] = [
     component: <DocumentDetailPage />,
     layout: "/admin",
     key: `Document/${DOCUMENT_DETAILS}/:id`,
-    allowedRoles: [...allAuthRoles],
   },
 ];

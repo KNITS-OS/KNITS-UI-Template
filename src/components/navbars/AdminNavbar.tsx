@@ -31,7 +31,6 @@ import {
 
 import placeholderPortrait from "assets/img/icons/common/Portrait_Placeholder.png";
 
-import { anonymousUser, useAuth } from "context";
 import { Theme } from "types";
 
 interface Props {
@@ -39,10 +38,8 @@ interface Props {
 }
 
 export const AdminNavbar = ({ theme }: Props) => {
-  const { user, setUser } = useAuth();
-
   const logOut = () => {
-    setUser(anonymousUser);
+    console.log("logout");
   };
 
   return (
@@ -62,14 +59,10 @@ export const AdminNavbar = ({ theme }: Props) => {
                 <DropdownToggle className="nav-link pr-0" color="" tag="a">
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      {user?.imageUrl ? (
-                        <img alt="userImg" src={user?.imageUrl} />
-                      ) : (
-                        <img alt="placeholder" src={placeholderPortrait} />
-                      )}
+                      <img alt="placeholder" src={placeholderPortrait} />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
-                      <span className="mb-0 text-sm font-weight-bold">{user?.fullName}</span>
+                      <span className="mb-0 text-sm font-weight-bold">Username</span>
                     </Media>
                   </Media>
                 </DropdownToggle>

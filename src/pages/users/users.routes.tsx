@@ -1,7 +1,5 @@
 import { IRoute } from "types";
 
-import { allAuthRoles } from "../utils";
-
 import { EmployeeDetailsPage, EMPLOYEE_DETAILS, EMPLOYEE_SEARCH, SearchEmployeesPage } from ".";
 
 export const userMenu: IRoute[] = [
@@ -12,7 +10,7 @@ export const userMenu: IRoute[] = [
     state: "usersCollapse",
     path: "UsersMenu",
     key: "UsersMenu",
-    allowedRoles: [...allAuthRoles],
+
     views: [
       {
         path: EMPLOYEE_SEARCH,
@@ -21,7 +19,6 @@ export const userMenu: IRoute[] = [
         component: <SearchEmployeesPage />,
         layout: "/admin",
         key: "Users/Employees",
-        allowedRoles: [...allAuthRoles],
       },
     ],
   },
@@ -33,6 +30,5 @@ export const userMenu: IRoute[] = [
     layout: "/admin",
     name: `${EMPLOYEE_DETAILS}/:id`,
     key: `Users/${EMPLOYEE_DETAILS}/:id`,
-    allowedRoles: [...allAuthRoles],
   },
 ];

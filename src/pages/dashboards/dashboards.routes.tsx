@@ -1,7 +1,5 @@
 import { IRoute } from "types";
 
-import { fromCountryManagerRole } from "../utils";
-
 import { ChartsPage, WorldOverviewPage } from ".";
 
 export const dashboardMenu: IRoute[] = [
@@ -12,7 +10,7 @@ export const dashboardMenu: IRoute[] = [
     state: "dashboardCollapse",
     key: "DashboardMenu",
     path: "DashboardMenu",
-    allowedRoles: [...fromCountryManagerRole],
+
     views: [
       {
         path: "/statistics",
@@ -21,7 +19,6 @@ export const dashboardMenu: IRoute[] = [
         component: <ChartsPage />,
         layout: "/admin",
         key: "Dashboard/Charts",
-        allowedRoles: [...fromCountryManagerRole],
       },
       {
         path: "/world-map",
@@ -30,7 +27,6 @@ export const dashboardMenu: IRoute[] = [
         component: <WorldOverviewPage />,
         layout: "/admin",
         key: "Dashboard/World Map",
-        allowedRoles: [...fromCountryManagerRole],
       },
     ],
   },

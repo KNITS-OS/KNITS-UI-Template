@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -22,12 +22,8 @@ import { AuthHeader } from "components/headers";
 
 import { HOME } from "pages/home";
 
-import { useAuth, regionalManagerUser } from "context";
-import { Role } from "types";
-
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
 
   const [focusedEmail, setfocusedEmail] = useState(false);
   const [focusedPassword, setfocusedPassword] = useState(false);
@@ -37,15 +33,9 @@ export const LoginPage = () => {
 
   const handleSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setUser(regionalManagerUser);
+    console.log("sign in", email, password);
+    navigate(`/admin${HOME}`);
   };
-
-  useEffect(() => {
-    if (user !== null && user.authRole !== Role.Anonymous) {
-      navigate(`/admin${HOME}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
 
   return (
     <>

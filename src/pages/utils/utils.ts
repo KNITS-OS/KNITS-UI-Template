@@ -1,7 +1,6 @@
-import { businessUnitsData, countriesData, employeesData, careRolesData, groupsData } from "data";
-import { Role, Permission, SelectOption } from "types";
+import { businessUnitsData, countriesData, employeesData, groupsData } from "data";
+import { SelectOption } from "types";
 import { SELECT_ALL } from "variables/app.consts";
-import { AuthorizationPolicies } from "variables/rbac.config";
 
 export const toFileArray = (filelist: FileList | null): File[] => {
   if (!filelist || filelist.length === 0) {
@@ -35,34 +34,6 @@ export const toFormData = (object: any): FormData => {
   return formData;
 };
 
-export const toRoleEnum = (role: string): Role => {
-  switch (role) {
-    case "RegionalTransformationManager":
-      return Role.RegionalManager;
-    case "CountryTransformationManager":
-      return Role.CountryManager;
-    case "Advocate":
-      return Role.Advocate;
-    case "Trainer":
-      return Role.Trainer;
-    case "Sponsor":
-      return Role.Sponsor;
-
-    default:
-      throw Error("Illegal value for tole. Found: " + role);
-  }
-};
-
-const getPermissionForRole = (role: Role): Permission[] => {
-  return AuthorizationPolicies[role];
-};
-
-export const checkAuthorized = (role: Role, required: Permission): boolean => {
-  const permissions = getPermissionForRole(role);
-  const foundPermission = permissions.find(permission => permission === required);
-  return foundPermission ? true : false;
-};
-
 export const toBoolean = (value: string | number | boolean | null | undefined): boolean => {
   if (value == null || value == undefined) {
     return false;
@@ -84,14 +55,6 @@ export const selectAllCountriesDataAsSelectOptions = (): SelectOption[] => {
   return [SELECT_ALL, ...countryOptions];
 };
 
-export const selectLoggedUserDefaultCountryAsSelection = (userCountry: string): SelectOption => {
-  const countriesAsSelections = selectAllCountriesDataAsSelectOptions();
-  const countrySelectOption = countriesAsSelections.find(
-    countryOption => countryOption.value === userCountry
-  );
-  return countrySelectOption as SelectOption;
-};
-
 export const selectCountryByIsoCodeAsSelectOption = (code: string): SelectOption[] => {
   const country = countriesData.find(country => country.code3 === code);
 
@@ -106,22 +69,6 @@ export const selectAllEmployeeDataAsSelectOptions = (): SelectOption[] => {
     return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
   });
   return [SELECT_ALL, ...employeesOptions];
-};
-
-export const selectRoleByIdAsSelectOption = (id: number): SelectOption[] => {
-  const role = careRolesData.find(role => role.id === id);
-
-  if (role) {
-    return [{ value: `${role.id}`, label: role.name }];
-  }
-  return [];
-};
-
-export const selectAllRolesDataAsSelectOptions = (): SelectOption[] => {
-  const rolesOptions = careRolesData.map(role => {
-    return { value: `${role.id}`, label: role.name };
-  });
-  return [SELECT_ALL, ...rolesOptions];
 };
 
 export const selectGroupsByIdsAsSelectValues = (ids: number[]): SelectOption[] => {
