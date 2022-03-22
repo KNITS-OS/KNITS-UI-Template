@@ -15,7 +15,7 @@
 
 */
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack"; //this will optimize load with webworker
 import Rating from "react-rating";
 import { useNavigate, useParams } from "react-router-dom";
@@ -38,8 +38,7 @@ import {
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { documentService } from "api";
-import { huddle64pdf } from "data";
+import { huddle64pdf, documentsData } from "data";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 import { SEARCH_DOCUMENT } from "../documents.routes.const";
@@ -49,20 +48,10 @@ export const DocumentDetailPage = () => {
   const { id } = useParams();
   const documentId = parseInt(id);
 
-  const [document, setDocument] = useState();
+  const [document] = useState(documentsData.find(document => document.id === documentId));
 
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-
-  useEffect(() => {
-    const fetchDocument = async () => {
-      const { data } = await documentService.getDocumentById(documentId);
-      setDocument(data);
-    };
-    fetchDocument();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (!document) {
     return (

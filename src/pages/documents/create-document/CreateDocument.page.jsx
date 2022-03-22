@@ -8,7 +8,6 @@ import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
 import { toFileArray } from "pages/utils";
 
-import { documentService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { defaultDocumentsTags } from "variables/app.consts";
 
@@ -28,8 +27,7 @@ export const CreateDocumentPage = () => {
   };
 
   const onCreateDocument = async () => {
-    // JSON server automatically adds ID to the document
-    await documentService.createDocument(document);
+    console.log("create document", document);
     setSuccessMessage("Document Created");
     setSaveSent(true);
     setIsSuccess(true);

@@ -1,6 +1,6 @@
-const sampleBase64pdf = require("./mock-data-pdf-base64");
+import { sampleBase64pdf } from "./mock-data-pdf-base64";
 
-module.exports = [
+export const documentsData = [
   {
     id: 1,
     title: "Use the right type for your variables",

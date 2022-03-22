@@ -22,7 +22,7 @@ import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
-import { documentService } from "api";
+import { documentsData } from "data";
 
 import { DocumentHighlightsPanel } from "../document-panels";
 import { DOCUMENT_DETAILS } from "../documents.routes.const";
@@ -34,12 +34,10 @@ export const SearchDocumentsPage = () => {
 
   const [alert] = useState(null);
 
-  const [documents, setDocuments] = useState([]);
+  const [documents] = useState(documentsData);
 
   const onSearchDocuments = async filters => {
-    const queryParams = new URLSearchParams(filters);
-    const { data } = await documentService.searchDocuments(queryParams);
-    setDocuments(data);
+    console.log("searchDocuments", filters);
   };
 
   const onViewDocumentDetails = e => {
@@ -50,9 +48,7 @@ export const SearchDocumentsPage = () => {
   const onDeleteDocument = async e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    await documentService.deleteDocument(id);
-
-    setDocuments(documents.filter(document => document.id !== parseInt(id)));
+    console.log("deleteDocument", id);
   };
 
   return (

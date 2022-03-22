@@ -15,7 +15,7 @@
 
 */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
@@ -25,7 +25,7 @@ import { BoxHeader } from "components/headers";
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
 import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
-import { employeeService } from "api";
+import { employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
 
 export const EmployeeDetailsPage = () => {
@@ -35,18 +35,8 @@ export const EmployeeDetailsPage = () => {
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [employee, setEmployee] = useState();
+  const [employee] = useState(employeesData.find(e => e.id === employeeId));
   const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
-
-  useEffect(() => {
-    const fetchEmployee = async () => {
-      const { data } = await employeeService.getEmployeeById(employeeId);
-      setEmployee(data);
-    };
-    fetchEmployee();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (!employee) {
     return (
@@ -57,8 +47,7 @@ export const EmployeeDetailsPage = () => {
   }
 
   const onSaveEmployee = async employeeRequest => {
-    const { data } = await employeeService.updateEmployee(employeeId, employeeRequest);
-    setEmployee(employee => ({ ...employee, ...data }));
+    console.log("httpUpdateRequest", employeeRequest);
     setSuccessMessage("Employee Updated");
     setSaveSent(true);
     setIsSuccess(true);
