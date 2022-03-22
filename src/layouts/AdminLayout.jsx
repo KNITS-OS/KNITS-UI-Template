@@ -21,8 +21,6 @@ import { Outlet, useLocation } from "react-router-dom";
 
 import careLogo from "assets/img/brand/CareLogoMin.png";
 
-import { routes } from "routes";
-
 import {
   findAllBusinessUnits,
   findAllCountries,
@@ -133,7 +131,6 @@ export const AdminLayout = () => {
       ) : (
         <>
           <Sidebar
-            routes={routes}
             logo={{
               innerLink: "/",
               imgSrc: careLogo,
