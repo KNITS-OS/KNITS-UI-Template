@@ -1,6 +1,4 @@
-import { Employee } from "types";
-
-export const employeesData: Employee[] = [
+module.exports = [
   {
     id: 1,
     pdmId: 1,

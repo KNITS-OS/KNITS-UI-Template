@@ -1,8 +1,7 @@
-import { Document } from "types";
+/* eslint-disable @typescript-eslint/no-var-requires */
+const sampleBase64pdf = require("./mock-data-pdf-base64");
 
-import { sampleBase64pdf } from "./mock-data-pdf-base64";
-
-export const documentsData: Document[] = [
+module.exports = [
   {
     id: 1,
     title: "Use the right type for your variables",
