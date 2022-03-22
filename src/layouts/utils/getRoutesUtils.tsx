@@ -1,6 +1,8 @@
 import { Route } from "react-router-dom";
 
-const getLayout = (route, layout, userRole) => {
+import { IRoute, LayoutType, Role } from "types";
+
+const getLayout = (route: IRoute, layout: LayoutType, userRole: Role) => {
   if (route.layout === layout && route.allowedRoles.includes(userRole) && route.component) {
     return <Route path={route.layout + route.path} element={route.component} key={route.key} />;
   } else {
@@ -8,11 +10,11 @@ const getLayout = (route, layout, userRole) => {
   }
 };
 
-const getRouteViews = (routes, layout, userRole) => {
+const getRouteViews = (routes: IRoute[], layout: LayoutType, userRole: Role) => {
   return routes.map(route => getLayout(route, layout, userRole));
 };
 
-export const getRoutes = (routes, layout, userRole) => {
+export const getRoutes = (routes: IRoute[], layout: LayoutType, userRole: Role) => {
   return routes.map(route => {
     if (
       route.collapse &&

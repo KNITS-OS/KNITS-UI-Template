@@ -19,8 +19,6 @@ import { Outlet, useLocation } from "react-router-dom";
 
 import careLogo from "assets/img/brand/CareLogoMin.png";
 
-import { routes } from "routes";
-
 import { AdminFooter } from "components/footers";
 import { AdminNavbar } from "components/navbars";
 import { Sidebar } from "components/sidebar";
@@ -41,7 +39,6 @@ export const AdminLayout = () => {
   return (
     <>
       <Sidebar
-        routes={routes}
         logo={{
           innerLink: "/",
           imgSrc: careLogo,
