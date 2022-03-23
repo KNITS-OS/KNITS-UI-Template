@@ -34,7 +34,8 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }: Props) => {
   const [groups, setGroups] = useState<number[]>(employee.groups || []);
 
   // state to know which group fields has the user selected
-  const [currentGroupSelections, setCurrentGroupSelections] = useState<SelectOption[]>([]);
+  const [currentGroupSelections, setCurrentGroupSelections] =
+    useState<SelectOption[]>(employeeGroups);
 
   const onSaveEmployee = () => {
     const newEmployee: Employee = {
