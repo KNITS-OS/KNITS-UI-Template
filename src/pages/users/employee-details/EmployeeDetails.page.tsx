@@ -63,7 +63,7 @@ export const EmployeeDetailsPage = () => {
       id: employeeId,
       body: updatedEmployee,
     });
-    setEmployee(employee => ({ ...employee, ...data }));
+    setEmployee(data);
 
     setSuccessMessage("Employee Updated");
     setSaveSent(true);
