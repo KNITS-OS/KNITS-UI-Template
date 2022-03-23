@@ -1,3 +1,4 @@
+import { employeeService } from "api";
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +9,6 @@ import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import { employeeService } from "api";
 import { Employee, EmployeeQueryFilters } from "types";
 
 import {

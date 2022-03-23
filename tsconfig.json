@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "declaration": true,
+    "declaration": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,

@@ -14,6 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import { documentService } from "api";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack"; //this will optimize load with webworker
@@ -38,7 +39,6 @@ import {
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { documentService } from "api";
 import { huddle64pdf } from "data";
 import { Document as DocumentType } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";

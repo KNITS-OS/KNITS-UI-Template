@@ -14,6 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import { documentService } from "api";
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +23,6 @@ import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
-import { documentService } from "api";
 import { DocumentsQueryFilters, Document } from "types";
 
 import { DocumentHighlightsPanel } from "../document-panels";

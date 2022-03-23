@@ -1,3 +1,4 @@
+import { employeeService } from "api";
 import { useEffect, useState } from "react";
 
 import { Card, Collapse } from "reactstrap";
@@ -7,7 +8,6 @@ import { ReactTable } from "components/widgets";
 
 import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
-import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { Group, Employee, AdvancedEmployeeQueryFilters } from "types";
 

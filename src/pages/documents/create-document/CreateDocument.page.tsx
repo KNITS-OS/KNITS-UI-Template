@@ -1,3 +1,4 @@
+import { documentService } from "api";
 import { useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
@@ -8,7 +9,6 @@ import { InputField, FileInput, DisplayFiles } from "components/widgets";
 
 import { toFileArray } from "pages/utils";
 
-import { documentService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { SelectOption, Document } from "types";
 import { defaultDocumentsTags } from "variables/app.consts";
