@@ -4,8 +4,6 @@ import { RootState } from "redux/app";
 
 import { SELECT_ALL_IDS } from "variables/app.consts";
 
-import { selectAllEmployeeData } from "../employees";
-
 export const selectGroupState = (rootState: RootState) => rootState.group;
 
 export const selectAllGroupData = createSelector(
@@ -39,16 +37,3 @@ export const selectAllGroupsDataAsSelectOptions = createSelector([selectAllGroup
   });
   return [SELECT_ALL_IDS(groups.map(group => group.id)), ...groupOptions];
 });
-
-export const selectGroupMembers = (groupId: number) =>
-  createSelector(
-    [
-      selectGroupById(groupId), // select the current group
-      state => selectAllEmployeeData(state),
-    ],
-    (group, employees) => {
-      return Object.keys(employees)
-        .map(key => employees[parseInt(key)])
-        .filter(employee => group?.members.includes(employee.id));
-    }
-  );

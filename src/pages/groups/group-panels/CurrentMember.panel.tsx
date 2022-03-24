@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Collapse } from "reactstrap";
@@ -9,7 +9,10 @@ import { EMPLOYEE_DETAILS, employeesTableColumns } from "pages/users";
 
 import { Employee, Group } from "types";
 
+import { employeeService } from "../../../redux/features";
+
 interface Props {
+  group: Group;
   currentMembersCollapse: boolean;
   currentGroupMembers: Employee[];
   setGroup: React.Dispatch<React.SetStateAction<Group>>;
@@ -17,12 +20,25 @@ interface Props {
 }
 
 export const CurrentMemberPanel = ({
+  group,
   currentMembersCollapse,
   currentGroupMembers,
   setGroup,
   setCurrentGroupMembers,
 }: Props) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchGroupMembers = async (members: number[]) => {
+      const groupMembers = await employeeService.searchEmployeesByIds(members);
+      setCurrentGroupMembers(groupMembers.data as Employee[]);
+    };
+
+    if (group.members.length > 0) {
+      fetchGroupMembers(group.members);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onViewMemberDetails = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.currentTarget as HTMLButtonElement;

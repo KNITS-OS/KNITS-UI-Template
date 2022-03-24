@@ -3,7 +3,7 @@ import { ActionType } from "typesafe-actions";
 
 import { AppActionType, typedAction, SerializedError, IUpdated } from "redux/app";
 
-import { Group } from "types";
+import { Group, GroupSaveRequest } from "types";
 
 import { groupService } from ".";
 
@@ -59,17 +59,19 @@ export type GroupActionType = ActionType<
   | typeof deleteGroupError
 >;
 
-export const createGroup = (group: Group) => async (dispatch: Dispatch<GroupActionType>) => {
-  try {
-    dispatch(createGroupLoading());
+export const createGroup =
+  (group: GroupSaveRequest) => async (dispatch: Dispatch<GroupActionType>) => {
+    try {
+      dispatch(createGroupLoading());
+      console.log("group 1234", group);
 
-    const { data } = await groupService.createGroup(group);
+      const { data } = await groupService.createGroup(group);
 
-    dispatch(createGroupComplete(data));
-  } catch (err) {
-    dispatch(createGroupError(err as SerializedError));
-  }
-};
+      dispatch(createGroupComplete(data));
+    } catch (err) {
+      dispatch(createGroupError(err as SerializedError));
+    }
+  };
 
 export const searchGroup = (id: number) => async (dispatch: Dispatch<GroupActionType>) => {
   try {

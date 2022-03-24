@@ -16,6 +16,11 @@ const findAllEmployees = (): HttpResponseType<Employee[]> => httpCommon.get(`${E
 const getEmployeeById = (id: number): HttpResponseType<Employee> =>
   httpCommon.get(`${EMPLOYEE_ROUTE}/${id}`);
 
+const searchEmployeesByIds = (employeeIds: number[]) => {
+  const searchString = employeeIds.map(id => `id=${id}`).join("&");
+  return httpCommon.get(`${EMPLOYEE_ROUTE}?${searchString}`);
+};
+
 const updateEmployee = (updatedEmployee: IUpdated<Employee>): HttpResponseType<Employee> => {
   const { id, body } = updatedEmployee;
   return httpCommon.put(`${EMPLOYEE_ROUTE}/${id}`, body);
@@ -28,6 +33,7 @@ export const employeeService = {
   searchEmployees,
   findAllEmployees,
   getEmployeeById,
+  searchEmployeesByIds,
   updateEmployee,
   deleteEmployee,
 };

@@ -1,13 +1,13 @@
 import { GROUP_ROUTE, httpCommon, HttpResponseType, IUpdated } from "redux/app";
 
-import { Group } from "types";
+import { Group, GroupSaveRequest } from "types";
 
 const findAll = (): HttpResponseType<Group[]> => httpCommon.get(`${GROUP_ROUTE}`);
 
 const getGroupById = (id: number): HttpResponseType<Group> =>
   httpCommon.get(`${GROUP_ROUTE}/${id}`);
 
-const createGroup = (group: Group): HttpResponseType<Group> =>
+const createGroup = (group: GroupSaveRequest): HttpResponseType<Group> =>
   httpCommon.post(`${GROUP_ROUTE}`, group);
 
 const updateGroup = (updatedGroup: IUpdated<Group>): HttpResponseType<Group> => {
