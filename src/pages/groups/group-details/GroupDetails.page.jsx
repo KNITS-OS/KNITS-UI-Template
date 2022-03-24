@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
 import { selectGroupById, updateGroup } from "redux/features";
 
@@ -25,6 +25,14 @@ export const GroupDetailsPage = () => {
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
   const { fireAlert } = useFeatureDisabledWarning();
+
+  if (!group) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   const onSaveGroup = () => {
     dispatch(updateGroup(groupId, group));

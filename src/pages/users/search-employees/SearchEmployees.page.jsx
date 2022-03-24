@@ -39,7 +39,7 @@ export const SearchEmployeesPage = () => {
     e.preventDefault();
     const { id } = e.currentTarget;
 
-    dispatch(deleteEmployee(id));
+    dispatch(deleteEmployee(parseInt(id)));
   };
 
   return (

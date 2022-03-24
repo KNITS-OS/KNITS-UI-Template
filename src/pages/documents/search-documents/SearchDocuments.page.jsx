@@ -50,7 +50,7 @@ export const SearchDocumentsPage = () => {
   const onDeleteDocument = async e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    dispatch(deleteDocument(id));
+    dispatch(deleteDocument(parseInt(id)));
   };
 
   return (
