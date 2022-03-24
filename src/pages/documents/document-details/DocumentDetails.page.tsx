@@ -14,10 +14,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { documentService } from "api";
-import { huddle64pdf } from "data";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack"; //this will optimize load with webworker
 import Rating from "react-rating";
 import { useNavigate, useParams } from "react-router-dom";
@@ -37,10 +35,13 @@ import {
   Spinner,
 } from "reactstrap";
 
+import { useAppSelector } from "redux/app";
+import { selectDocumentById } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { Document as DocumentType } from "types";
+import { huddle64pdf } from "data";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
 import { SEARCH_DOCUMENT } from "..";
@@ -50,20 +51,10 @@ export const DocumentDetailPage = () => {
   const { id } = useParams() as { id: string };
   const documentId = parseInt(id);
 
-  const [document, setDocument] = useState<DocumentType>();
+  const document = useAppSelector(selectDocumentById(documentId));
 
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
-
-  useEffect(() => {
-    const fetchDocument = async () => {
-      const { data } = await documentService.getDocumentById(documentId);
-      setDocument(data);
-    };
-    fetchDocument();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (!document) {
     return (

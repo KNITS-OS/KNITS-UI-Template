@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 
 import { Col, Row } from "reactstrap";
 
-import { FilterPanel } from "components/panels";
-import { DateField, InputField, SelectField } from "components/widgets";
-
+import { useAppSelector } from "redux/app";
 import {
   selectAllBusinessUnitsDataAsSelectOptions,
   selectAllCountriesDataAsSelectOptions,
   selectAllGroupsDataAsSelectOptions,
-} from "pages/utils";
+} from "redux/features";
+
+import { FilterPanel } from "components/panels";
+import { DateField, InputField, SelectField } from "components/widgets";
 
 import { AdvancedEmployeeQueryFilters, Employee, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
@@ -21,9 +22,9 @@ interface Props {
 }
 
 export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMembers }: Props) => {
-  const [businessUnits] = useState(selectAllBusinessUnitsDataAsSelectOptions);
-  const [countries] = useState(selectAllCountriesDataAsSelectOptions);
-  const [groups] = useState(selectAllGroupsDataAsSelectOptions);
+  const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
+  const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);
+  const groups = useAppSelector(selectAllGroupsDataAsSelectOptions);
 
   const [searchLastName, setSearchLastName] = useState("");
   const [searchOnBoardDateFrom, setSearchOnBoardDateFrom] = useState<Moment | undefined>(undefined);

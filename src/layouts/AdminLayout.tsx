@@ -15,11 +15,12 @@
 
 */
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 
 import careLogo from "assets/img/brand/CareLogoMin.png";
 
+import { useAppSelector } from "redux/app";
 import {
   selectAllCountryData,
   selectAllBusinessUnitData,
@@ -51,10 +52,10 @@ export const AdminLayout = () => {
   const [isGroupsDataLoaded, setIsGroupsDataLoaded] = useState(false);
   const [isEmployeesDataLoaded, setIsEmployeesDataLoaded] = useState(false);
 
-  const countries = useSelector(selectAllCountryData);
-  const businessUnits = useSelector(selectAllBusinessUnitData);
-  const groups = useSelector(selectAllGroupData);
-  const employees = useSelector(selectAllEmployeeData);
+  const countries = useAppSelector(selectAllCountryData);
+  const businessUnits = useAppSelector(selectAllBusinessUnitData);
+  const groups = useAppSelector(selectAllGroupData);
+  const employees = useAppSelector(selectAllEmployeeData);
 
   useEffect(() => {
     dispatch(findAllCountries());

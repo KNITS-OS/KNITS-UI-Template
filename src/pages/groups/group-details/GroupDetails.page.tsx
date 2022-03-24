@@ -1,8 +1,11 @@
-import { groupsData } from "data";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
+
+import { useAppSelector } from "redux/app";
+import { selectGroupById, updateGroup } from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
@@ -16,14 +19,26 @@ export const GroupDetailsPage = () => {
   const { id } = useParams() as { id: string };
   const groupId = parseInt(id);
   const navigate = useNavigate();
-  const [group, setGroup] = useState(groupsData.find(e => e.id === groupId) as Group);
+  const dispatch = useDispatch();
+
+  const groupState = useAppSelector(selectGroupById(groupId)) as Group;
+  const [group, setGroup] = useState(groupState);
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const { fireAlert } = useFeatureDisabledWarning();
 
+  if (!group) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   const onSaveGroup = () => {
-    console.log("update group", groupId, group);
+    dispatch(updateGroup({ id: groupId, body: group }));
+
     setSuccessMessage("Group Updated");
     setSaveSent(true);
     setIsSuccess(true);
@@ -31,12 +46,9 @@ export const GroupDetailsPage = () => {
 
   const onToggleGroupActive = () => {
     fireAlert();
-
-    console.log("toggle group active", groupId, group);
   };
   const onDeleteGroup = () => {
     fireAlert();
-    console.log("delete group", groupId);
   };
 
   return (

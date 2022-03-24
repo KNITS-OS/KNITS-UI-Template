@@ -14,16 +14,19 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { documentService } from "api";
 import { MouseEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 
+import { useAppSelector } from "redux/app";
+import { deleteDocument, searchDocuments, selectAllDocumentsData } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
-import { DocumentsQueryFilters, Document } from "types";
+import { DocumentsQueryFilters } from "types";
 
 import { DocumentHighlightsPanel } from "../document-panels";
 import { DOCUMENT_DETAILS } from "../documents.routes.const";
@@ -32,15 +35,14 @@ import { documentsTableColumns, SearchDocumentsFilterPanel } from ".";
 
 export const SearchDocumentsPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [alert] = useState(null);
 
-  const [documents, setDocuments] = useState<Document[]>([]);
+  const documents = useAppSelector(selectAllDocumentsData);
 
   const onSearchDocuments = async (filters: DocumentsQueryFilters) => {
-    const queryParams = new URLSearchParams(filters as any);
-    const { data } = await documentService.searchDocuments(queryParams);
-    setDocuments(data);
+    dispatch(searchDocuments(filters));
   };
 
   const onViewDocumentDetails = (e: MouseEvent<HTMLButtonElement>) => {
@@ -51,9 +53,7 @@ export const SearchDocumentsPage = () => {
   const onDeleteDocument = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    await documentService.deleteDocument(parseInt(id));
-
-    setDocuments(documents.filter(document => document.id !== parseInt(id)));
+    dispatch(deleteDocument(parseInt(id)));
   };
 
   return (

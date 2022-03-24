@@ -15,16 +15,21 @@
 
 */
 
-import { employeeService } from "api";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
+import { useAppSelector } from "redux/app";
+import {
+  selectAllGroupsDataAsSelectOptions,
+  selectEmployeeById,
+  updateEmployee,
+} from "redux/features";
+
 import { BoxHeader } from "components/headers";
 
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
-import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
 import { useLocalStateAlerts } from "hooks";
 import { Employee } from "types";
@@ -33,22 +38,12 @@ export const EmployeeDetailsPage = () => {
   const { id } = useParams() as { id: string };
   const employeeId = parseInt(id);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [employee, setEmployee] = useState<Employee>();
-
-  const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
-
-  useEffect(() => {
-    const fetchEmployee = async () => {
-      const { data } = await employeeService.getEmployeeById(employeeId);
-      setEmployee(data);
-    };
-    fetchEmployee();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const employee = useAppSelector(selectEmployeeById(employeeId));
+  const groupOptions = useAppSelector(selectAllGroupsDataAsSelectOptions);
 
   if (!employee) {
     return (
@@ -59,11 +54,7 @@ export const EmployeeDetailsPage = () => {
   }
 
   const onSaveEmployee = async (updatedEmployee: Employee) => {
-    const { data } = await employeeService.updateEmployee({
-      id: employeeId,
-      body: updatedEmployee,
-    });
-    setEmployee(data);
+    dispatch(updateEmployee({ id: employeeId, body: updatedEmployee }));
 
     setSuccessMessage("Employee Updated");
     setSaveSent(true);

@@ -1,35 +1,38 @@
-import { employeeService } from "api";
-import { MouseEvent, useState } from "react";
+import { MouseEvent } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
+
+import { useAppSelector } from "redux/app";
+import {
+  deleteEmployee,
+  searchEmployees,
+  selectAllBusinessUnitsDataAsSelectOptions,
+  selectAllCountriesDataAsSelectOptions,
+  selectAllEmployeeData,
+} from "redux/features";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import { Employee, EmployeeQueryFilters } from "types";
-
-import {
-  selectAllBusinessUnitsDataAsSelectOptions,
-  selectAllCountriesDataAsSelectOptions,
-} from "../../utils";
+import { EmployeeQueryFilters } from "types";
 
 import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
 
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const dispatch = useDispatch();
+  const employees = useAppSelector(selectAllEmployeeData);
 
-  const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
-  const countries = selectAllCountriesDataAsSelectOptions();
+  const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
+  const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);
 
   const onSearchEmployees = async (filters: EmployeeQueryFilters) => {
-    const queryParams = new URLSearchParams(filters as any);
-    const { data } = await employeeService.searchEmployees(queryParams);
-    setEmployees(data);
+    dispatch(searchEmployees(filters));
   };
 
   const onViewEmployeeDetails = (e: MouseEvent<HTMLButtonElement>) => {
@@ -42,8 +45,7 @@ export const SearchEmployeesPage = () => {
     e.preventDefault();
     const { id } = e.currentTarget;
 
-    await employeeService.deleteEmployee(parseInt(id));
-    setEmployees(employees.filter(employee => employee.id !== parseInt(id)));
+    dispatch(deleteEmployee(parseInt(id)));
   };
 
   return (

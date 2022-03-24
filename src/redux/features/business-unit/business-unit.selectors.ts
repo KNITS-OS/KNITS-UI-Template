@@ -1,5 +1,7 @@
 import { createSelector } from "reselect";
 
+import { RootState } from "redux/app";
+
 import { SELECT_ALL } from "variables/app.consts";
 
 export const selectBusinessUnitState = (rootState: RootState) => rootState.businessUnit;
