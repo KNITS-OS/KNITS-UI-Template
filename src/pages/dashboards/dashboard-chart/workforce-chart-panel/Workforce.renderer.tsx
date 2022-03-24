@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { Line } from "react-chartjs-2";
 
 import { Chart, ILineChart } from "types";
@@ -17,8 +18,8 @@ const toWorkforceLineChartUI = (response: Chart[]): ILineChart => {
   };
 };
 
-export const renderChart = (response: Chart[]) => {
-  const chart = toWorkforceLineChartUI(response);
+export const renderChart = (response: AxiosResponse<Chart[]>) => {
+  const chart = toWorkforceLineChartUI(response.data);
   return (
     <Line data={chart.data} options={chart.options} id="chart-workforce" className="chart-canvas" />
   );

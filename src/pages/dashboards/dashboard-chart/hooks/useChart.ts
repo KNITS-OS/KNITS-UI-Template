@@ -1,24 +1,42 @@
+import { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 
-import { renderChartErrorAlert } from "..";
+import { HttpResponseType } from "redux/app";
 
-interface RenderChartFunction<T> {
-  (response: T): JSX.Element;
+import { renderChartErrorAlert } from "../Chart.renderers";
+
+interface ApiCallFunction<T> {
+  (): HttpResponseType<T>;
 }
 
-export const useChart = <T>(data: T, renderChart: RenderChartFunction<T>) => {
-  const [isLoading] = useState<boolean>(false);
+interface RenderChartFunction<T> {
+  (response: AxiosResponse<T>): JSX.Element;
+}
+
+export const useChart = <T>(
+  asyncFunction: ApiCallFunction<T>,
+  renderChart: RenderChartFunction<T>
+) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [chart, setChart] = useState<JSX.Element>();
   const [alert, setAlert] = useState<JSX.Element>();
 
-  useEffect(() => {
-    if (data) {
-      setChart(renderChart(data));
+  const fetchDataAsync = async () => {
+    const httpResponse = await asyncFunction();
+    console.log("httpResponse 1234", httpResponse);
+
+    if (!httpResponse.data) {
+      setAlert(renderChartErrorAlert(httpResponse));
     } else {
-      setAlert(renderChartErrorAlert());
+      setChart(renderChart(httpResponse));
     }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchDataAsync();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoading]);
 
   return { isLoading, chart, alert };
 };

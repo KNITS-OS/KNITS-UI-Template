@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { Bar } from "react-chartjs-2";
 
 import { TurnoverChart, IBarChart } from "types";
@@ -25,7 +26,7 @@ export const toTurnoverBarChartUI = (response: TurnoverChart[]): IBarChart => {
   };
 };
 
-export const renderChart = (response: TurnoverChart[]) => {
-  const barChart = toTurnoverBarChartUI(response);
+export const renderChart = (response: AxiosResponse<TurnoverChart[]>) => {
+  const barChart = toTurnoverBarChartUI(response.data);
   return <Bar data={barChart.data} options={barChart.options} className="chart-canvas" />;
 };

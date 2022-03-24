@@ -1,4 +1,4 @@
-import { workforceReport } from "data";
+import { dashboardService } from "redux/features";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
@@ -6,7 +6,7 @@ import { useChart } from "../hooks";
 import { renderChart } from "./Workforce.renderer";
 
 export const WorkforceChartPanel = () => {
-  const { isLoading, chart, alert } = useChart(workforceReport, renderChart);
+  const { isLoading, chart, alert } = useChart(dashboardService.getWorkforceReport, renderChart);
 
   return (
     <ChartPanel

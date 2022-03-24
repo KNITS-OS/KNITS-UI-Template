@@ -1,4 +1,4 @@
-import { distributionByGenderReport } from "data";
+import { dashboardService } from "redux/features";
 
 import { ChartPanel } from "../chart-panels";
 import { useChart } from "../hooks";
@@ -6,7 +6,10 @@ import { useChart } from "../hooks";
 import { renderChart } from "./Gender.renderer";
 
 export const GenderChartPanel = () => {
-  const { isLoading, chart, alert } = useChart(distributionByGenderReport, renderChart);
+  const { isLoading, chart, alert } = useChart(
+    dashboardService.getDistributionByGenderReport,
+    renderChart
+  );
 
   return (
     <ChartPanel

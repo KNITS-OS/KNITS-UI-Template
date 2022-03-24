@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { Pie } from "react-chartjs-2";
 
 import { Chart, IPieChart } from "types";
@@ -29,7 +30,7 @@ const toPieChartUI = (response: Chart[]): IPieChart => {
   };
 };
 
-export const renderChart = (response: Chart[]) => {
-  const pieChart = toPieChartUI(response);
+export const renderChart = (response: AxiosResponse<Chart[]>) => {
+  const pieChart = toPieChartUI(response.data);
   return <Pie data={pieChart.data} options={pieChart.options} className="chart-canvas" />;
 };
