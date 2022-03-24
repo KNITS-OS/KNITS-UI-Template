@@ -4,7 +4,7 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 import {
-  // worldOverviewReducer,
+  worldOverviewReducer,
   // countryReducer,
   // businessUnitReducer,
   groupReducer,
@@ -18,9 +18,9 @@ const rootReducer = combineReducers({
   employee: employeeReducer,
   document: documentReducer,
   group: groupReducer,
+  worldOverview: worldOverviewReducer,
   // businessUnit: businessUnitReducer,
   // country: countryReducer,
-  // worldOverview: worldOverviewReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

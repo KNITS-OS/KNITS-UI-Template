@@ -1,5 +1,8 @@
 import { createSelector } from "reselect";
 
+import { RootState } from "redux/app";
+
+import { WorldOverviewCachedReports } from "types";
 import {
   NO_REPORT_CACHED,
   REPORT_KEY_ACTIVE_MEMBERS,
@@ -9,14 +12,15 @@ import {
   REPORT_KEY_SELF_RESIGNED_MEMBERS,
 } from "variables/app.consts";
 
-export const selectWorldOverviewCachedReportsState = rootState => rootState.worldOverview;
+export const selectWorldOverviewCachedReportsState = (rootState: RootState) =>
+  rootState.worldOverview;
 
 const selectAllReportsData = createSelector(
   [selectWorldOverviewCachedReportsState],
   worldOverview => worldOverview.entities
 );
 
-const findReportInCache = (allReports, cacheKey) => {
+const findReportInCache = (allReports: WorldOverviewCachedReports[], cacheKey: string) => {
   const reportsData = allReports.find(report => report.reportName === cacheKey);
   return reportsData ? reportsData.data : NO_REPORT_CACHED;
 };

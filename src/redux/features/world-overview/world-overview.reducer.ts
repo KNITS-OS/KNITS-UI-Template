@@ -1,3 +1,6 @@
+/* eslint-disable no-case-declarations */
+import { AnyAction } from "redux";
+
 import {
   FETCH_ACTIVE_MEMBERS_REPORT_LOADING,
   FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING,
@@ -11,8 +14,10 @@ import {
   FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE,
   FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE,
   FETCH_NEW_MEMBERS_REPORT_COMPLETE,
+  StateType,
 } from "redux/app";
 
+import { WorldOverviewCachedReports } from "types";
 import {
   REPORT_KEY_NEW_MEMBERS,
   REPORT_KEY_CURRENT_MAP,
@@ -24,7 +29,7 @@ import {
 
 const NO_ACTION_FOUND = "NO_ACTION_FOUND";
 
-const initialState = {
+const initialState: StateType<WorldOverviewCachedReports> = {
   entities: [
     {
       reportName: REPORT_KEY_ACTIVE_MEMBERS,
@@ -53,7 +58,7 @@ const initialState = {
   error: {},
 };
 
-const toCacheKey = actionType => {
+const toCacheKey = (actionType: string): string => {
   switch (actionType) {
     case FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE:
       return REPORT_KEY_ACTIVE_MEMBERS;
@@ -68,7 +73,10 @@ const toCacheKey = actionType => {
   }
 };
 
-export const worldOverviewReducer = (worldOverviewState = initialState, action = {}) => {
+export const worldOverviewReducer = (
+  worldOverviewState = initialState,
+  action: AnyAction
+): StateType<WorldOverviewCachedReports> => {
   const { type, payload } = action;
   const { entities, entity } = worldOverviewState;
   switch (type) {
@@ -114,6 +122,7 @@ export const worldOverviewReducer = (worldOverviewState = initialState, action =
         entity,
         isLoading: false,
         isSuccess: true,
+        error: {},
       };
 
     default:

@@ -1,3 +1,5 @@
+import { AnyAction, Dispatch } from "redux";
+
 import {
   FETCH_ACTIVE_MEMBERS_REPORT_LOADING,
   FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING,
@@ -11,87 +13,99 @@ import {
   FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE,
   FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE,
   FETCH_NEW_MEMBERS_REPORT_COMPLETE,
+  typedAction,
+  SerializedError,
 } from "redux/app";
+
+import { MapValues } from "types";
 
 import { worldOverviewService } from ".";
 
+// Loading
+const fetchActiveMembersReportLoading = () =>
+  typedAction(FETCH_ACTIVE_MEMBERS_REPORT_LOADING, FETCH_ACTIVE_MEMBERS_REPORT_LOADING);
+const fetchNewMembersReportLoading = () =>
+  typedAction(FETCH_NEW_MEMBERS_REPORT_LOADING, FETCH_NEW_MEMBERS_REPORT_LOADING);
+const fetchAutoOffboardedMembersReportLoading = () =>
+  typedAction(
+    FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING,
+    FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING
+  );
+const fetchSelfResignedMembersReportLoading = () =>
+  typedAction(
+    FETCH_SELF_RESIGNED_MEMBERS_REPORT_LOADING,
+    FETCH_SELF_RESIGNED_MEMBERS_REPORT_LOADING
+  );
+
+// Complete
+const fetchActiveMembersReportComplete = (data: MapValues) =>
+  typedAction(FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE, data);
+
+const fetchNewMembersReportComplete = (data: MapValues) =>
+  typedAction(FETCH_NEW_MEMBERS_REPORT_COMPLETE, data);
+
+const fetchAutoOffboardedReportComplete = (data: MapValues) =>
+  typedAction(FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE, data);
+
+const fetchSelfResignedMembersReportComplete = (data: MapValues) =>
+  typedAction(FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE, data);
+
+// Error
+const fetchActiveMembersReportError = (err: SerializedError) =>
+  typedAction(FETCH_ACTIVE_MEMBERS_REPORT_ERROR, err.message);
+
+const fetchNewMembersReportError = (err: SerializedError) =>
+  typedAction(FETCH_NEW_MEMBERS_REPORT_ERROR, err.message);
+
+const fetchAutoOffboardedMembersReportError = (err: SerializedError) =>
+  typedAction(FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_ERROR, err.message);
+
+const fetchSelfResignedMembersReportError = (err: SerializedError) =>
+  typedAction(FETCH_SELF_RESIGNED_MEMBERS_REPORT_ERROR, err.message);
+
 export const fetchActiveMembersReport = () => async (dispatch: Dispatch<AnyAction>) => {
   try {
-    dispatch({
-      type: FETCH_ACTIVE_MEMBERS_REPORT_LOADING,
-      payload: FETCH_ACTIVE_MEMBERS_REPORT_LOADING,
-    });
+    dispatch(fetchActiveMembersReportLoading());
 
     const { data } = await worldOverviewService.getActiveMembersMapData();
 
-    dispatch({
-      type: FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE,
-      payload: data,
-    });
+    dispatch(fetchActiveMembersReportComplete(data));
   } catch (err) {
-    dispatch({
-      type: FETCH_ACTIVE_MEMBERS_REPORT_ERROR,
-      payload: err.message,
-    });
+    dispatch(fetchActiveMembersReportError(err as SerializedError));
   }
 };
+
 export const fetchNewMembersReport = () => async (dispatch: Dispatch<AnyAction>) => {
   try {
-    dispatch({
-      type: FETCH_NEW_MEMBERS_REPORT_LOADING,
-      payload: FETCH_NEW_MEMBERS_REPORT_LOADING,
-    });
+    dispatch(fetchNewMembersReportLoading());
 
     const { data } = await worldOverviewService.getNewMembersMapData();
 
-    dispatch({
-      type: FETCH_NEW_MEMBERS_REPORT_COMPLETE,
-      payload: data,
-    });
+    dispatch(fetchNewMembersReportComplete(data));
   } catch (err) {
-    dispatch({
-      type: FETCH_NEW_MEMBERS_REPORT_ERROR,
-      payload: err.message,
-    });
+    dispatch(fetchNewMembersReportError(err as SerializedError));
   }
 };
+
 export const fetchAutoOffboardedMembersReport = () => async (dispatch: Dispatch<AnyAction>) => {
   try {
-    dispatch({
-      type: FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING,
-      payload: FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING,
-    });
+    dispatch(fetchAutoOffboardedMembersReportLoading());
 
     const { data } = await worldOverviewService.getAutoOffboardedMembersMapData();
 
-    dispatch({
-      type: FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE,
-      payload: data,
-    });
+    dispatch(fetchAutoOffboardedReportComplete(data));
   } catch (err) {
-    dispatch({
-      type: FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_ERROR,
-      payload: err.message,
-    });
+    dispatch(fetchAutoOffboardedMembersReportError(err as SerializedError));
   }
 };
 export const fetchSelfResignedMembersReport = () => async (dispatch: Dispatch<AnyAction>) => {
   try {
-    dispatch({
-      type: FETCH_SELF_RESIGNED_MEMBERS_REPORT_LOADING,
-      payload: FETCH_SELF_RESIGNED_MEMBERS_REPORT_LOADING,
-    });
+    dispatch(fetchSelfResignedMembersReportLoading());
 
     const { data } = await worldOverviewService.getSelfResignedMembersMapData();
 
-    dispatch({
-      type: FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE,
-      payload: data,
-    });
+    dispatch(fetchSelfResignedMembersReportComplete(data));
   } catch (err) {
-    dispatch({
-      type: FETCH_SELF_RESIGNED_MEMBERS_REPORT_ERROR,
-      payload: err.message,
-    });
+    dispatch(fetchSelfResignedMembersReportError(err as SerializedError));
   }
 };

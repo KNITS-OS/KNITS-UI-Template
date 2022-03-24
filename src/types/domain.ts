@@ -84,3 +84,7 @@ export interface WorldOverviewCachedReports extends Domain {
 export declare type WorldDataReport = {
   [countryCode: string]: number;
 };
+
+export type MapValues = {
+  [key: string]: number;
+};
