@@ -1,49 +1,54 @@
 import { AnyAction, Dispatch } from "redux";
 
-import {
-  SEARCH_EMPLOYEE_LOADING,
-  SEARCH_EMPLOYEE_ERROR,
-  SEARCH_EMPLOYEE_COMPLETE,
-  DELETE_EMPLOYEE_COMPLETE,
-  DELETE_EMPLOYEE_ERROR,
-  DELETE_EMPLOYEE_LOADING,
-  SEARCH_EMPLOYEES_COMPLETE,
-  SEARCH_EMPLOYEES_ERROR,
-  SEARCH_EMPLOYEES_LOADING,
-  UPDATE_EMPLOYEE_COMPLETE,
-  UPDATE_EMPLOYEE_ERROR,
-  UPDATE_EMPLOYEE_LOADING,
-  IUpdated,
-  typedAction,
-  SerializedError,
-} from "redux/app";
+import { ActionType, IUpdated, typedAction, SerializedError } from "redux/app";
 
 import { Employee } from "types";
 
 import { employeeService } from ".";
 
-const searchEmployeeLoading = () => typedAction(SEARCH_EMPLOYEE_LOADING, SEARCH_EMPLOYEE_LOADING);
+const searchEmployeeLoading = () =>
+  typedAction(ActionType.SEARCH_EMPLOYEE_LOADING, ActionType.SEARCH_EMPLOYEE_LOADING);
 const searchEmployeesLoading = () =>
-  typedAction(SEARCH_EMPLOYEES_LOADING, SEARCH_EMPLOYEES_LOADING);
-const updateEmployeeLoading = () => typedAction(UPDATE_EMPLOYEE_LOADING, UPDATE_EMPLOYEE_LOADING);
-const deleteEmployeeLoading = () => typedAction(DELETE_EMPLOYEE_LOADING, DELETE_EMPLOYEE_LOADING);
+  typedAction(ActionType.SEARCH_EMPLOYEES_LOADING, ActionType.SEARCH_EMPLOYEES_LOADING);
+const updateEmployeeLoading = () =>
+  typedAction(ActionType.UPDATE_EMPLOYEE_LOADING, ActionType.UPDATE_EMPLOYEE_LOADING);
+const deleteEmployeeLoading = () =>
+  typedAction(ActionType.DELETE_EMPLOYEE_LOADING, ActionType.DELETE_EMPLOYEE_LOADING);
 
-const searchEmployeeComplete = (data: Employee) => typedAction(SEARCH_EMPLOYEE_COMPLETE, data);
-const searchEmployeesComplete = (data: Employee[]) => typedAction(SEARCH_EMPLOYEES_COMPLETE, data);
-const updateEmployeeComplete = (data: Employee) => typedAction(UPDATE_EMPLOYEE_COMPLETE, data);
-const deleteEmployeeComplete = (data: number) => typedAction(DELETE_EMPLOYEE_COMPLETE, data);
+const searchEmployeeComplete = (data: Employee) =>
+  typedAction(ActionType.SEARCH_EMPLOYEE_COMPLETE, data);
+const searchEmployeesComplete = (data: Employee[]) =>
+  typedAction(ActionType.SEARCH_EMPLOYEES_COMPLETE, data);
+const updateEmployeeComplete = (data: Employee) =>
+  typedAction(ActionType.UPDATE_EMPLOYEE_COMPLETE, data);
+const deleteEmployeeComplete = (data: number) =>
+  typedAction(ActionType.DELETE_EMPLOYEE_COMPLETE, data);
 
 const searchEmployeeError = (err: SerializedError) =>
-  typedAction(SEARCH_EMPLOYEE_ERROR, err.message);
+  typedAction(ActionType.SEARCH_EMPLOYEE_ERROR, err.message);
 
 const searchEmployeesError = (err: SerializedError) =>
-  typedAction(SEARCH_EMPLOYEES_ERROR, err.message);
+  typedAction(ActionType.SEARCH_EMPLOYEES_ERROR, err.message);
 
 const updateEmployeeError = (err: SerializedError) =>
-  typedAction(UPDATE_EMPLOYEE_ERROR, err.message);
+  typedAction(ActionType.UPDATE_EMPLOYEE_ERROR, err.message);
 
 const deleteEmployeeError = (err: SerializedError) =>
-  typedAction(DELETE_EMPLOYEE_ERROR, err.message);
+  typedAction(ActionType.DELETE_EMPLOYEE_ERROR, err.message);
+
+export type EmployeeActionType =
+  | typeof searchEmployeeLoading
+  | typeof searchEmployeesLoading
+  | typeof updateEmployeeLoading
+  | typeof deleteEmployeeLoading
+  | typeof searchEmployeeComplete
+  | typeof searchEmployeesComplete
+  | typeof updateEmployeeComplete
+  | typeof deleteEmployeeComplete
+  | typeof searchEmployeeError
+  | typeof searchEmployeesError
+  | typeof updateEmployeeError
+  | typeof deleteEmployeeError;
 
 export const searchEmployee = (id: number) => async (dispatch: Dispatch<AnyAction>) => {
   try {

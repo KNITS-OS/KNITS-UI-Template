@@ -1,11 +1,6 @@
 import { AnyAction } from "redux";
 
-import {
-  LIST_BUSINESS_UNITS_COMPLETE,
-  LIST_BUSINESS_UNITS_LOADING,
-  LIST_BUSINESS_UNITS_ERROR,
-  StateType,
-} from "redux/app";
+import { ActionType, StateType } from "redux/app";
 
 import { BusinessUnit } from "types";
 
@@ -23,7 +18,7 @@ export const businessUnitReducer = (
 ): StateType<BusinessUnit> => {
   const { type, payload } = action;
   switch (type) {
-    case LIST_BUSINESS_UNITS_LOADING:
+    case ActionType.LIST_BUSINESS_UNITS_LOADING:
       return {
         isLoading: true,
         isSuccess: false,
@@ -32,7 +27,7 @@ export const businessUnitReducer = (
         entity: null,
       };
 
-    case LIST_BUSINESS_UNITS_ERROR:
+    case ActionType.LIST_BUSINESS_UNITS_ERROR:
       return {
         isLoading: false,
         isSuccess: false,
@@ -41,7 +36,7 @@ export const businessUnitReducer = (
         entity: null,
       };
 
-    case LIST_BUSINESS_UNITS_COMPLETE:
+    case ActionType.LIST_BUSINESS_UNITS_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,

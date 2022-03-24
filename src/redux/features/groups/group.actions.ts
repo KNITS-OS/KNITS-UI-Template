@@ -1,51 +1,43 @@
 import { AnyAction, Dispatch } from "redux";
 
-import {
-  CREATE_GROUP_COMPLETE,
-  CREATE_GROUP_ERROR,
-  CREATE_GROUP_LOADING,
-  DELETE_GROUP_COMPLETE,
-  DELETE_GROUP_ERROR,
-  DELETE_GROUP_LOADING,
-  SEARCH_GROUP_COMPLETE,
-  SEARCH_GROUP_ERROR,
-  SEARCH_GROUP_LOADING,
-  SEARCH_GROUPS_COMPLETE,
-  SEARCH_GROUPS_ERROR,
-  SEARCH_GROUPS_LOADING,
-  UPDATE_GROUP_COMPLETE,
-  UPDATE_GROUP_ERROR,
-  UPDATE_GROUP_LOADING,
-  typedAction,
-  SerializedError,
-  IUpdated,
-} from "redux/app";
+import { ActionType, typedAction, SerializedError, IUpdated } from "redux/app";
 
 import { Group } from "types";
 
 import { groupService } from ".";
 
-const createGroupLoading = () => typedAction(CREATE_GROUP_LOADING, CREATE_GROUP_LOADING);
-const searchGroupLoading = () => typedAction(SEARCH_GROUP_LOADING, SEARCH_GROUP_LOADING);
-const searchGroupsLoading = () => typedAction(SEARCH_GROUPS_LOADING, SEARCH_GROUPS_LOADING);
-const updateGroupLoading = () => typedAction(UPDATE_GROUP_LOADING, UPDATE_GROUP_LOADING);
-const deleteGroupLoading = () => typedAction(DELETE_GROUP_LOADING, DELETE_GROUP_LOADING);
+const createGroupLoading = () =>
+  typedAction(ActionType.CREATE_GROUP_LOADING, ActionType.CREATE_GROUP_LOADING);
+const searchGroupLoading = () =>
+  typedAction(ActionType.SEARCH_GROUP_LOADING, ActionType.SEARCH_GROUP_LOADING);
+const searchGroupsLoading = () =>
+  typedAction(ActionType.SEARCH_GROUPS_LOADING, ActionType.SEARCH_GROUPS_LOADING);
+const updateGroupLoading = () =>
+  typedAction(ActionType.UPDATE_GROUP_LOADING, ActionType.UPDATE_GROUP_LOADING);
+const deleteGroupLoading = () =>
+  typedAction(ActionType.DELETE_GROUP_LOADING, ActionType.DELETE_GROUP_LOADING);
 
-const createGroupComplete = (data: Group) => typedAction(CREATE_GROUP_COMPLETE, data);
-const searchGroupComplete = (data: Group) => typedAction(SEARCH_GROUP_COMPLETE, data);
-const searchGroupsComplete = (data: Group[]) => typedAction(SEARCH_GROUPS_COMPLETE, data);
-const updateGroupComplete = (data: Group) => typedAction(UPDATE_GROUP_COMPLETE, data);
-const deleteGroupComplete = (data: number) => typedAction(DELETE_GROUP_COMPLETE, data);
+const createGroupComplete = (data: Group) => typedAction(ActionType.CREATE_GROUP_COMPLETE, data);
+const searchGroupComplete = (data: Group) => typedAction(ActionType.SEARCH_GROUP_COMPLETE, data);
+const searchGroupsComplete = (data: Group[]) =>
+  typedAction(ActionType.SEARCH_GROUPS_COMPLETE, data);
+const updateGroupComplete = (data: Group) => typedAction(ActionType.UPDATE_GROUP_COMPLETE, data);
+const deleteGroupComplete = (data: number) => typedAction(ActionType.DELETE_GROUP_COMPLETE, data);
 
-const createGroupError = (err: SerializedError) => typedAction(CREATE_GROUP_ERROR, err.message);
+const createGroupError = (err: SerializedError) =>
+  typedAction(ActionType.CREATE_GROUP_ERROR, err.message);
 
-const searchGroupError = (err: SerializedError) => typedAction(SEARCH_GROUP_ERROR, err.message);
+const searchGroupError = (err: SerializedError) =>
+  typedAction(ActionType.SEARCH_GROUP_ERROR, err.message);
 
-const searchGroupsError = (err: SerializedError) => typedAction(SEARCH_GROUPS_ERROR, err.message);
+const searchGroupsError = (err: SerializedError) =>
+  typedAction(ActionType.SEARCH_GROUPS_ERROR, err.message);
 
-const updateGroupError = (err: SerializedError) => typedAction(UPDATE_GROUP_ERROR, err.message);
+const updateGroupError = (err: SerializedError) =>
+  typedAction(ActionType.UPDATE_GROUP_ERROR, err.message);
 
-const deleteGroupError = (err: SerializedError) => typedAction(DELETE_GROUP_ERROR, err.message);
+const deleteGroupError = (err: SerializedError) =>
+  typedAction(ActionType.DELETE_GROUP_ERROR, err.message);
 
 export const createGroup = (group: Group) => async (dispatch: Dispatch<AnyAction>) => {
   try {

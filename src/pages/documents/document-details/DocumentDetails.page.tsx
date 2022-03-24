@@ -15,6 +15,7 @@
 
 */
 import { documentService } from "api";
+import { huddle64pdf } from "data";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack"; //this will optimize load with webworker
@@ -39,7 +40,6 @@ import {
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { huddle64pdf } from "data";
 import { Document as DocumentType } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 

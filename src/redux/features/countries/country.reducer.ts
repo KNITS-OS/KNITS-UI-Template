@@ -1,11 +1,6 @@
 import { AnyAction } from "redux";
 
-import {
-  LIST_COUNTRIES_COMPLETE,
-  LIST_COUNTRIES_ERROR,
-  LIST_COUNTRIES_LOADING,
-  StateType,
-} from "redux/app";
+import { ActionType, StateType } from "redux/app";
 
 import { Country } from "types";
 
@@ -23,7 +18,7 @@ export const countryReducer = (
 ): StateType<Country> => {
   const { type, payload } = action;
   switch (type) {
-    case LIST_COUNTRIES_LOADING:
+    case ActionType.LIST_COUNTRIES_LOADING:
       return {
         isLoading: true,
         isSuccess: false,
@@ -32,7 +27,7 @@ export const countryReducer = (
         entity: null,
       };
 
-    case LIST_COUNTRIES_ERROR:
+    case ActionType.LIST_COUNTRIES_ERROR:
       return {
         isLoading: false,
         isSuccess: false,
@@ -41,7 +36,7 @@ export const countryReducer = (
         entity: null,
       };
 
-    case LIST_COUNTRIES_COMPLETE:
+    case ActionType.LIST_COUNTRIES_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,

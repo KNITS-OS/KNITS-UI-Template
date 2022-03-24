@@ -1,4 +1,5 @@
 import { countriesData } from "data";
+
 import { Country } from "types";
 
 export type MapValues = {

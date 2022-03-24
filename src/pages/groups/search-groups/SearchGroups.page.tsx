@@ -1,3 +1,4 @@
+import { groupsData } from "data";
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -5,8 +6,6 @@ import { Card, CardHeader, Container, Row } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
-
-import { groupsData } from "data";
 
 import { GROUP_DETAILS } from "..";
 

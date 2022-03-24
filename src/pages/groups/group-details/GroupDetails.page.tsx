@@ -1,3 +1,4 @@
+import { groupsData } from "data";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -6,7 +7,6 @@ import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactst
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { groupsData } from "data";
 import { useFeatureDisabledWarning, useLocalStateAlerts } from "hooks";
 import { Group } from "types";
 
