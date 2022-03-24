@@ -7,7 +7,7 @@ import {
   // worldOverviewReducer,
   // countryReducer,
   // businessUnitReducer,
-  // groupReducer,
+  groupReducer,
   documentReducer,
   employeeReducer,
 } from "redux/features";
@@ -17,8 +17,8 @@ const middleware = [thunk];
 const rootReducer = combineReducers({
   employee: employeeReducer,
   document: documentReducer,
+  group: groupReducer,
   // businessUnit: businessUnitReducer,
-  // group: groupReducer,
   // country: countryReducer,
   // worldOverview: worldOverviewReducer,
 });
