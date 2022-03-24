@@ -1,6 +1,8 @@
-import { httpCommon, COUNTRY_ROUTE } from "redux/app";
+import { httpCommon, COUNTRY_ROUTE, HttpResponseType } from "redux/app";
 
-const findAll = () => httpCommon.get(`${COUNTRY_ROUTE}`);
+import { Country } from "types";
+
+const findAll = (): HttpResponseType<Country[]> => httpCommon.get(`${COUNTRY_ROUTE}`);
 
 export const countryService = {
   findAll,

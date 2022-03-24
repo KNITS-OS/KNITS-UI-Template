@@ -1,8 +1,10 @@
 import { createSelector } from "reselect";
 
+import { RootState } from "redux/app";
+
 import { SELECT_ALL } from "variables/app.consts";
 
-export const selectCountryState = rootState => rootState.country;
+export const selectCountryState = (rootState: RootState) => rootState.country;
 
 export const selectAllCountryData = createSelector([selectCountryState], countryState => {
   return countryState.entities;

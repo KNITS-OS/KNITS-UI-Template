@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 
 import {
   worldOverviewReducer,
-  // countryReducer,
+  countryReducer,
   businessUnitReducer,
   groupReducer,
   documentReducer,
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   group: groupReducer,
   worldOverview: worldOverviewReducer,
   businessUnit: businessUnitReducer,
-  // country: countryReducer,
+  country: countryReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
