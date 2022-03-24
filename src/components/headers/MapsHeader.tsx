@@ -2,10 +2,10 @@ import { Breadcrumb, Button, Container, Row, Col } from "reactstrap";
 
 interface Props {
   name: string;
-  onActiveMembersClick: () => void;
-  onNewMembersClick: () => void;
-  onSelfResignedClick: () => void;
-  onAutoOffboardedClick: () => void;
+  onActiveMembersClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onNewMembersClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onSelfResignedClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onAutoOffboardedClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export const MapsHeader = ({

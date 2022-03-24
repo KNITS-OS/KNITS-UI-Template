@@ -16,46 +16,64 @@
 */
 import { useState } from "react";
 import { VectorMap } from "react-jvectormap";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
 
 import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
 
+import { useAppSelector } from "redux/app";
+import {
+  fetchActiveMembersReport,
+  fetchAutoOffboardedMembersReport,
+  fetchNewMembersReport,
+  fetchSelfResignedMembersReport,
+  selectActiveMembersReportsData,
+  selectAutoOffboardedMembersReportsData,
+  selectCurrentMapData,
+  selectNewMembersReportsData,
+  selectSelfResignedMembersReportsData,
+  WorldOverviewActionType,
+} from "redux/features";
+
 import { MapsHeader } from "components/headers";
 
-import {
-  getActiveMembersMapData,
-  getAutoOffboardedMembersMapData,
-  getNewMembersMapData,
-  getSelfResignedMembersMapData,
-  MapValues,
-} from ".";
-
 export const WorldOverviewPage = () => {
-  const [activeMembersMap] = useState(getActiveMembersMapData());
-  const [newMembersMap] = useState(getNewMembersMapData());
-  const [selfResignedMembersMap] = useState(getSelfResignedMembersMapData());
-  const [autoOffboardedMembersMap] = useState(getAutoOffboardedMembersMapData());
+  const dispatch = useDispatch();
+  const activeMap = useAppSelector(selectCurrentMapData);
+
+  const activeMembersMap = useAppSelector(selectActiveMembersReportsData);
+  const newMembersMap = useAppSelector(selectNewMembersReportsData);
+  const selfResignedMembersMap = useAppSelector(selectSelfResignedMembersReportsData);
+  const autoOffboardedMembersMap = useAppSelector(selectAutoOffboardedMembersReportsData);
 
   const [activeMembers, setActiveMembers] = useState<number>(0);
   const [newMembers, setNewMembers] = useState<number>(0);
   const [selfResignedMembers, setSelfResignedMembers] = useState<number>(0);
   const [autoOffboardedMembers, setAutoOffboardedMembers] = useState<number>(0);
 
-  const [activeMap, setActiveMap] = useState<MapValues | null>(null);
-
-  const onActiveMembersClick = () => {
-    setActiveMap(activeMembersMap);
+  const mapFilterClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    fnApiCall: () => (dispatch: Dispatch<WorldOverviewActionType>) => Promise<void>
+  ) => {
+    e.preventDefault();
+    dispatch(fnApiCall());
+    fnApiCall();
   };
 
-  const onNewMembersClick = () => {
-    setActiveMap(newMembersMap);
+  const onActiveMembersClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    mapFilterClick(e, fetchActiveMembersReport);
   };
 
-  const onSelfResignedClick = () => {
-    setActiveMap(selfResignedMembersMap);
+  const onNewMembersClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    mapFilterClick(e, fetchNewMembersReport);
   };
 
-  const onAutoOffboardedClick = () => {
-    setActiveMap(autoOffboardedMembersMap);
+  const onSelfResignedClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    mapFilterClick(e, fetchSelfResignedMembersReport);
+  };
+
+  const onAutoOffboardedClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    mapFilterClick(e, fetchAutoOffboardedMembersReport);
   };
 
   return (
