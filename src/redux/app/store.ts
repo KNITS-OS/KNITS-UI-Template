@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import {
   worldOverviewReducer,
   // countryReducer,
-  // businessUnitReducer,
+  businessUnitReducer,
   groupReducer,
   documentReducer,
   employeeReducer,
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   document: documentReducer,
   group: groupReducer,
   worldOverview: worldOverviewReducer,
-  // businessUnit: businessUnitReducer,
+  businessUnit: businessUnitReducer,
   // country: countryReducer,
 });
 

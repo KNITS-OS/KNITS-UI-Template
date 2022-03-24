@@ -1,10 +1,15 @@
+import { AnyAction } from "redux";
+
 import {
   LIST_BUSINESS_UNITS_COMPLETE,
   LIST_BUSINESS_UNITS_LOADING,
   LIST_BUSINESS_UNITS_ERROR,
+  StateType,
 } from "redux/app";
 
-const initialState = {
+import { BusinessUnit } from "types";
+
+const initialState: StateType<BusinessUnit> = {
   entities: [],
   entity: null,
   isLoading: false,
@@ -12,7 +17,10 @@ const initialState = {
   error: {},
 };
 
-export const businessUnitReducer = (businessUnitState = initialState, action = {}) => {
+export const businessUnitReducer = (
+  businessUnitState = initialState,
+  action: AnyAction
+): StateType<BusinessUnit> => {
   const { type, payload } = action;
   switch (type) {
     case LIST_BUSINESS_UNITS_LOADING:

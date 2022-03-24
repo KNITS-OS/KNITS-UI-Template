@@ -1,6 +1,8 @@
-import { httpCommon, BUSINESS_UNIT_ROUTE } from "redux/app";
+import { httpCommon, BUSINESS_UNIT_ROUTE, HttpResponseType } from "redux/app";
 
-const findAll = () => httpCommon.get(`${BUSINESS_UNIT_ROUTE}`);
+import { BusinessUnit } from "types";
+
+const findAll = (): HttpResponseType<BusinessUnit[]> => httpCommon.get(`${BUSINESS_UNIT_ROUTE}`);
 
 export const businessUnitService = {
   findAll,
