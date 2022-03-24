@@ -30,4 +30,4 @@ export const store = createStore(
   composeWithDevTools(applyMiddleware(...middleware, logger))
 );
 
-export type AppDisptatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch;

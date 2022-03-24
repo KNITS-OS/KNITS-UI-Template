@@ -1,8 +1,8 @@
-import { ActionType, StateType } from "redux/app";
+import { AppActionType, StateType } from "redux/app";
 
 import { Employee } from "types";
 
-import { EmployeeActionType } from "./employee.actions";
+import { EmployeeAppActionType } from "./employee.actions";
 
 const initialState: StateType<Employee> = {
   entities: [],
@@ -14,7 +14,7 @@ const initialState: StateType<Employee> = {
 
 export const employeeReducer = (
   employeeState = initialState,
-  action: EmployeeActionType
+  action: EmployeeAppActionType
 ): StateType<Employee> => {
   const { type, payload } = action;
   const { entities, entity } = employeeState;
@@ -23,10 +23,10 @@ export const employeeReducer = (
   let employeesToKeep = [];
 
   switch (type) {
-    case ActionType.SEARCH_EMPLOYEE_LOADING:
-    case ActionType.SEARCH_EMPLOYEES_LOADING:
-    case ActionType.UPDATE_EMPLOYEE_LOADING:
-    case ActionType.DELETE_EMPLOYEE_LOADING:
+    case AppActionType.SEARCH_EMPLOYEE_LOADING:
+    case AppActionType.SEARCH_EMPLOYEES_LOADING:
+    case AppActionType.UPDATE_EMPLOYEE_LOADING:
+    case AppActionType.DELETE_EMPLOYEE_LOADING:
       return {
         isLoading: true,
         isSuccess: false,
@@ -35,10 +35,10 @@ export const employeeReducer = (
         entity,
       };
 
-    case ActionType.SEARCH_EMPLOYEE_ERROR:
-    case ActionType.SEARCH_EMPLOYEES_ERROR:
-    case ActionType.UPDATE_EMPLOYEE_ERROR:
-    case ActionType.DELETE_EMPLOYEE_ERROR:
+    case AppActionType.SEARCH_EMPLOYEE_ERROR:
+    case AppActionType.SEARCH_EMPLOYEES_ERROR:
+    case AppActionType.UPDATE_EMPLOYEE_ERROR:
+    case AppActionType.DELETE_EMPLOYEE_ERROR:
       return {
         isLoading: false,
         isSuccess: false,
@@ -47,7 +47,7 @@ export const employeeReducer = (
         entity,
       };
 
-    case ActionType.SEARCH_EMPLOYEE_COMPLETE:
+    case AppActionType.SEARCH_EMPLOYEE_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -56,7 +56,7 @@ export const employeeReducer = (
         entity: payload,
       };
 
-    case ActionType.SEARCH_EMPLOYEES_COMPLETE:
+    case AppActionType.SEARCH_EMPLOYEES_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -65,12 +65,12 @@ export const employeeReducer = (
         entity,
       };
 
-    case ActionType.UPDATE_EMPLOYEE_COMPLETE:
+    case AppActionType.UPDATE_EMPLOYEE_COMPLETE:
       updatedEmployees = employeeState.entities.map(employee => {
         if (employee.id === payload.id) {
           return {
             ...employee,
-            ...payload.data,
+            ...payload,
           };
         }
         return employee;
@@ -81,11 +81,11 @@ export const employeeReducer = (
         isSuccess: true,
         error: {},
         entities: updatedEmployees,
-        entity: payload.data,
+        entity: payload,
       };
 
-    case ActionType.DELETE_EMPLOYEE_COMPLETE:
-      employeesToKeep = employeeState.entities.filter(({ id }) => id !== parseInt(payload.id));
+    case AppActionType.DELETE_EMPLOYEE_COMPLETE:
+      employeesToKeep = employeeState.entities.filter(({ id }) => id !== payload);
 
       return {
         isLoading: false,

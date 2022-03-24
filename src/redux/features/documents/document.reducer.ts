@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 
-import { ActionType, StateType } from "redux/app";
+import { AppActionType, StateType } from "redux/app";
 
 import { Document } from "types";
 
@@ -23,11 +23,11 @@ export const documentReducer = (
   let documentsToKeep = [];
 
   switch (type) {
-    case ActionType.SEARCH_DOCUMENT_LOADING:
-    case ActionType.SEARCH_DOCUMENTS_LOADING:
-    case ActionType.CREATE_DOCUMENT_LOADING:
-    case ActionType.UPDATE_DOCUMENT_LOADING:
-    case ActionType.DELETE_DOCUMENT_LOADING:
+    case AppActionType.SEARCH_DOCUMENT_LOADING:
+    case AppActionType.SEARCH_DOCUMENTS_LOADING:
+    case AppActionType.CREATE_DOCUMENT_LOADING:
+    case AppActionType.UPDATE_DOCUMENT_LOADING:
+    case AppActionType.DELETE_DOCUMENT_LOADING:
       return {
         isLoading: true,
         isSuccess: false,
@@ -36,11 +36,11 @@ export const documentReducer = (
         entity,
       };
 
-    case ActionType.SEARCH_DOCUMENT_ERROR:
-    case ActionType.SEARCH_DOCUMENTS_ERROR:
-    case ActionType.CREATE_DOCUMENT_ERROR:
-    case ActionType.UPDATE_DOCUMENT_ERROR:
-    case ActionType.DELETE_DOCUMENT_ERROR:
+    case AppActionType.SEARCH_DOCUMENT_ERROR:
+    case AppActionType.SEARCH_DOCUMENTS_ERROR:
+    case AppActionType.CREATE_DOCUMENT_ERROR:
+    case AppActionType.UPDATE_DOCUMENT_ERROR:
+    case AppActionType.DELETE_DOCUMENT_ERROR:
       return {
         isLoading: false,
         isSuccess: false,
@@ -49,7 +49,7 @@ export const documentReducer = (
         entity,
       };
 
-    case ActionType.CREATE_DOCUMENT_COMPLETE:
+    case AppActionType.CREATE_DOCUMENT_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -58,7 +58,7 @@ export const documentReducer = (
         entity: payload,
       };
 
-    case ActionType.SEARCH_DOCUMENT_COMPLETE:
+    case AppActionType.SEARCH_DOCUMENT_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -67,7 +67,7 @@ export const documentReducer = (
         entity: payload,
       };
 
-    case ActionType.SEARCH_DOCUMENTS_COMPLETE:
+    case AppActionType.SEARCH_DOCUMENTS_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -76,7 +76,7 @@ export const documentReducer = (
         entity,
       };
 
-    case ActionType.UPDATE_DOCUMENT_COMPLETE:
+    case AppActionType.UPDATE_DOCUMENT_COMPLETE:
       updatedDocuments = documentState.entities.map(document => {
         if (document.id === payload.id) {
           return {
@@ -95,7 +95,7 @@ export const documentReducer = (
         entity: payload.data,
       };
 
-    case ActionType.DELETE_DOCUMENT_COMPLETE:
+    case AppActionType.DELETE_DOCUMENT_COMPLETE:
       documentsToKeep = documentState.entities.filter(({ id }) => id !== parseInt(payload.id));
 
       return {

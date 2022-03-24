@@ -1,61 +1,81 @@
-import { AnyAction, Dispatch } from "redux";
+import { Dispatch } from "redux";
+import { ActionType } from "typesafe-actions";
 
-import { ActionType, SerializedError, typedAction, IUpdated } from "redux/app";
+import { AppActionType, SerializedError, typedAction, IUpdated } from "redux/app";
 
 import { Document } from "types";
 
 import { documentService } from ".";
 
 const createDocumentLoading = () =>
-  typedAction(ActionType.CREATE_DOCUMENT_LOADING, ActionType.CREATE_DOCUMENT_LOADING);
+  typedAction(AppActionType.CREATE_DOCUMENT_LOADING, AppActionType.CREATE_DOCUMENT_LOADING);
 const searchDocumentLoading = () =>
-  typedAction(ActionType.SEARCH_DOCUMENT_LOADING, ActionType.SEARCH_DOCUMENT_LOADING);
+  typedAction(AppActionType.SEARCH_DOCUMENT_LOADING, AppActionType.SEARCH_DOCUMENT_LOADING);
 const searchDocumentsLoading = () =>
-  typedAction(ActionType.SEARCH_DOCUMENTS_LOADING, ActionType.SEARCH_DOCUMENTS_LOADING);
+  typedAction(AppActionType.SEARCH_DOCUMENTS_LOADING, AppActionType.SEARCH_DOCUMENTS_LOADING);
 const updateDocumentLoading = () =>
-  typedAction(ActionType.UPDATE_DOCUMENT_LOADING, ActionType.UPDATE_DOCUMENT_LOADING);
+  typedAction(AppActionType.UPDATE_DOCUMENT_LOADING, AppActionType.UPDATE_DOCUMENT_LOADING);
 const deleteDocumentLoading = () =>
-  typedAction(ActionType.DELETE_DOCUMENT_LOADING, ActionType.DELETE_DOCUMENT_LOADING);
+  typedAction(AppActionType.DELETE_DOCUMENT_LOADING, AppActionType.DELETE_DOCUMENT_LOADING);
 
 const createDocumentComplete = (data: Document) =>
-  typedAction(ActionType.CREATE_DOCUMENT_COMPLETE, data);
+  typedAction(AppActionType.CREATE_DOCUMENT_COMPLETE, data);
 const searchDocumentComplete = (data: Document) =>
-  typedAction(ActionType.SEARCH_DOCUMENT_COMPLETE, data);
+  typedAction(AppActionType.SEARCH_DOCUMENT_COMPLETE, data);
 const searchDocumentsComplete = (data: Document[]) =>
-  typedAction(ActionType.SEARCH_DOCUMENTS_COMPLETE, data);
+  typedAction(AppActionType.SEARCH_DOCUMENTS_COMPLETE, data);
 const updateDocumentComplete = (data: Document) =>
-  typedAction(ActionType.UPDATE_DOCUMENT_COMPLETE, data);
+  typedAction(AppActionType.UPDATE_DOCUMENT_COMPLETE, data);
 const deleteDocumentComplete = (data: number) =>
-  typedAction(ActionType.DELETE_DOCUMENT_COMPLETE, data);
+  typedAction(AppActionType.DELETE_DOCUMENT_COMPLETE, data);
 
 const createDocumentError = (err: SerializedError) =>
-  typedAction(ActionType.CREATE_DOCUMENT_ERROR, err.message);
+  typedAction(AppActionType.CREATE_DOCUMENT_ERROR, err);
 
 const searchDocumentError = (err: SerializedError) =>
-  typedAction(ActionType.SEARCH_DOCUMENT_ERROR, err.message);
+  typedAction(AppActionType.SEARCH_DOCUMENT_ERROR, err);
 
 const searchDocumentsError = (err: SerializedError) =>
-  typedAction(ActionType.SEARCH_DOCUMENTS_ERROR, err.message);
+  typedAction(AppActionType.SEARCH_DOCUMENTS_ERROR, err);
 
 const updateDocumentError = (err: SerializedError) =>
-  typedAction(ActionType.UPDATE_DOCUMENT_ERROR, err.message);
+  typedAction(AppActionType.UPDATE_DOCUMENT_ERROR, err);
 
 const deleteDocumentError = (err: SerializedError) =>
-  typedAction(ActionType.DELETE_DOCUMENT_ERROR, err.message);
+  typedAction(AppActionType.DELETE_DOCUMENT_ERROR, err);
 
-export const createDocument = (document: Document) => async (dispatch: Dispatch<AnyAction>) => {
-  try {
-    dispatch(createDocumentLoading());
+export type DocumentActionType = ActionType<
+  | typeof createDocumentLoading
+  | typeof searchDocumentLoading
+  | typeof searchDocumentsLoading
+  | typeof updateDocumentLoading
+  | typeof deleteDocumentLoading
+  | typeof createDocumentComplete
+  | typeof searchDocumentComplete
+  | typeof searchDocumentsComplete
+  | typeof updateDocumentComplete
+  | typeof deleteDocumentComplete
+  | typeof createDocumentError
+  | typeof searchDocumentError
+  | typeof searchDocumentsError
+  | typeof updateDocumentError
+  | typeof deleteDocumentError
+>;
 
-    const { data } = await documentService.createDocument(document);
+export const createDocument =
+  (document: Document) => async (dispatch: Dispatch<DocumentActionType>) => {
+    try {
+      dispatch(createDocumentLoading());
 
-    dispatch(createDocumentComplete(data));
-  } catch (err) {
-    dispatch(createDocumentError(err as SerializedError));
-  }
-};
+      const { data } = await documentService.createDocument(document);
 
-export const searchDocument = (id: number) => async (dispatch: Dispatch<AnyAction>) => {
+      dispatch(createDocumentComplete(data));
+    } catch (err) {
+      dispatch(createDocumentError(err as SerializedError));
+    }
+  };
+
+export const searchDocument = (id: number) => async (dispatch: Dispatch<DocumentActionType>) => {
   try {
     dispatch(searchDocumentLoading());
 
@@ -66,7 +86,7 @@ export const searchDocument = (id: number) => async (dispatch: Dispatch<AnyActio
   }
 };
 
-export const searchDocuments = (filters: any) => async (dispatch: Dispatch<AnyAction>) => {
+export const searchDocuments = (filters: any) => async (dispatch: Dispatch<DocumentActionType>) => {
   try {
     const queryParams = new URLSearchParams(filters);
 
@@ -81,7 +101,7 @@ export const searchDocuments = (filters: any) => async (dispatch: Dispatch<AnyAc
 };
 
 export const updateDocument =
-  (updatedDocument: IUpdated<Document>) => async (dispatch: Dispatch<AnyAction>) => {
+  (updatedDocument: IUpdated<Document>) => async (dispatch: Dispatch<DocumentActionType>) => {
     try {
       dispatch(updateDocumentLoading());
 
@@ -93,7 +113,7 @@ export const updateDocument =
     }
   };
 
-export const deleteDocument = (id: number) => async (dispatch: Dispatch<AnyAction>) => {
+export const deleteDocument = (id: number) => async (dispatch: Dispatch<DocumentActionType>) => {
   try {
     dispatch(deleteDocumentLoading());
 

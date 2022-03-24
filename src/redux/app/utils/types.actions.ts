@@ -5,7 +5,7 @@ export function typedAction(type: string, payload?: any) {
   return { type, payload };
 }
 
-export enum ActionType {
+export enum AppActionType {
   // countries
   LIST_COUNTRIES_LOADING = "LIST_COUNTRIES_LOADING",
   LIST_COUNTRIES_ERROR = "LIST_COUNTRIES_ERROR",

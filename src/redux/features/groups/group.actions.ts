@@ -1,45 +1,65 @@
-import { AnyAction, Dispatch } from "redux";
+import { Dispatch } from "redux";
+import { ActionType } from "typesafe-actions";
 
-import { ActionType, typedAction, SerializedError, IUpdated } from "redux/app";
+import { AppActionType, typedAction, SerializedError, IUpdated } from "redux/app";
 
 import { Group } from "types";
 
 import { groupService } from ".";
 
 const createGroupLoading = () =>
-  typedAction(ActionType.CREATE_GROUP_LOADING, ActionType.CREATE_GROUP_LOADING);
+  typedAction(AppActionType.CREATE_GROUP_LOADING, AppActionType.CREATE_GROUP_LOADING);
 const searchGroupLoading = () =>
-  typedAction(ActionType.SEARCH_GROUP_LOADING, ActionType.SEARCH_GROUP_LOADING);
+  typedAction(AppActionType.SEARCH_GROUP_LOADING, AppActionType.SEARCH_GROUP_LOADING);
 const searchGroupsLoading = () =>
-  typedAction(ActionType.SEARCH_GROUPS_LOADING, ActionType.SEARCH_GROUPS_LOADING);
+  typedAction(AppActionType.SEARCH_GROUPS_LOADING, AppActionType.SEARCH_GROUPS_LOADING);
 const updateGroupLoading = () =>
-  typedAction(ActionType.UPDATE_GROUP_LOADING, ActionType.UPDATE_GROUP_LOADING);
+  typedAction(AppActionType.UPDATE_GROUP_LOADING, AppActionType.UPDATE_GROUP_LOADING);
 const deleteGroupLoading = () =>
-  typedAction(ActionType.DELETE_GROUP_LOADING, ActionType.DELETE_GROUP_LOADING);
+  typedAction(AppActionType.DELETE_GROUP_LOADING, AppActionType.DELETE_GROUP_LOADING);
 
-const createGroupComplete = (data: Group) => typedAction(ActionType.CREATE_GROUP_COMPLETE, data);
-const searchGroupComplete = (data: Group) => typedAction(ActionType.SEARCH_GROUP_COMPLETE, data);
+const createGroupComplete = (data: Group) => typedAction(AppActionType.CREATE_GROUP_COMPLETE, data);
+const searchGroupComplete = (data: Group) => typedAction(AppActionType.SEARCH_GROUP_COMPLETE, data);
 const searchGroupsComplete = (data: Group[]) =>
-  typedAction(ActionType.SEARCH_GROUPS_COMPLETE, data);
-const updateGroupComplete = (data: Group) => typedAction(ActionType.UPDATE_GROUP_COMPLETE, data);
-const deleteGroupComplete = (data: number) => typedAction(ActionType.DELETE_GROUP_COMPLETE, data);
+  typedAction(AppActionType.SEARCH_GROUPS_COMPLETE, data);
+const updateGroupComplete = (data: Group) => typedAction(AppActionType.UPDATE_GROUP_COMPLETE, data);
+const deleteGroupComplete = (data: number) =>
+  typedAction(AppActionType.DELETE_GROUP_COMPLETE, data);
 
 const createGroupError = (err: SerializedError) =>
-  typedAction(ActionType.CREATE_GROUP_ERROR, err.message);
+  typedAction(AppActionType.CREATE_GROUP_ERROR, err);
 
 const searchGroupError = (err: SerializedError) =>
-  typedAction(ActionType.SEARCH_GROUP_ERROR, err.message);
+  typedAction(AppActionType.SEARCH_GROUP_ERROR, err);
 
 const searchGroupsError = (err: SerializedError) =>
-  typedAction(ActionType.SEARCH_GROUPS_ERROR, err.message);
+  typedAction(AppActionType.SEARCH_GROUPS_ERROR, err);
 
 const updateGroupError = (err: SerializedError) =>
-  typedAction(ActionType.UPDATE_GROUP_ERROR, err.message);
+  typedAction(AppActionType.UPDATE_GROUP_ERROR, err);
 
 const deleteGroupError = (err: SerializedError) =>
-  typedAction(ActionType.DELETE_GROUP_ERROR, err.message);
+  typedAction(AppActionType.DELETE_GROUP_ERROR, err);
 
-export const createGroup = (group: Group) => async (dispatch: Dispatch<AnyAction>) => {
+export type GroupActionType = ActionType<
+  | typeof createGroupLoading
+  | typeof searchGroupLoading
+  | typeof searchGroupsLoading
+  | typeof updateGroupLoading
+  | typeof deleteGroupLoading
+  | typeof createGroupComplete
+  | typeof searchGroupComplete
+  | typeof searchGroupsComplete
+  | typeof updateGroupComplete
+  | typeof deleteGroupComplete
+  | typeof createGroupError
+  | typeof searchGroupError
+  | typeof searchGroupsError
+  | typeof updateGroupError
+  | typeof deleteGroupError
+>;
+
+export const createGroup = (group: Group) => async (dispatch: Dispatch<GroupActionType>) => {
   try {
     dispatch(createGroupLoading());
 
@@ -51,7 +71,7 @@ export const createGroup = (group: Group) => async (dispatch: Dispatch<AnyAction
   }
 };
 
-export const searchGroup = (id: number) => async (dispatch: Dispatch<AnyAction>) => {
+export const searchGroup = (id: number) => async (dispatch: Dispatch<GroupActionType>) => {
   try {
     dispatch(searchGroupLoading());
 
@@ -63,7 +83,7 @@ export const searchGroup = (id: number) => async (dispatch: Dispatch<AnyAction>)
   }
 };
 
-export const searchGroups = () => async (dispatch: Dispatch<AnyAction>) => {
+export const searchGroups = () => async (dispatch: Dispatch<GroupActionType>) => {
   try {
     dispatch(searchGroupsLoading());
 
@@ -76,7 +96,7 @@ export const searchGroups = () => async (dispatch: Dispatch<AnyAction>) => {
 };
 
 export const updateGroup =
-  (updatedGroup: IUpdated<Group>) => async (dispatch: Dispatch<AnyAction>) => {
+  (updatedGroup: IUpdated<Group>) => async (dispatch: Dispatch<GroupActionType>) => {
     try {
       dispatch(updateGroupLoading());
       const { data } = await groupService.updateGroup(updatedGroup);
@@ -87,7 +107,7 @@ export const updateGroup =
     }
   };
 
-export const deleteGroup = (id: number) => async (dispatch: Dispatch<AnyAction>) => {
+export const deleteGroup = (id: number) => async (dispatch: Dispatch<GroupActionType>) => {
   try {
     dispatch(deleteGroupLoading());
 

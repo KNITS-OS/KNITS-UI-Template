@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 
-import { ActionType, StateType } from "redux/app";
+import { AppActionType, StateType } from "redux/app";
 
 import { Group } from "types";
 
@@ -20,11 +20,11 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
   let groupsToKeep = [];
 
   switch (type) {
-    case ActionType.SEARCH_GROUP_LOADING:
-    case ActionType.SEARCH_GROUPS_LOADING:
-    case ActionType.CREATE_GROUP_LOADING:
-    case ActionType.UPDATE_GROUP_LOADING:
-    case ActionType.DELETE_GROUP_LOADING:
+    case AppActionType.SEARCH_GROUP_LOADING:
+    case AppActionType.SEARCH_GROUPS_LOADING:
+    case AppActionType.CREATE_GROUP_LOADING:
+    case AppActionType.UPDATE_GROUP_LOADING:
+    case AppActionType.DELETE_GROUP_LOADING:
       return {
         isLoading: true,
         isSuccess: false,
@@ -33,11 +33,11 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
         entity,
       };
 
-    case ActionType.SEARCH_GROUP_ERROR:
-    case ActionType.SEARCH_GROUPS_ERROR:
-    case ActionType.CREATE_GROUP_ERROR:
-    case ActionType.UPDATE_GROUP_ERROR:
-    case ActionType.DELETE_GROUP_ERROR:
+    case AppActionType.SEARCH_GROUP_ERROR:
+    case AppActionType.SEARCH_GROUPS_ERROR:
+    case AppActionType.CREATE_GROUP_ERROR:
+    case AppActionType.UPDATE_GROUP_ERROR:
+    case AppActionType.DELETE_GROUP_ERROR:
       return {
         isLoading: false,
         isSuccess: false,
@@ -46,7 +46,7 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
         entity,
       };
 
-    case ActionType.CREATE_GROUP_COMPLETE:
+    case AppActionType.CREATE_GROUP_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -55,7 +55,7 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
         entity: payload,
       };
 
-    case ActionType.SEARCH_GROUP_COMPLETE:
+    case AppActionType.SEARCH_GROUP_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -64,7 +64,7 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
         entity: payload,
       };
 
-    case ActionType.SEARCH_GROUPS_COMPLETE:
+    case AppActionType.SEARCH_GROUPS_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,
@@ -73,7 +73,7 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
         entity: null,
       };
 
-    case ActionType.UPDATE_GROUP_COMPLETE:
+    case AppActionType.UPDATE_GROUP_COMPLETE:
       updatedGroups = groupState.entities.map(group => {
         if (group.id === payload.id) {
           return {
@@ -92,7 +92,7 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
         entity: null,
       };
 
-    case ActionType.DELETE_GROUP_COMPLETE:
+    case AppActionType.DELETE_GROUP_COMPLETE:
       groupsToKeep = groupState.entities.filter(({ id }) => id !== parseInt(payload.id));
 
       return {

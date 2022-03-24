@@ -1,21 +1,28 @@
-import { AnyAction, Dispatch } from "redux";
+import { Dispatch } from "redux";
+import { ActionType } from "typesafe-actions";
 
-import { ActionType, typedAction, SerializedError } from "redux/app";
+import { AppActionType, typedAction, SerializedError } from "redux/app";
 
 import { BusinessUnit } from "types";
 
 import { businessUnitService } from ".";
 
 const findAllBusinessUnitsLoading = () =>
-  typedAction(ActionType.LIST_BUSINESS_UNITS_LOADING, ActionType.LIST_BUSINESS_UNITS_LOADING);
+  typedAction(AppActionType.LIST_BUSINESS_UNITS_LOADING, AppActionType.LIST_BUSINESS_UNITS_LOADING);
 
 const findAllBusinessUnitsComplete = (data: BusinessUnit[]) =>
-  typedAction(ActionType.LIST_BUSINESS_UNITS_COMPLETE, data);
+  typedAction(AppActionType.LIST_BUSINESS_UNITS_COMPLETE, data);
 
 const findAllBusinessUnitsError = (err: SerializedError) =>
-  typedAction(ActionType.LIST_BUSINESS_UNITS_ERROR, err.message);
+  typedAction(AppActionType.LIST_BUSINESS_UNITS_ERROR, err);
 
-export const findAllBusinessUnits = () => async (dispatch: Dispatch<AnyAction>) => {
+export type BusinessUnitActionType = ActionType<
+  | typeof findAllBusinessUnitsLoading
+  | typeof findAllBusinessUnitsComplete
+  | typeof findAllBusinessUnitsError
+>;
+
+export const findAllBusinessUnits = () => async (dispatch: Dispatch<BusinessUnitActionType>) => {
   try {
     dispatch(findAllBusinessUnitsLoading());
 

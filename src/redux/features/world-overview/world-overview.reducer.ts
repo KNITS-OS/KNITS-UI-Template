@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 import { AnyAction } from "redux";
 
-import { ActionType, StateType } from "redux/app";
+import { AppActionType, StateType } from "redux/app";
 
 import { WorldOverviewCachedReports } from "types";
 import {
@@ -44,15 +44,15 @@ const initialState: StateType<WorldOverviewCachedReports> = {
   error: {},
 };
 
-const toCacheKey = (actionType: string): string => {
+const toCacheKey = (actionType: AppActionType): string => {
   switch (actionType) {
-    case ActionType.FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE:
       return REPORT_KEY_ACTIVE_MEMBERS;
-    case ActionType.FETCH_NEW_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_NEW_MEMBERS_REPORT_COMPLETE:
       return REPORT_KEY_NEW_MEMBERS;
-    case ActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE:
       return REPORT_KEY_AUTO_OFFBOARDED_MEMBERS;
-    case ActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE:
       return REPORT_KEY_SELF_RESIGNED_MEMBERS;
     default:
       return NO_ACTION_FOUND;
@@ -66,10 +66,10 @@ export const worldOverviewReducer = (
   const { type, payload } = action;
   const { entities, entity } = worldOverviewState;
   switch (type) {
-    case ActionType.FETCH_ACTIVE_MEMBERS_REPORT_LOADING:
-    case ActionType.FETCH_NEW_MEMBERS_REPORT_LOADING:
-    case ActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING:
-    case ActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_LOADING:
+    case AppActionType.FETCH_ACTIVE_MEMBERS_REPORT_LOADING:
+    case AppActionType.FETCH_NEW_MEMBERS_REPORT_LOADING:
+    case AppActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_LOADING:
+    case AppActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_LOADING:
       return {
         entities,
         entity,
@@ -78,10 +78,10 @@ export const worldOverviewReducer = (
         error: {},
       };
 
-    case ActionType.FETCH_ACTIVE_MEMBERS_REPORT_ERROR:
-    case ActionType.FETCH_NEW_MEMBERS_REPORT_ERROR:
-    case ActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_ERROR:
-    case ActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_ERROR:
+    case AppActionType.FETCH_ACTIVE_MEMBERS_REPORT_ERROR:
+    case AppActionType.FETCH_NEW_MEMBERS_REPORT_ERROR:
+    case AppActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_ERROR:
+    case AppActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_ERROR:
       return {
         entities,
         entity,
@@ -90,10 +90,10 @@ export const worldOverviewReducer = (
         error: payload,
       };
 
-    case ActionType.FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE:
-    case ActionType.FETCH_NEW_MEMBERS_REPORT_COMPLETE:
-    case ActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE:
-    case ActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_NEW_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_AUTO_OFFBOARDED_MEMBERS_REPORT_COMPLETE:
+    case AppActionType.FETCH_SELF_RESIGNED_MEMBERS_REPORT_COMPLETE:
       const updatedReports = worldOverviewState.entities.map(report => {
         if (
           report.reportName === toCacheKey(action.type) ||
