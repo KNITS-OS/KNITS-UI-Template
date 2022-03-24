@@ -5,9 +5,6 @@ import {
   DELETE_DOCUMENT_COMPLETE,
   DELETE_DOCUMENT_ERROR,
   DELETE_DOCUMENT_LOADING,
-  SEARCH_DOCUMENTS_BY_IDS_COMPLETE,
-  SEARCH_DOCUMENTS_BY_IDS_ERROR,
-  SEARCH_DOCUMENTS_BY_IDS_LOADING,
   SEARCH_DOCUMENTS_COMPLETE,
   SEARCH_DOCUMENTS_ERROR,
   SEARCH_DOCUMENTS_LOADING,
@@ -37,7 +34,6 @@ export const documentReducer = (documentState = initialState, action = {}) => {
   switch (type) {
     case SEARCH_DOCUMENT_LOADING:
     case SEARCH_DOCUMENTS_LOADING:
-    case SEARCH_DOCUMENTS_BY_IDS_LOADING:
     case CREATE_DOCUMENT_LOADING:
     case UPDATE_DOCUMENT_LOADING:
     case DELETE_DOCUMENT_LOADING:
@@ -51,7 +47,6 @@ export const documentReducer = (documentState = initialState, action = {}) => {
 
     case SEARCH_DOCUMENT_ERROR:
     case SEARCH_DOCUMENTS_ERROR:
-    case SEARCH_DOCUMENTS_BY_IDS_ERROR:
     case CREATE_DOCUMENT_ERROR:
     case UPDATE_DOCUMENT_ERROR:
     case DELETE_DOCUMENT_ERROR:
@@ -82,15 +77,6 @@ export const documentReducer = (documentState = initialState, action = {}) => {
       };
 
     case SEARCH_DOCUMENTS_COMPLETE:
-      return {
-        isLoading: false,
-        isSuccess: true,
-        error: {},
-        entities: payload,
-        entity,
-      };
-
-    case SEARCH_DOCUMENTS_BY_IDS_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,

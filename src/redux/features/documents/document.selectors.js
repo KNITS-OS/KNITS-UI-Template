@@ -9,5 +9,5 @@ export const selectAllDocumentsData = createSelector(
 
 export const selectDocumentById = id =>
   createSelector([selectAllDocumentsData], documentsData =>
-    documentsData.find(document => document.id === parseInt(id))
+    documentsData.find(document => document.id === id)
   );

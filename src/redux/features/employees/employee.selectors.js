@@ -11,7 +11,7 @@ export const selectAllEmployeeData = createSelector(
 
 export const selectEmployeeById = id =>
   createSelector([selectAllEmployeeData], employeesData =>
-    employeesData.find(employee => employee.id === parseInt(id))
+    employeesData.find(employee => employee.id === id)
   );
 
 export const selectEmployeesAsList = createSelector([selectAllEmployeeData], employeesData =>

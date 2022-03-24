@@ -114,6 +114,7 @@ export const worldOverviewReducer = (worldOverviewState = initialState, action =
         entity,
         isLoading: false,
         isSuccess: true,
+        error: {},
       };
 
     default:

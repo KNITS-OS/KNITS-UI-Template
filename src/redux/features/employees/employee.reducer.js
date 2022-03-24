@@ -2,9 +2,6 @@ import {
   DELETE_EMPLOYEE_COMPLETE,
   DELETE_EMPLOYEE_ERROR,
   DELETE_EMPLOYEE_LOADING,
-  SEARCH_EMPLOYEES_BY_IDS_COMPLETE,
-  SEARCH_EMPLOYEES_BY_IDS_ERROR,
-  SEARCH_EMPLOYEES_BY_IDS_LOADING,
   SEARCH_EMPLOYEES_COMPLETE,
   SEARCH_EMPLOYEES_ERROR,
   SEARCH_EMPLOYEES_LOADING,
@@ -34,7 +31,6 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
   switch (type) {
     case SEARCH_EMPLOYEE_LOADING:
     case SEARCH_EMPLOYEES_LOADING:
-    case SEARCH_EMPLOYEES_BY_IDS_LOADING:
     case UPDATE_EMPLOYEE_LOADING:
     case DELETE_EMPLOYEE_LOADING:
       return {
@@ -47,7 +43,6 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
 
     case SEARCH_EMPLOYEE_ERROR:
     case SEARCH_EMPLOYEES_ERROR:
-    case SEARCH_EMPLOYEES_BY_IDS_ERROR:
     case UPDATE_EMPLOYEE_ERROR:
     case DELETE_EMPLOYEE_ERROR:
       return {
@@ -63,20 +58,11 @@ export const employeeReducer = (employeeState = initialState, action = {}) => {
         isLoading: false,
         isSuccess: true,
         error: {},
-        entities: [],
+        entities,
         entity: payload,
       };
 
     case SEARCH_EMPLOYEES_COMPLETE:
-      return {
-        isLoading: false,
-        isSuccess: true,
-        error: {},
-        entities: payload,
-        entity,
-      };
-
-    case SEARCH_EMPLOYEES_BY_IDS_COMPLETE:
       return {
         isLoading: false,
         isSuccess: true,

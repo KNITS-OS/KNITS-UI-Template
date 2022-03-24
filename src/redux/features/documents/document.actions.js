@@ -8,9 +8,6 @@ import {
   DELETE_DOCUMENT_COMPLETE,
   DELETE_DOCUMENT_ERROR,
   DELETE_DOCUMENT_LOADING,
-  SEARCH_DOCUMENTS_BY_IDS_COMPLETE,
-  SEARCH_DOCUMENTS_BY_IDS_ERROR,
-  SEARCH_DOCUMENTS_BY_IDS_LOADING,
   SEARCH_DOCUMENTS_COMPLETE,
   SEARCH_DOCUMENTS_ERROR,
   SEARCH_DOCUMENTS_LOADING,
@@ -77,27 +74,6 @@ export const searchDocuments = filters => async dispatch => {
   } catch (err) {
     dispatch({
       type: SEARCH_DOCUMENTS_ERROR,
-      payload: err.message,
-    });
-  }
-};
-
-export const searchDocumentsByIds = documentIds => async dispatch => {
-  try {
-    dispatch({
-      type: SEARCH_DOCUMENTS_BY_IDS_LOADING,
-      payload: SEARCH_DOCUMENTS_BY_IDS_LOADING,
-    });
-
-    const { data } = await documentService.searchDocumentsByIds(documentIds);
-
-    dispatch({
-      type: SEARCH_DOCUMENTS_BY_IDS_COMPLETE,
-      payload: data,
-    });
-  } catch (err) {
-    dispatch({
-      type: SEARCH_DOCUMENTS_BY_IDS_ERROR,
       payload: err.message,
     });
   }

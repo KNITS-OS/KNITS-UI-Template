@@ -11,7 +11,10 @@ const searchEmployees = queryParams => {
 
 const getEmployeeById = id => httpCommon.get(`${EMPLOYEE_ROUTE}/${id}`);
 
-const updateEmployee = (id, body) => httpCommon.put(`${EMPLOYEE_ROUTE}/${id}`, body);
+const updateEmployee = updatedEmployee => {
+  const { id, body } = updatedEmployee;
+  return httpCommon.put(`${EMPLOYEE_ROUTE}/${id}`, body);
+};
 
 const deleteEmployee = id => httpCommon.delete(`${EMPLOYEE_ROUTE}/${id}`);
 
