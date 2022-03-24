@@ -1,5 +1,6 @@
 import {
   httpCommon,
+  HttpResponseType,
   REPORT_MEMBERS_BY_AGE_ROUTE,
   REPORT_MEMBERS_BY_BUSINESS_UNITS_ROUTE,
   REPORT_MEMBERS_BY_GENDER_ROUTE,
@@ -9,32 +10,34 @@ import {
   REPORT_MEMBERS_WORKFORCE_ROUTE,
 } from "redux/app";
 
-export const getTurnoverReport = async () => {
-  return await httpCommon.get(`${REPORT_MEMBERS_TURNOVER_ROUTE}`);
+import { Chart, TurnoverChart } from "types";
+
+export const getTurnoverReport = (): HttpResponseType<TurnoverChart[]> => {
+  return httpCommon.get(`${REPORT_MEMBERS_TURNOVER_ROUTE}`);
 };
 
-const getWorkforceReport = async () => {
-  return await httpCommon.get(`${REPORT_MEMBERS_WORKFORCE_ROUTE}`);
+const getWorkforceReport = (): HttpResponseType<Chart[]> => {
+  return httpCommon.get(`${REPORT_MEMBERS_WORKFORCE_ROUTE}`);
 };
 
-const getDistributionByGenderReport = async () => {
-  return await httpCommon.get(`${REPORT_MEMBERS_BY_GENDER_ROUTE}`);
+const getDistributionByGenderReport = (): HttpResponseType<Chart[]> => {
+  return httpCommon.get(`${REPORT_MEMBERS_BY_GENDER_ROUTE}`);
 };
 
-const getDistributionByRoleReport = async () => {
-  return await httpCommon.get(`${REPORT_MEMBERS_BY_ROLE_ROUTE}`);
+const getDistributionByRoleReport = (): HttpResponseType<Chart[]> => {
+  return httpCommon.get(`${REPORT_MEMBERS_BY_ROLE_ROUTE}`);
 };
 
-const getDistributionByBusinessUnitReport = async () => {
-  return await httpCommon.get(`${REPORT_MEMBERS_BY_BUSINESS_UNITS_ROUTE}`);
+const getDistributionByBusinessUnitReport = (): HttpResponseType<Chart[]> => {
+  return httpCommon.get(`${REPORT_MEMBERS_BY_BUSINESS_UNITS_ROUTE}`);
 };
 
-const getDistributionByAgeReport = async () => {
-  return await httpCommon.get(`${REPORT_MEMBERS_BY_AGE_ROUTE}`);
+const getDistributionByAgeReport = (): HttpResponseType<Chart[]> => {
+  return httpCommon.get(`${REPORT_MEMBERS_BY_AGE_ROUTE}`);
 };
 
-const getDistributionBySeniorityReport = async () => {
-  return await httpCommon.get(`${REPORT_MEMBERS_BY_SENIORITY_ROUTE}`);
+const getDistributionBySeniorityReport = (): HttpResponseType<Chart[]> => {
+  return httpCommon.get(`${REPORT_MEMBERS_BY_SENIORITY_ROUTE}`);
 };
 
 export const dashboardService = {
