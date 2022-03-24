@@ -1,8 +1,8 @@
-import { AnyAction } from "redux";
-
 import { AppActionType, StateType } from "redux/app";
 
 import { BusinessUnit } from "types";
+
+import { BusinessUnitActionType } from ".";
 
 const initialState: StateType<BusinessUnit> = {
   entities: [],
@@ -14,7 +14,7 @@ const initialState: StateType<BusinessUnit> = {
 
 export const businessUnitReducer = (
   businessUnitState = initialState,
-  action: AnyAction
+  action: BusinessUnitActionType
 ): StateType<BusinessUnit> => {
   const { type, payload } = action;
   switch (type) {

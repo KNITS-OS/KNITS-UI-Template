@@ -1,8 +1,8 @@
-import { AnyAction } from "redux";
-
 import { AppActionType, StateType } from "redux/app";
 
 import { Group } from "types";
+
+import { GroupActionType } from ".";
 
 const initialState: StateType<Group> = {
   entities: [],
@@ -12,7 +12,10 @@ const initialState: StateType<Group> = {
   error: {},
 };
 
-export const groupReducer = (groupState = initialState, action: AnyAction): StateType<Group> => {
+export const groupReducer = (
+  groupState = initialState,
+  action: GroupActionType
+): StateType<Group> => {
   const { type, payload } = action;
   const { entities, entity } = groupState;
 
@@ -78,7 +81,7 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
         if (group.id === payload.id) {
           return {
             ...group,
-            ...payload.data,
+            ...payload,
           };
         }
         return group;
@@ -93,7 +96,7 @@ export const groupReducer = (groupState = initialState, action: AnyAction): Stat
       };
 
     case AppActionType.DELETE_GROUP_COMPLETE:
-      groupsToKeep = groupState.entities.filter(({ id }) => id !== parseInt(payload.id));
+      groupsToKeep = groupState.entities.filter(({ id }) => id !== payload);
 
       return {
         isLoading: false,

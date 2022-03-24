@@ -1,6 +1,4 @@
 /* eslint-disable no-case-declarations */
-import { AnyAction } from "redux";
-
 import { AppActionType, StateType } from "redux/app";
 
 import { WorldOverviewCachedReports } from "types";
@@ -12,6 +10,8 @@ import {
   NO_REPORT_CACHED,
   REPORT_KEY_ACTIVE_MEMBERS,
 } from "variables/app.consts";
+
+import { WorldOverviewActionType } from ".";
 
 const NO_ACTION_FOUND = "NO_ACTION_FOUND";
 
@@ -61,7 +61,7 @@ const toCacheKey = (actionType: AppActionType): string => {
 
 export const worldOverviewReducer = (
   worldOverviewState = initialState,
-  action: AnyAction
+  action: WorldOverviewActionType
 ): StateType<WorldOverviewCachedReports> => {
   const { type, payload } = action;
   const { entities, entity } = worldOverviewState;

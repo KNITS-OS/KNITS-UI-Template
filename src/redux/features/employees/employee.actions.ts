@@ -37,7 +37,7 @@ const updateEmployeeError = (err: SerializedError) =>
 const deleteEmployeeError = (err: SerializedError) =>
   typedAction(AppActionType.DELETE_EMPLOYEE_ERROR, err);
 
-export type EmployeeAppActionType = ActionType<
+export type EmployeeActionType = ActionType<
   | typeof searchEmployeeLoading
   | typeof searchEmployeesLoading
   | typeof updateEmployeeLoading
@@ -52,7 +52,7 @@ export type EmployeeAppActionType = ActionType<
   | typeof deleteEmployeeError
 >;
 
-export const searchEmployee = (id: number) => async (dispatch: Dispatch<EmployeeAppActionType>) => {
+export const searchEmployee = (id: number) => async (dispatch: Dispatch<EmployeeActionType>) => {
   try {
     dispatch(searchEmployeeLoading());
 
@@ -63,22 +63,21 @@ export const searchEmployee = (id: number) => async (dispatch: Dispatch<Employee
   }
 };
 
-export const searchEmployees =
-  (filters: any) => async (dispatch: Dispatch<EmployeeAppActionType>) => {
-    try {
-      const queryParams = new URLSearchParams(filters);
+export const searchEmployees = (filters: any) => async (dispatch: Dispatch<EmployeeActionType>) => {
+  try {
+    const queryParams = new URLSearchParams(filters);
 
-      dispatch(searchEmployeesLoading());
+    dispatch(searchEmployeesLoading());
 
-      const { data } = await employeeService.searchEmployees(queryParams);
-      dispatch(searchEmployeesComplete(data));
-    } catch (err) {
-      dispatch(searchEmployeesError(err as SerializedError));
-    }
-  };
+    const { data } = await employeeService.searchEmployees(queryParams);
+    dispatch(searchEmployeesComplete(data));
+  } catch (err) {
+    dispatch(searchEmployeesError(err as SerializedError));
+  }
+};
 
 export const updateEmployee =
-  (updatedEmployee: IUpdated<Employee>) => async (dispatch: Dispatch<EmployeeAppActionType>) => {
+  (updatedEmployee: IUpdated<Employee>) => async (dispatch: Dispatch<EmployeeActionType>) => {
     try {
       dispatch(updateEmployeeLoading());
 
@@ -89,7 +88,7 @@ export const updateEmployee =
     }
   };
 
-export const deleteEmployee = (id: number) => async (dispatch: Dispatch<EmployeeAppActionType>) => {
+export const deleteEmployee = (id: number) => async (dispatch: Dispatch<EmployeeActionType>) => {
   try {
     dispatch(deleteEmployeeLoading());
 

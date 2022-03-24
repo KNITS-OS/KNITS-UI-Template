@@ -1,8 +1,8 @@
-import { AnyAction } from "redux";
-
 import { AppActionType, StateType } from "redux/app";
 
 import { Document } from "types";
+
+import { DocumentActionType } from ".";
 
 const initialState: StateType<Document> = {
   entities: [],
@@ -14,7 +14,7 @@ const initialState: StateType<Document> = {
 
 export const documentReducer = (
   documentState = initialState,
-  action: AnyAction
+  action: DocumentActionType
 ): StateType<Document> => {
   const { type, payload } = action;
   const { entities, entity } = documentState;
@@ -81,7 +81,7 @@ export const documentReducer = (
         if (document.id === payload.id) {
           return {
             ...document,
-            ...payload.data,
+            ...payload,
           };
         }
         return document;
@@ -92,11 +92,11 @@ export const documentReducer = (
         isSuccess: true,
         error: {},
         entities: updatedDocuments,
-        entity: payload.data,
+        entity: payload,
       };
 
     case AppActionType.DELETE_DOCUMENT_COMPLETE:
-      documentsToKeep = documentState.entities.filter(({ id }) => id !== parseInt(payload.id));
+      documentsToKeep = documentState.entities.filter(({ id }) => id !== payload);
 
       return {
         isLoading: false,
