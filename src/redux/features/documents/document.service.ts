@@ -2,7 +2,7 @@ import { Document } from "types";
 
 import { httpCommon, DOCUMENT_ROUTE, HttpResponseType, IUpdated } from "../../app";
 
-const searchDocuments = (queryParams: URLSearchParams): HttpResponseType<Document> =>
+const searchDocuments = (queryParams: URLSearchParams): HttpResponseType<Document[]> =>
   httpCommon.get(`${DOCUMENT_ROUTE}?${queryParams}`);
 
 const getDocumentById = (id: number): HttpResponseType<Document> =>

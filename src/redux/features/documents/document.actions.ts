@@ -34,7 +34,7 @@ const deleteDocumentLoading = () => typedAction(DELETE_DOCUMENT_LOADING, DELETE_
 
 const createDocumentComplete = (data: Document) => typedAction(CREATE_DOCUMENT_COMPLETE, data);
 const searchDocumentComplete = (data: Document) => typedAction(SEARCH_DOCUMENT_COMPLETE, data);
-const searchDocumentsComplete = (data: Document) => typedAction(SEARCH_DOCUMENTS_COMPLETE, data);
+const searchDocumentsComplete = (data: Document[]) => typedAction(SEARCH_DOCUMENTS_COMPLETE, data);
 const updateDocumentComplete = (data: Document) => typedAction(UPDATE_DOCUMENT_COMPLETE, data);
 const deleteDocumentComplete = (data: number) => typedAction(DELETE_DOCUMENT_COMPLETE, data);
 

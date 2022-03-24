@@ -1,13 +1,15 @@
 import { createSelector } from "reselect";
 
-export const selectDocumentsState = rootState => rootState.document;
+import { RootState } from "redux/app";
+
+export const selectDocumentsState = (rootState: RootState) => rootState.document;
 
 export const selectAllDocumentsData = createSelector(
   [selectDocumentsState],
   documentState => documentState.entities
 );
 
-export const selectDocumentById = id =>
+export const selectDocumentById = (id: number) =>
   createSelector([selectAllDocumentsData], documentsData =>
-    documentsData.find(document => document.id === parseInt(id))
+    documentsData.find(document => document.id === id)
   );

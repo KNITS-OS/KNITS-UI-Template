@@ -29,7 +29,7 @@ const updateEmployeeLoading = () => typedAction(UPDATE_EMPLOYEE_LOADING, UPDATE_
 const deleteEmployeeLoading = () => typedAction(DELETE_EMPLOYEE_LOADING, DELETE_EMPLOYEE_LOADING);
 
 const searchEmployeeComplete = (data: Employee) => typedAction(SEARCH_EMPLOYEE_COMPLETE, data);
-const searchEmployeesComplete = (data: Employee) => typedAction(SEARCH_EMPLOYEES_COMPLETE, data);
+const searchEmployeesComplete = (data: Employee[]) => typedAction(SEARCH_EMPLOYEES_COMPLETE, data);
 const updateEmployeeComplete = (data: Employee) => typedAction(UPDATE_EMPLOYEE_COMPLETE, data);
 const deleteEmployeeComplete = (data: number) => typedAction(DELETE_EMPLOYEE_COMPLETE, data);
 
