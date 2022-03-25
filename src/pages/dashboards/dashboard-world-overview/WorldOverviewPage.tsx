@@ -43,7 +43,6 @@ interface ActiveMap {
 
 export const WorldOverviewPage = () => {
   const dispatch = useDispatch();
-  // const activeMap = useAppSelector(selectCurrentMapData);
 
   const [activeMap, setActiveMap] = useState<ActiveMap | null>(null);
 
