@@ -57,7 +57,6 @@ export const WorldOverviewPage = () => {
   ) => {
     e.preventDefault();
     dispatch(fnApiCall());
-    fnApiCall();
   };
 
   const onActiveMembersClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -75,6 +74,14 @@ export const WorldOverviewPage = () => {
   const onAutoOffboardedClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     mapFilterClick(e, fetchAutoOffboardedMembersReport);
   };
+
+  // jvectormap creates a new div that has a class of "jvectormap-tip" each time user hovers over a country
+  // that causes the page to be longer than it should be. This function removes the extra divs.
+  setTimeout(() => {
+    Array.from(document.getElementsByClassName("jvectormap-tip")).forEach(el => {
+      el.remove();
+    });
+  }, 100);
 
   return (
     <>
@@ -129,16 +136,16 @@ export const WorldOverviewPage = () => {
                   }}
                   onRegionTipShow={function name(e: any, label: any, code: string) {
                     if (activeMap !== null) {
-                      activeMembersMap[code] != undefined
+                      activeMembersMap[code] !== undefined
                         ? setActiveMembers(activeMembersMap[code])
                         : setActiveMembers(0);
-                      newMembersMap[code] != undefined
+                      newMembersMap[code] !== undefined
                         ? setNewMembers(newMembersMap[code])
                         : setNewMembers(0);
-                      selfResignedMembersMap[code] != undefined
+                      selfResignedMembersMap[code] !== undefined
                         ? setSelfResignedMembers(selfResignedMembersMap[code])
                         : setSelfResignedMembers(0);
-                      autoOffboardedMembersMap[code] != undefined
+                      autoOffboardedMembersMap[code] !== undefined
                         ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
                         : setAutoOffboardedMembers(0);
                     }
