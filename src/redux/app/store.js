@@ -16,7 +16,7 @@ const middleware = [thunk];
 
 const rootReducer = combineReducers({
   employee: employeeReducer,
-  documentReducer,
+  document: documentReducer,
   group: groupReducer,
   worldOverview: worldOverviewReducer,
   businessUnit: businessUnitReducer,
