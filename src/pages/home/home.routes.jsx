@@ -1,5 +1,4 @@
-import { HOME } from "./home.routes.const";
-import { HomePage } from "./HomePage";
+import { HOME, HomePage } from ".";
 
 export const homeMenu = [
   {

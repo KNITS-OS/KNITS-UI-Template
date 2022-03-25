@@ -1,15 +1,28 @@
-import { useEffect, useState } from "react";
+import { AxiosResponse } from "axios";
+import { HttpResponseType } from "redux/app";
+import { renderChartErrorAlert } from "../Chart.renderers";
 
-import { renderChartErrorAlert } from "..";
 
-export const useChart = (asyncFunction, renderChart) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [chart, setChart] = useState();
-  const [alert, setAlert] = useState();
+
+interface ApiCallFunction<T> {
+  (): HttpResponseType<T>;
+}
+
+interface RenderChartFunction<T> {
+  (response: AxiosResponse<T>): JSX.Element;
+}
+
+export const useChart = <T>(
+  asyncFunction: ApiCallFunction<T>,
+  renderChart: RenderChartFunction<T>
+) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [chart, setChart] = useState<JSX.Element>();
+  const [alert, setAlert] = useState<JSX.Element>();
 
   const fetchDataAsync = async () => {
     const httpResponse = await asyncFunction();
-    if (httpResponse.isError) {
+    if (!httpResponse.data) {
       setAlert(renderChartErrorAlert(httpResponse));
     } else {
       setChart(renderChart(httpResponse));

@@ -1,16 +1,18 @@
+import { AxiosResponse } from "axios";
 import { Pie } from "react-chartjs-2";
 
+import { Chart, IPieChart } from "types";
 import { ThemeColors } from "variables/app.consts";
 
 import { pieDataTemplate, pieOptionsTemplate } from "..";
 
-const toPieChartUI = apiResponse => {
+const toPieChartUI = (response: Chart[]): IPieChart => {
   const genderTemplate = pieDataTemplate({
     label: "Gender",
     backgroundColor: [ThemeColors.theme["primary"], ThemeColors.theme["info"]],
   });
 
-  apiResponse.forEach(genderRecord => {
+  response.forEach(genderRecord => {
     genderTemplate.labels?.push(genderRecord.label);
     genderTemplate.datasets[0].data.push(genderRecord.value);
   });
@@ -21,7 +23,7 @@ const toPieChartUI = apiResponse => {
   };
 };
 
-export const renderChart = response => {
+export const renderChart = (response: AxiosResponse<Chart[]>) => {
   const pieChart = toPieChartUI(response.data);
   return <Pie data={pieChart.data} options={pieChart.options} className="chart-canvas" />;
 };

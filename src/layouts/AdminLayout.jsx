@@ -15,28 +15,26 @@
 
 */
 import { useEffect, useRef, useState } from "react";
-import { Audio } from "react-loader-spinner";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 
 import careLogo from "assets/img/brand/CareLogoMin.png";
 
+import { useAppSelector } from "redux/app";
 import {
-  findAllBusinessUnits,
-  findAllCountries,
-  selectAllBusinessUnitData,
   selectAllCountryData,
+  selectAllBusinessUnitData,
   selectAllGroupData,
+  selectAllEmployeeData,
+  findAllCountries,
+  findAllBusinessUnits,
   searchGroups,
   searchEmployees,
-  selectAllEmployeeData,
 } from "redux/features";
 
 import { AdminFooter } from "components/footers";
 import { AdminNavbar } from "components/navbars";
 import { Sidebar } from "components/sidebar";
-
-import { ThemeColors } from "variables/app.consts";
 
 import { useScrollToTop } from ".";
 
@@ -54,10 +52,10 @@ export const AdminLayout = () => {
   const [isGroupsDataLoaded, setIsGroupsDataLoaded] = useState(false);
   const [isEmployeesDataLoaded, setIsEmployeesDataLoaded] = useState(false);
 
-  const countries = useSelector(selectAllCountryData);
-  const businessUnits = useSelector(selectAllBusinessUnitData);
-  const groups = useSelector(selectAllGroupData);
-  const employees = useSelector(selectAllEmployeeData);
+  const countries = useAppSelector(selectAllCountryData);
+  const businessUnits = useAppSelector(selectAllBusinessUnitData);
+  const groups = useAppSelector(selectAllGroupData);
+  const employees = useAppSelector(selectAllEmployeeData);
 
   useEffect(() => {
     dispatch(findAllCountries());
@@ -119,32 +117,19 @@ export const AdminLayout = () => {
 
   return (
     <>
-      {!isDataLoadingCompleted ? (
-        <>
-          <div className="main-content" ref={mainContentRef}>
-            <div style={{ height: "300pt" }}>&nbsp;</div>
-            <div className="d-flex justify-content-center mb-3">
-              <Audio color={ThemeColors.theme.primary} height={160} width={160} />
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <Sidebar
-            logo={{
-              innerLink: "/",
-              imgSrc: careLogo,
-              imgAlt: "...",
-            }}
-            rtlActive={false}
-          />
-          <div className="main-content" ref={mainContentRef}>
-            <AdminNavbar theme={getNavbarTheme()} />
-            <Outlet />
-            <AdminFooter />
-          </div>
-        </>
-      )}
+      <Sidebar
+        logo={{
+          innerLink: "/",
+          imgSrc: careLogo,
+          imgAlt: "...",
+        }}
+        rtlActive={false}
+      />
+      <div className="main-content" ref={mainContentRef}>
+        <AdminNavbar theme={getNavbarTheme()} />
+        <Outlet />
+        <AdminFooter />
+      </div>
     </>
   );
 };

@@ -1,1 +1,1 @@
-export * from "./DateField.jsx";
+export * from "./DateField";

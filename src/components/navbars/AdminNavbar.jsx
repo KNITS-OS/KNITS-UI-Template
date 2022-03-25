@@ -35,6 +35,7 @@ export const AdminNavbar = ({ theme }) => {
   const logOut = () => {
     console.log("logout");
   };
+
   return (
     <>
       <Navbar
