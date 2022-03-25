@@ -1,5 +1,3 @@
-import { IRoute } from "types";
-
 import { EmployeeDetailsPage, EMPLOYEE_DETAILS, EMPLOYEE_SEARCH, SearchEmployeesPage } from ".";
 
 export const userMenu = [

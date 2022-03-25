@@ -1,10 +1,8 @@
-import { MouseEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
 import {
   deleteEmployee,
   searchEmployees,
@@ -18,30 +16,28 @@ import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import { EmployeeQueryFilters } from "types";
-
 import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 
 export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const employees = useAppSelector(selectAllEmployeeData);
+  const employees = useSelector(selectAllEmployeeData);
 
-  const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
-  const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);
+  const businessUnits = useSelector(selectAllBusinessUnitsDataAsSelectOptions);
+  const countries = useSelector(selectAllCountriesDataAsSelectOptions);
 
-  const onSearchEmployees = async (filters: EmployeeQueryFilters) => {
+  const onSearchEmployees = async filters => {
     dispatch(searchEmployees(filters));
   };
 
-  const onViewEmployeeDetails = (e: MouseEvent<HTMLButtonElement>) => {
+  const onViewEmployeeDetails = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
     navigate(`/admin${EMPLOYEE_DETAILS}/${id}`);
   };
 
-  const onDeleteEmployee = async (e: MouseEvent<HTMLButtonElement>) => {
+  const onDeleteEmployee = async e => {
     e.preventDefault();
     const { id } = e.currentTarget;
 

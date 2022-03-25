@@ -18,6 +18,7 @@ import moment from "moment";
 import { useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack"; //this will optimize load with webworker
 import Rating from "react-rating";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -35,7 +36,6 @@ import {
   Spinner,
 } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
 import { selectDocumentById } from "redux/features";
 
 import { BoxHeader } from "components/headers";
@@ -48,10 +48,10 @@ import { SEARCH_DOCUMENT } from "..";
 
 export const DocumentDetailPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams() as { id: string };
+  const { id } = useParams();
   const documentId = parseInt(id);
 
-  const document = useAppSelector(selectDocumentById(documentId));
+  const document = useSelector(selectDocumentById(documentId));
 
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
@@ -64,12 +64,12 @@ export const DocumentDetailPage = () => {
     );
   }
 
-  const onDocumentLoadSuccess = ({ numPages }: { numPages }) => {
+  const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
     setPageNumber(1);
   };
 
-  const changePage = (offset) => {
+  const changePage = offset => {
     setPageNumber(prevPageNumber => prevPageNumber + offset);
   };
 

@@ -1,5 +1,3 @@
-import { IRoute } from "types";
-
 import { LOGIN, LoginPage } from ".";
 
 export const authMenu = [

@@ -1,11 +1,6 @@
-import { Column } from "react-table";
+import { TwoMouseEventActionButtons } from "components/widgets";
 
-import { TwoMouseEventActionButtons, IDefaultActionButtons } from "components/widgets";
-
-export const employeesTableColumns = ({
-  onDetailsButtonClick,
-  onRemoveButtonClick,
-}: IDefaultActionButtons) => {
+export const employeesTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
   const tableArray = [
     {
       accessor: "id",
@@ -43,7 +38,7 @@ export const employeesTableColumns = ({
       accessor: "startDate",
       Header: "Hire Date",
     },
-  ] as Array<Column>;
+  ];
 
   if (onDetailsButtonClick && onRemoveButtonClick) {
     tableArray.push(TwoMouseEventActionButtons({ onDetailsButtonClick, onRemoveButtonClick }));

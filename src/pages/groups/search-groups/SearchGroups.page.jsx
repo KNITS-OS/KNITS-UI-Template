@@ -1,10 +1,8 @@
-import { MouseEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
 import { deleteGroup, selectAllGroupData } from "redux/features";
 
 import { BoxHeader } from "components/headers";
@@ -18,15 +16,15 @@ export const SearchGroupsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const groups = useAppSelector(selectAllGroupData);
+  const groups = useSelector(selectAllGroupData);
 
-  const onViewGroupDetails = (e: MouseEvent<HTMLButtonElement>) => {
-    const { id } = e.target as HTMLElement;
+  const onViewGroupDetails = e => {
+    const { id } = e.target;
     navigate(`/admin${GROUP_DETAILS}/${id}`);
   };
 
-  const onDeleteGroup = (e: MouseEvent<HTMLButtonElement>) => {
-    const { id } = e.target as HTMLElement;
+  const onDeleteGroup = e => {
+    const { id } = e.target;
     dispatch(deleteGroup(parseInt(id)));
   };
 

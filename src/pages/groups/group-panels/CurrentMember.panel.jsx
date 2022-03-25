@@ -1,23 +1,13 @@
-import { MouseEvent, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Collapse } from "reactstrap";
 
+import { employeeService } from "redux/features";
+
 import { ReactTable } from "components/widgets";
 
-import { EMPLOYEE_DETAILS, employeesTableColumns } from "pages/users";
-
-import { Employee, Group } from "types";
-
-import { employeeService } from "../../../redux/features";
-
-interface Props {
-  group: Group;
-  currentMembersCollapse: boolean;
-  currentGroupMembers: Employee[];
-  setGroup: React.Dispatch<React.SetStateAction<Group>>;
-  setCurrentGroupMembers: React.Dispatch<React.SetStateAction<Employee[]>>;
-}
+import { employeesTableColumns, EMPLOYEE_DETAILS } from "pages/users";
 
 export const CurrentMemberPanel = ({
   group,
@@ -29,9 +19,9 @@ export const CurrentMemberPanel = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchGroupMembers = async (members[]) => {
+    const fetchGroupMembers = async members => {
       const groupMembers = await employeeService.searchEmployeesByIds(members);
-      setCurrentGroupMembers(groupMembers.data as Employee[]);
+      setCurrentGroupMembers(groupMembers.data);
     };
 
     if (group.members.length > 0) {
@@ -40,13 +30,13 @@ export const CurrentMemberPanel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onViewMemberDetails = (e: MouseEvent<HTMLButtonElement>) => {
-    const { id } = e.currentTarget as HTMLButtonElement;
+  const onViewMemberDetails = e => {
+    const { id } = e.currentTarget;
     navigate(`/admin${EMPLOYEE_DETAILS}/${id}`);
   };
 
-  const onRemoveMember = (e: MouseEvent<HTMLButtonElement>) => {
-    const { id } = e.currentTarget as HTMLButtonElement;
+  const onRemoveMember = e => {
+    const { id } = e.currentTarget;
     const newGroupMembers = currentGroupMembers.filter(member => member.id !== parseInt(id));
     setCurrentGroupMembers(prevState => prevState.filter(member => member.id !== parseInt(id)));
     setGroup(prevState => ({

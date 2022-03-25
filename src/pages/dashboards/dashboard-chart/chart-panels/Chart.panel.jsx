@@ -1,12 +1,4 @@
-import { Card, CardHeader, CardBody, Spinner } from "reactstrap";
-
-interface Props {
-  title;
-  subTitle;
-  chart: JSX.Element | undefined;
-  isLoading: boolean;
-  alert: JSX.Element | undefined;
-}
+import { Card, CardBody, CardHeader, Spinner } from "reactstrap";
 
 export const ChartPanel = ({ chart, title, subTitle, isLoading, alert }) => {
   return (

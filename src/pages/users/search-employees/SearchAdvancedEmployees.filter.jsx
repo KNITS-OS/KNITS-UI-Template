@@ -1,9 +1,8 @@
-import { Moment } from "moment";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { Col, Row } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
 import {
   selectAllBusinessUnitsDataAsSelectOptions,
   selectAllCountriesDataAsSelectOptions,
@@ -13,32 +12,22 @@ import {
 import { FilterPanel } from "components/panels";
 import { DateField, InputField, SelectField } from "components/widgets";
 
-import { AdvancedEmployeeQueryFilters, Employee, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-interface Props {
-  setFilters: (filters: AdvancedEmployeeQueryFilters) => void;
-  currentGroupMembers?: Employee[];
-}
-
 export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMembers }) => {
-  const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
-  const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);
-  const groups = useAppSelector(selectAllGroupsDataAsSelectOptions);
+  const businessUnits = useSelector(selectAllBusinessUnitsDataAsSelectOptions);
+  const countries = useSelector(selectAllCountriesDataAsSelectOptions);
+  const groups = useSelector(selectAllGroupsDataAsSelectOptions);
 
   const [searchLastName, setSearchLastName] = useState("");
-  const [searchOnBoardDateFrom, setSearchOnBoardDateFrom] = useState<Moment | undefined>(undefined);
-  const [searchOnBoardDateTo, setSearchOnBoardDateTo] = useState<Moment | undefined>(undefined);
-  const [searchOffboardingDateFrom, setSearchOffboardingDateFrom] = useState<Moment | undefined>(
-    undefined
-  );
-  const [searchOffboardingDateTo, setSearchOffboardingDateTo] = useState<Moment | undefined>(
-    undefined
-  );
+  const [searchOnBoardDateFrom, setSearchOnBoardDateFrom] = useState(undefined);
+  const [searchOnBoardDateTo, setSearchOnBoardDateTo] = useState(undefined);
+  const [searchOffboardingDateFrom, setSearchOffboardingDateFrom] = useState(undefined);
+  const [searchOffboardingDateTo, setSearchOffboardingDateTo] = useState(undefined);
 
-  const [businessUnitSelected, setBusinessUnitSelected] = useState<SelectOption | null>();
-  const [groupSelected, setGroupSelected] = useState<SelectOption | null>();
-  const [countrySelected, setCountrySelected] = useState<SelectOption | null>();
+  const [businessUnitSelected, setBusinessUnitSelected] = useState();
+  const [groupSelected, setGroupSelected] = useState();
+  const [countrySelected, setCountrySelected] = useState();
   const [groupMembers, setGroupMembers] = useState(
     currentGroupMembers?.map(member => member.id) || []
   );
@@ -102,7 +91,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
             value={businessUnitSelected}
             options={businessUnits}
             onChange={item => {
-              setBusinessUnitSelected(item as SelectOption);
+              setBusinessUnitSelected(item);
             }}
           />
         </Col>
@@ -113,7 +102,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
             value={countrySelected}
             options={countries}
             onChange={item => {
-              setCountrySelected(item as SelectOption);
+              setCountrySelected(item);
             }}
           />
         </Col>
@@ -125,7 +114,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
             value={groupSelected}
             options={groups}
             onChange={item => {
-              setGroupSelected(item as SelectOption);
+              setGroupSelected(item);
             }}
           />
         </Col>

@@ -1,15 +1,10 @@
 import moment from "moment";
-import { Column } from "react-table";
 
-import { TwoMouseEventActionButtons, IDefaultActionButtons } from "components/widgets";
+import { TwoMouseEventActionButtons } from "components/widgets";
 
-import { Document } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-export const documentsTableColumns = ({
-  onDetailsButtonClick,
-  onRemoveButtonClick,
-}: IDefaultActionButtons) => {
+export const documentsTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
   return [
     {
       accessor: "id",
@@ -31,7 +26,7 @@ export const documentsTableColumns = ({
       accessor: "tags",
       Header: "Tags",
       Cell: ({ row }) => {
-        const { tags = [] } = row.original as Document;
+        const { tags = [] } = row.original;
 
         return (
           <>
@@ -46,7 +41,7 @@ export const documentsTableColumns = ({
       accessor: "rating",
       Header: "Rating",
       Cell: ({ row }) => {
-        const { rating } = row.original as Document;
+        const { rating } = row.original;
         return <>{rating}</>;
       },
     },
@@ -54,10 +49,10 @@ export const documentsTableColumns = ({
       accessor: "publishDate",
       Header: "Publish Date",
       Cell: ({ row }) => {
-        const { publishDate } = row.original as Document;
+        const { publishDate } = row.original;
         return <>{moment(publishDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT)}</>;
       },
     },
     TwoMouseEventActionButtons({ onDetailsButtonClick, onRemoveButtonClick }),
-  ] as Array<Column>;
+  ];
 };

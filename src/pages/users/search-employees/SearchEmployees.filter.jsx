@@ -1,32 +1,21 @@
+import { useState } from "react";
+
+import { Col, Row } from "reactstrap";
+
 import { FilterPanel } from "components/panels";
 import { DateField, InputField, SelectField } from "components/widgets";
-import { useState } from "react";
-import { Col, Row } from "reactstrap";
-import { EmployeeQueryFilters, SelectOption } from "types";
+
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
-
-
-
-
-interface onSearchEmployeesFunction {
-  (employeeSearchRequest: EmployeeQueryFilters): void;
-}
-
-interface Props {
-  countries: SelectOption[];
-  businessUnits: SelectOption[];
-  onSearchEmployees: onSearchEmployeesFunction;
-}
 
 export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchEmployees }) => {
   const [searchLastName, setSearchLastName] = useState("");
 
-  const [businessUnitSelected, setBusinessUnitSelected] = useState<SelectOption | null>();
-  const [countrySelected, setCountrySelected] = useState<SelectOption | null>();
+  const [businessUnitSelected, setBusinessUnitSelected] = useState();
+  const [countrySelected, setCountrySelected] = useState();
 
-  const [searchHiringDate, setSearchHiringDate] = useState<Moment | undefined>();
+  const [searchHiringDate, setSearchHiringDate] = useState();
 
-  const onChangeSearchLastName = (e) => {
+  const onChangeSearchLastName = e => {
     const searchLastName = e.target.value;
     setSearchLastName(searchLastName);
   };
@@ -80,7 +69,7 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
             value={businessUnitSelected}
             options={businessUnits}
             onChange={item => {
-              setBusinessUnitSelected(item as SelectOption);
+              setBusinessUnitSelected(item);
             }}
           />
         </Col>
@@ -91,7 +80,7 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
             value={countrySelected}
             options={countries}
             onChange={item => {
-              setCountrySelected(item as SelectOption);
+              setCountrySelected(item);
             }}
           />
         </Col>

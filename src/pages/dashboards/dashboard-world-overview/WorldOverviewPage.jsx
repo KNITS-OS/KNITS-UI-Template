@@ -14,13 +14,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { MapsHeader } from "components/headers";
 import { useState } from "react";
 import { VectorMap } from "react-jvectormap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
-import { Dispatch } from "redux";
-import { useAppSelector } from "redux/app";
+
 import {
   fetchActiveMembersReport,
   fetchAutoOffboardedMembersReport,
@@ -31,44 +30,42 @@ import {
   selectCurrentMapData,
   selectNewMembersReportsData,
   selectSelfResignedMembersReportsData,
-  WorldOverviewActionType,
 } from "redux/features";
+
+import { MapsHeader } from "components/headers";
 
 export const WorldOverviewPage = () => {
   const dispatch = useDispatch();
-  const activeMap = useAppSelector(selectCurrentMapData);
+  const activeMap = useSelector(selectCurrentMapData);
 
-  const activeMembersMap = useAppSelector(selectActiveMembersReportsData);
-  const newMembersMap = useAppSelector(selectNewMembersReportsData);
-  const selfResignedMembersMap = useAppSelector(selectSelfResignedMembersReportsData);
-  const autoOffboardedMembersMap = useAppSelector(selectAutoOffboardedMembersReportsData);
+  const activeMembersMap = useSelector(selectActiveMembersReportsData);
+  const newMembersMap = useSelector(selectNewMembersReportsData);
+  const selfResignedMembersMap = useSelector(selectSelfResignedMembersReportsData);
+  const autoOffboardedMembersMap = useSelector(selectAutoOffboardedMembersReportsData);
 
-  const [activeMembers, setActiveMembers] = useState < number > 0;
-  const [newMembers, setNewMembers] = useState < number > 0;
-  const [selfResignedMembers, setSelfResignedMembers] = useState < number > 0;
-  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState < number > 0;
+  const [activeMembers, setActiveMembers] = useState(0);
+  const [newMembers, setNewMembers] = useState(0);
+  const [selfResignedMembers, setSelfResignedMembers] = useState(0);
+  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState(0);
 
-  const mapFilterClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    fnApiCall: () => (dispatch: Dispatch<WorldOverviewActionType>) => Promise<void>
-  ) => {
+  const mapFilterClick = (e, fnApiCall) => {
     e.preventDefault();
     dispatch(fnApiCall());
   };
 
-  const onActiveMembersClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onActiveMembersClick = e => {
     mapFilterClick(e, fetchActiveMembersReport);
   };
 
-  const onNewMembersClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onNewMembersClick = e => {
     mapFilterClick(e, fetchNewMembersReport);
   };
 
-  const onSelfResignedClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onSelfResignedClick = e => {
     mapFilterClick(e, fetchSelfResignedMembersReport);
   };
 
-  const onAutoOffboardedClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAutoOffboardedClick = e => {
     mapFilterClick(e, fetchAutoOffboardedMembersReport);
   };
 
@@ -131,7 +128,7 @@ export const WorldOverviewPage = () => {
                       },
                     ],
                   }}
-                  onRegionTipShow={function name(e, label, code: string) {
+                  onRegionTipShow={function name(e, label, code) {
                     if (activeMap !== null) {
                       activeMembersMap[code] !== undefined
                         ? setActiveMembers(activeMembersMap[code])

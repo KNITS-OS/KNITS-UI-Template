@@ -1,11 +1,6 @@
-import { Column } from "react-table";
+import { TwoMouseEventActionButtons } from "components/widgets";
 
-import { TwoMouseEventActionButtons, IDefaultActionButtons } from "components/widgets";
-
-export const groupsTableColumns = ({
-  onDetailsButtonClick,
-  onRemoveButtonClick,
-}: IDefaultActionButtons) => {
+export const groupsTableColumns = ({ onDetailsButtonClick, onRemoveButtonClick }) => {
   return [
     {
       accessor: "id",
@@ -24,5 +19,5 @@ export const groupsTableColumns = ({
       Header: "active",
     },
     TwoMouseEventActionButtons({ onDetailsButtonClick, onRemoveButtonClick }),
-  ] as Array<Column>;
+  ];
 };

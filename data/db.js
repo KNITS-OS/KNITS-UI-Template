@@ -7,7 +7,7 @@ const reportData = require("./report-data");
 
 module.exports = () => ({
   employee: employeesData,
-  documentsData,
+  document: documentsData,
   country: countriesData,
   "business-unit": businessUnitsData,
   group: groupsData,

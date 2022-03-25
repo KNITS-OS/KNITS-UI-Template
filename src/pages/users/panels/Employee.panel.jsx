@@ -1,45 +1,33 @@
-import { DateField, InputField, SelectField } from "components/widgets";
 import moment from "moment";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
 import { Button, Col, Form, Row } from "reactstrap";
-import { useAppSelector } from "redux/app";
+
 import { selectGroupsByIdsAsSelectValues } from "redux/features";
-import { Employee, SelectOption } from "types";
+
+import { DateField, InputField, SelectField } from "components/widgets";
+
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
 
-
-
-
-
-interface onSaveFunction {
-  (updatedEmployee: Employee): void;
-}
-
-interface Props {
-  employee: Employee;
-  groupOptions: SelectOption[];
-  onSave: onSaveFunction;
-}
-
 export const EmployeePanel = ({ employee, groupOptions, onSave }) => {
-  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>(
+  const [onboardingDate, setOnboardingDate] = useState(
     moment(employee?.onboardingDate, DATE_FILTER_FORMAT)
   );
 
-  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>(
+  const [offboardingDate, setOffboardingDate] = useState(
     moment(employee?.offboardingDate, DATE_FILTER_FORMAT)
   );
 
-  const employeeGroups = useAppSelector(selectGroupsByIdsAsSelectValues(employee.groups || []));
+  const employeeGroups = useSelector(selectGroupsByIdsAsSelectValues(employee.groups || []));
 
-  const [groups, setGroups] = useState<number[]>(employee.groups || []);
+  const [groups, setGroups] = useState(employee.groups || []);
 
   // state to know which group fields has the user selected
-  const [currentGroupSelections, setCurrentGroupSelections] =
-    useState<SelectOption[]>(employeeGroups);
+  const [currentGroupSelections, setCurrentGroupSelections] = useState(employeeGroups);
 
   const onSaveEmployee = () => {
-    const newEmployee: Employee = {
+    const newEmployee = {
       ...employee,
       onboardingDate: moment(onboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
@@ -79,7 +67,7 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }) => {
               defaultValue={employeeGroups}
               isMulti={true}
               isOptionDisabled={option => {
-                const { label } = option as SelectOption;
+                const { label } = option;
                 // if user has selected ALL field then other fields will be disabled
                 if (currentGroupSelections.some(selection => selection.label === "ALL")) {
                   return true;

@@ -8,7 +8,6 @@ import { createGroup } from "redux/features";
 import { BoxHeader } from "components/headers";
 
 import { useLocalStateAlerts } from "hooks";
-import { Group, GroupSaveRequest } from "types";
 import { CREATE_ENTITY_ID } from "variables/app.consts";
 
 import { EditGroupPanel } from "..";
@@ -23,13 +22,13 @@ export const CreateGroupPage = () => {
     active: true,
   };
 
-  const [group, setGroup] = useState<Group>(initialState);
+  const [group, setGroup] = useState(initialState);
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const onCreateGroup = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     const { id, ...newGroup } = group;
-    dispatch(createGroup(newGroup as GroupSaveRequest));
+    dispatch(createGroup(newGroup));
 
     setSuccessMessage("Group Created");
     setSaveSent(true);

@@ -14,17 +14,21 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { Card, CardHeader, Col, Container, Row } from "reactstrap";
+
+import { deleteDocument, searchDocuments, selectAllDocumentsData } from "redux/features";
+
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
-import { MouseEvent, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Card, CardHeader, Col, Container, Row } from "reactstrap";
-import { useAppSelector } from "redux/app";
-import { deleteDocument, searchDocuments, selectAllDocumentsData } from "redux/features";
-import { documentsTableColumns, SearchDocumentsFilterPanel } from ".";
+
 import { DocumentHighlightsPanel } from "../document-panels";
 import { DOCUMENT_DETAILS } from "../documents.routes.const";
+
+import { documentsTableColumns, SearchDocumentsFilterPanel } from ".";
 
 export const SearchDocumentsPage = () => {
   const navigate = useNavigate();
@@ -32,18 +36,18 @@ export const SearchDocumentsPage = () => {
 
   const [alert] = useState(null);
 
-  const documents = useAppSelector(selectAllDocumentsData);
+  const documents = useSelector(selectAllDocumentsData);
 
-  const onSearchDocuments = async filterssQueryFilters => {
+  const onSearchDocuments = filters => {
     dispatch(searchDocuments(filters));
   };
 
-  const onViewDocumentDetails = (e: MouseEvent<HTMLButtonElement>) => {
+  const onViewDocumentDetails = e => {
     const { id } = e.currentTarget;
     navigate(`/admin${DOCUMENT_DETAILS}/${id}`);
   };
 
-  const onDeleteDocument = async (e: MouseEvent<HTMLButtonElement>) => {
+  const onDeleteDocument = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
     dispatch(deleteDocument(parseInt(id)));

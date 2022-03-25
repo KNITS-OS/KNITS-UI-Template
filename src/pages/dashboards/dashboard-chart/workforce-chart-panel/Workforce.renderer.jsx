@@ -1,11 +1,8 @@
-import { AxiosResponse } from "axios";
 import { Line } from "react-chartjs-2";
-
-import { Chart, ILineChart } from "types";
 
 import { lineDataTemplate, lineOptionsTemplate } from "..";
 
-const toWorkforceLineChartUI = (response: Chart[]): ILineChart => {
+const toWorkforceLineChartUI = response => {
   const template = lineDataTemplate({ label: "Members" });
   response.forEach(workforceRecord => {
     template.labels = template.labels ? template.labels : [];
@@ -18,7 +15,7 @@ const toWorkforceLineChartUI = (response: Chart[]): ILineChart => {
   };
 };
 
-export const renderChart = (response: AxiosResponse) => {
+export const renderChart = response => {
   const chart = toWorkforceLineChartUI(response.data);
   return (
     <Line data={chart.data} options={chart.options} id="chart-workforce" className="chart-canvas" />

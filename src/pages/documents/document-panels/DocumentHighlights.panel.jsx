@@ -1,15 +1,13 @@
-import { MouseEvent } from "react";
-
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-  CardImg,
-  CardTitle,
-  CardText,
   Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardImg,
+  CardText,
+  CardTitle,
+  Col,
+  Row,
 } from "reactstrap";
 
 import careCreditCardsImg from "assets/img/care/care-credit-cards.png";
@@ -17,10 +15,6 @@ import huddleImg from "assets/img/care/huddle.png";
 import remoteWorkImg from "assets/img/care/remote-work.png";
 
 import { useFeatureDisabledWarning } from "hooks";
-
-interface Props {
-  onViewDetailsClick: (e: MouseEvent<HTMLButtonElement>) => void;
-}
 
 export const DocumentHighlightsPanel = ({ onViewDetailsClick }) => {
   const { fireAlert } = useFeatureDisabledWarning();

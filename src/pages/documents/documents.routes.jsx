@@ -1,9 +1,7 @@
-import { IRoute } from "types";
-
 import {
+  CreateDocumentPage,
   DocumentDetailPage,
   DOCUMENT_DETAILS,
-  CreateDocumentPage,
   NEW_DOCUMENT,
   SearchDocumentsPage,
   SEARCH_DOCUMENT,

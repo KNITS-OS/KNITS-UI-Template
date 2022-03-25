@@ -15,12 +15,11 @@
 
 */
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
 
-import { useAppSelector } from "redux/app";
 import {
   selectAllGroupsDataAsSelectOptions,
   selectEmployeeById,
@@ -32,18 +31,17 @@ import { BoxHeader } from "components/headers";
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
 
 import { useLocalStateAlerts } from "hooks";
-import { Employee } from "types";
 
 export const EmployeeDetailsPage = () => {
-  const { id } = useParams() as { id: string };
+  const { id } = useParams();
   const employeeId = parseInt(id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const employee = useAppSelector(selectEmployeeById(employeeId));
-  const groupOptions = useAppSelector(selectAllGroupsDataAsSelectOptions);
+  const employee = useSelector(selectEmployeeById(employeeId));
+  const groupOptions = useSelector(selectAllGroupsDataAsSelectOptions);
 
   if (!employee) {
     return (
@@ -53,7 +51,7 @@ export const EmployeeDetailsPage = () => {
     );
   }
 
-  const onSaveEmployee = async (updatedEmployee: Employee) => {
+  const onSaveEmployee = async updatedEmployee => {
     dispatch(updateEmployee({ id: employeeId, body: updatedEmployee }));
 
     setSuccessMessage("Employee Updated");

@@ -1,12 +1,10 @@
-import { AxiosResponse } from "axios";
 import { Bar } from "react-chartjs-2";
 
-import { TurnoverChart, IBarChart } from "types";
 import { ThemeColors } from "variables/app.consts";
 
 import { barDataTemplate, barOptionsTemplate } from "..";
 
-export const toTurnoverBarChartUI = (response: TurnoverChart[]): IBarChart => {
+export const toTurnoverBarChartUI = response => {
   const template = barDataTemplate({
     bars: [
       { label: "Onboarded", backgroundColor: ThemeColors.theme["success"] },
@@ -26,7 +24,7 @@ export const toTurnoverBarChartUI = (response: TurnoverChart[]): IBarChart => {
   };
 };
 
-export const renderChart = (response: AxiosResponse) => {
+export const renderChart = response => {
   const barChart = toTurnoverBarChartUI(response.data);
   return <Bar data={barChart.data} options={barChart.options} className="chart-canvas" />;
 };

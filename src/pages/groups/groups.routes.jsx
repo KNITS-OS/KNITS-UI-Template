@@ -1,10 +1,8 @@
-import { IRoute } from "types";
-
 import {
   CreateGroupPage,
   GroupDetailsPage,
-  GROUP_DETAILS,
   GROUP_CREATE,
+  GROUP_DETAILS,
   GROUP_SEARCH,
   SearchGroupsPage,
 } from ".";
