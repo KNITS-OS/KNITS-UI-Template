@@ -14,10 +14,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { VectorMap } from "react-jvectormap";
 import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
 
 import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
 
@@ -29,17 +28,24 @@ import {
   fetchSelfResignedMembersReport,
   selectActiveMembersReportsData,
   selectAutoOffboardedMembersReportsData,
-  selectCurrentMapData,
   selectNewMembersReportsData,
   selectSelfResignedMembersReportsData,
-  WorldOverviewActionType,
 } from "redux/features";
 
 import { MapsHeader } from "components/headers";
 
+import { WorldDataReport } from "types";
+
+interface ActiveMap {
+  id: "activeMembersMap" | "newMembersMap" | "selfResignedMembersMap" | "autoOffboardedMembersMap";
+  value: WorldDataReport;
+}
+
 export const WorldOverviewPage = () => {
   const dispatch = useDispatch();
-  const activeMap = useAppSelector(selectCurrentMapData);
+  // const activeMap = useAppSelector(selectCurrentMapData);
+
+  const [activeMap, setActiveMap] = useState<ActiveMap | null>(null);
 
   const activeMembersMap = useAppSelector(selectActiveMembersReportsData);
   const newMembersMap = useAppSelector(selectNewMembersReportsData);
@@ -51,29 +57,41 @@ export const WorldOverviewPage = () => {
   const [selfResignedMembers, setSelfResignedMembers] = useState<number>(0);
   const [autoOffboardedMembers, setAutoOffboardedMembers] = useState<number>(0);
 
-  const mapFilterClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    fnApiCall: () => (dispatch: Dispatch<WorldOverviewActionType>) => Promise<void>
-  ) => {
-    e.preventDefault();
-    dispatch(fnApiCall());
+  const resetCards = () => {
+    // reset all the cards
+    setActiveMembers(0);
+    setNewMembers(0);
+    setSelfResignedMembers(0);
+    setAutoOffboardedMembers(0);
   };
 
-  const onActiveMembersClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    mapFilterClick(e, fetchActiveMembersReport);
+  const onActiveMembersClick = () => {
+    setActiveMap({ id: "activeMembersMap", value: activeMembersMap });
+    resetCards();
   };
 
-  const onNewMembersClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    mapFilterClick(e, fetchNewMembersReport);
+  const onNewMembersClick = () => {
+    setActiveMap({ id: "newMembersMap", value: newMembersMap });
+    resetCards();
   };
 
-  const onSelfResignedClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    mapFilterClick(e, fetchSelfResignedMembersReport);
+  const onSelfResignedClick = () => {
+    setActiveMap({ id: "selfResignedMembersMap", value: selfResignedMembersMap });
+    resetCards();
   };
 
-  const onAutoOffboardedClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    mapFilterClick(e, fetchAutoOffboardedMembersReport);
+  const onAutoOffboardedClick = () => {
+    setActiveMap({ id: "autoOffboardedMembersMap", value: autoOffboardedMembersMap });
+    resetCards();
   };
+
+  useEffect(() => {
+    dispatch(fetchActiveMembersReport());
+    dispatch(fetchNewMembersReport());
+    dispatch(fetchSelfResignedMembersReport());
+    dispatch(fetchAutoOffboardedMembersReport());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // jvectormap creates a new div that has a class of "jvectormap-tip" each time user hovers over a country
   // that causes the page to be longer than it should be. This function removes the extra divs.
@@ -128,7 +146,7 @@ export const WorldOverviewPage = () => {
                   series={{
                     regions: [
                       {
-                        values: activeMap,
+                        values: activeMap?.value,
                         scale: ["#ced4da", "#043c7c"],
                         normalizeFunction: "polynomial",
                       },
@@ -136,18 +154,23 @@ export const WorldOverviewPage = () => {
                   }}
                   onRegionTipShow={function name(e: any, label: any, code: string) {
                     if (activeMap !== null) {
-                      activeMembersMap[code] !== undefined
-                        ? setActiveMembers(activeMembersMap[code])
-                        : setActiveMembers(0);
-                      newMembersMap[code] !== undefined
-                        ? setNewMembers(newMembersMap[code])
-                        : setNewMembers(0);
-                      selfResignedMembersMap[code] !== undefined
-                        ? setSelfResignedMembers(selfResignedMembersMap[code])
-                        : setSelfResignedMembers(0);
-                      autoOffboardedMembersMap[code] !== undefined
-                        ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
-                        : setAutoOffboardedMembers(0);
+                      if (activeMap.id === "activeMembersMap") {
+                        activeMembersMap[code] !== undefined
+                          ? setActiveMembers(activeMembersMap[code])
+                          : setActiveMembers(0);
+                      } else if (activeMap.id === "newMembersMap") {
+                        newMembersMap[code] !== undefined
+                          ? setNewMembers(newMembersMap[code])
+                          : setNewMembers(0);
+                      } else if (activeMap.id === "selfResignedMembersMap") {
+                        selfResignedMembersMap[code] !== undefined
+                          ? setSelfResignedMembers(selfResignedMembersMap[code])
+                          : setSelfResignedMembers(0);
+                      } else if (activeMap.id === "autoOffboardedMembersMap") {
+                        autoOffboardedMembersMap[code] !== undefined
+                          ? setAutoOffboardedMembers(autoOffboardedMembersMap[code])
+                          : setAutoOffboardedMembers(0);
+                      }
                     }
                   }}
                 />
