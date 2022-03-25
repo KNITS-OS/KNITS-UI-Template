@@ -26,7 +26,7 @@ export const toTurnoverBarChartUI = (response: TurnoverChart[]): IBarChart => {
   };
 };
 
-export const renderChart = (response: AxiosResponse<TurnoverChart[]>) => {
+export const renderChart = (response: AxiosResponse) => {
   const barChart = toTurnoverBarChartUI(response.data);
   return <Bar data={barChart.data} options={barChart.options} className="chart-canvas" />;
 };

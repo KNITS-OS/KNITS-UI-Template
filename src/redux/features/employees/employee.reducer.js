@@ -1,10 +1,6 @@
-import { AppActionType, StateType } from "redux/app";
+import { AppActionType } from "redux/app";
 
-import { Employee } from "types";
-
-import { EmployeeActionType } from "./employee.actions";
-
-const initialState: StateType<Employee> = {
+const initialState = {
   entities: [],
   entity: null,
   isLoading: false,
@@ -12,10 +8,7 @@ const initialState: StateType<Employee> = {
   error: {},
 };
 
-export const employeeReducer = (
-  employeeState = initialState,
-  action: EmployeeActionType
-): StateType<Employee> => {
+export const employeeReducer = (employeeState = initialState, action) => {
   const { type, payload } = action;
   const { entities, entity } = employeeState;
 

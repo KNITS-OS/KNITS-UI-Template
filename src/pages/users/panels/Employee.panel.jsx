@@ -1,15 +1,15 @@
-import moment, { Moment } from "moment";
+import { DateField, InputField, SelectField } from "components/widgets";
+import moment from "moment";
 import { useState } from "react";
-
 import { Button, Col, Form, Row } from "reactstrap";
-
 import { useAppSelector } from "redux/app";
 import { selectGroupsByIdsAsSelectValues } from "redux/features";
-
-import { InputField, DateField, SelectField } from "components/widgets";
-
 import { Employee, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
+
+
+
+
 
 interface onSaveFunction {
   (updatedEmployee: Employee): void;
@@ -93,7 +93,7 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }) => {
                 // return true to disable field
               }}
               onChange={items => {
-                const selections = items as SelectOption[];
+                const selections = items;
                 setCurrentGroupSelections(selections);
                 // if there is an "ALL" selection in the list (data will be 1,2,3,12,etc)
                 // split and return an array of numbers

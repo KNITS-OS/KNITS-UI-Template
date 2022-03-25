@@ -64,12 +64,12 @@ export const DocumentDetailPage = () => {
     );
   }
 
-  const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
+  const onDocumentLoadSuccess = ({ numPages }: { numPages }) => {
     setNumPages(numPages);
     setPageNumber(1);
   };
 
-  const changePage = (offset: number) => {
+  const changePage = (offset) => {
     setPageNumber(prevPageNumber => prevPageNumber + offset);
   };
 

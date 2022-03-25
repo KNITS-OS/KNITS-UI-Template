@@ -1,10 +1,6 @@
-import { AppActionType, StateType } from "redux/app";
+import { AppActionType } from "redux/app";
 
-import { BusinessUnit } from "types";
-
-import { BusinessUnitActionType } from ".";
-
-const initialState: StateType<BusinessUnit> = {
+const initialState = {
   entities: [],
   entity: null,
   isLoading: false,
@@ -12,10 +8,7 @@ const initialState: StateType<BusinessUnit> = {
   error: {},
 };
 
-export const businessUnitReducer = (
-  businessUnitState = initialState,
-  action: BusinessUnitActionType
-): StateType<BusinessUnit> => {
+export const businessUnitReducer = (businessUnitState = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case AppActionType.LIST_BUSINESS_UNITS_LOADING:

@@ -29,7 +29,7 @@ export const CurrentMemberPanel = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchGroupMembers = async (members: number[]) => {
+    const fetchGroupMembers = async (members[]) => {
       const groupMembers = await employeeService.searchEmployeesByIds(members);
       setCurrentGroupMembers(groupMembers.data as Employee[]);
     };

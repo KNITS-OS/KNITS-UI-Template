@@ -18,7 +18,7 @@ const toWorkforceLineChartUI = (response: Chart[]): ILineChart => {
   };
 };
 
-export const renderChart = (response: AxiosResponse<Chart[]>) => {
+export const renderChart = (response: AxiosResponse) => {
   const chart = toWorkforceLineChartUI(response.data);
   return (
     <Line data={chart.data} options={chart.options} id="chart-workforce" className="chart-canvas" />

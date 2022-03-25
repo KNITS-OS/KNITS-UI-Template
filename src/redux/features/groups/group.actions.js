@@ -1,9 +1,4 @@
-import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
-
-import { AppActionType, typedAction, SerializedError, IUpdated } from "redux/app";
-
-import { Group, GroupSaveRequest } from "types";
+import { AppActionType, typedAction } from "redux/app";
 
 import { groupService } from ".";
 
@@ -18,60 +13,34 @@ const updateGroupLoading = () =>
 const deleteGroupLoading = () =>
   typedAction(AppActionType.DELETE_GROUP_LOADING, AppActionType.DELETE_GROUP_LOADING);
 
-const createGroupComplete = (data: Group) => typedAction(AppActionType.CREATE_GROUP_COMPLETE, data);
-const searchGroupComplete = (data: Group) => typedAction(AppActionType.SEARCH_GROUP_COMPLETE, data);
-const searchGroupsComplete = (data: Group[]) =>
-  typedAction(AppActionType.SEARCH_GROUPS_COMPLETE, data);
-const updateGroupComplete = (data: Group) => typedAction(AppActionType.UPDATE_GROUP_COMPLETE, data);
-const deleteGroupComplete = (data: number) =>
-  typedAction(AppActionType.DELETE_GROUP_COMPLETE, data);
+const createGroupComplete = data => typedAction(AppActionType.CREATE_GROUP_COMPLETE, data);
+const searchGroupComplete = data => typedAction(AppActionType.SEARCH_GROUP_COMPLETE, data);
+const searchGroupsComplete = data => typedAction(AppActionType.SEARCH_GROUPS_COMPLETE, data);
+const updateGroupComplete = data => typedAction(AppActionType.UPDATE_GROUP_COMPLETE, data);
+const deleteGroupComplete = data => typedAction(AppActionType.DELETE_GROUP_COMPLETE, data);
 
-const createGroupError = (err: SerializedError) =>
-  typedAction(AppActionType.CREATE_GROUP_ERROR, err);
+const createGroupError = err => typedAction(AppActionType.CREATE_GROUP_ERROR, err);
 
-const searchGroupError = (err: SerializedError) =>
-  typedAction(AppActionType.SEARCH_GROUP_ERROR, err);
+const searchGroupError = err => typedAction(AppActionType.SEARCH_GROUP_ERROR, err);
 
-const searchGroupsError = (err: SerializedError) =>
-  typedAction(AppActionType.SEARCH_GROUPS_ERROR, err);
+const searchGroupsError = err => typedAction(AppActionType.SEARCH_GROUPS_ERROR, err);
 
-const updateGroupError = (err: SerializedError) =>
-  typedAction(AppActionType.UPDATE_GROUP_ERROR, err);
+const updateGroupError = err => typedAction(AppActionType.UPDATE_GROUP_ERROR, err);
 
-const deleteGroupError = (err: SerializedError) =>
-  typedAction(AppActionType.DELETE_GROUP_ERROR, err);
+const deleteGroupError = err => typedAction(AppActionType.DELETE_GROUP_ERROR, err);
 
-export type GroupActionType = ActionType<
-  | typeof createGroupLoading
-  | typeof searchGroupLoading
-  | typeof searchGroupsLoading
-  | typeof updateGroupLoading
-  | typeof deleteGroupLoading
-  | typeof createGroupComplete
-  | typeof searchGroupComplete
-  | typeof searchGroupsComplete
-  | typeof updateGroupComplete
-  | typeof deleteGroupComplete
-  | typeof createGroupError
-  | typeof searchGroupError
-  | typeof searchGroupsError
-  | typeof updateGroupError
-  | typeof deleteGroupError
->;
+export const createGroup = group => async dispatch => {
+  try {
+    dispatch(createGroupLoading());
+    const { data } = await groupService.createGroup(group);
 
-export const createGroup =
-  (group: GroupSaveRequest) => async (dispatch: Dispatch<GroupActionType>) => {
-    try {
-      dispatch(createGroupLoading());
-      const { data } = await groupService.createGroup(group);
+    dispatch(createGroupComplete(data));
+  } catch (err) {
+    dispatch(createGroupError(err));
+  }
+};
 
-      dispatch(createGroupComplete(data));
-    } catch (err) {
-      dispatch(createGroupError(err as SerializedError));
-    }
-  };
-
-export const searchGroup = (id: number) => async (dispatch: Dispatch<GroupActionType>) => {
+export const searchGroup = id => async dispatch => {
   try {
     dispatch(searchGroupLoading());
 
@@ -79,11 +48,11 @@ export const searchGroup = (id: number) => async (dispatch: Dispatch<GroupAction
 
     dispatch(searchGroupComplete(data));
   } catch (err) {
-    dispatch(searchGroupError(err as SerializedError));
+    dispatch(searchGroupError(err));
   }
 };
 
-export const searchGroups = () => async (dispatch: Dispatch<GroupActionType>) => {
+export const searchGroups = () => async dispatch => {
   try {
     dispatch(searchGroupsLoading());
 
@@ -91,23 +60,22 @@ export const searchGroups = () => async (dispatch: Dispatch<GroupActionType>) =>
 
     dispatch(searchGroupsComplete(data));
   } catch (err) {
-    dispatch(searchGroupsError(err as SerializedError));
+    dispatch(searchGroupsError(err));
   }
 };
 
-export const updateGroup =
-  (updatedGroup: IUpdated<Group>) => async (dispatch: Dispatch<GroupActionType>) => {
-    try {
-      dispatch(updateGroupLoading());
-      const { data } = await groupService.updateGroup(updatedGroup);
+export const updateGroup = updatedGroup => async dispatch => {
+  try {
+    dispatch(updateGroupLoading());
+    const { data } = await groupService.updateGroup(updatedGroup);
 
-      dispatch(updateGroupComplete(data));
-    } catch (err) {
-      dispatch(updateGroupError(err as SerializedError));
-    }
-  };
+    dispatch(updateGroupComplete(data));
+  } catch (err) {
+    dispatch(updateGroupError(err));
+  }
+};
 
-export const deleteGroup = (id: number) => async (dispatch: Dispatch<GroupActionType>) => {
+export const deleteGroup = id => async dispatch => {
   try {
     dispatch(deleteGroupLoading());
 
@@ -115,6 +83,6 @@ export const deleteGroup = (id: number) => async (dispatch: Dispatch<GroupAction
 
     dispatch(deleteGroupComplete(id));
   } catch (err) {
-    dispatch(deleteGroupError(err as SerializedError));
+    dispatch(deleteGroupError(err));
   }
 };

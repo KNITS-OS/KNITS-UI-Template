@@ -14,24 +14,17 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import { BoxHeader } from "components/headers";
+import { ReactTable } from "components/widgets";
 import { MouseEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
-
 import { useAppSelector } from "redux/app";
 import { deleteDocument, searchDocuments, selectAllDocumentsData } from "redux/features";
-
-import { BoxHeader } from "components/headers";
-import { ReactTable } from "components/widgets";
-
-import { DocumentsQueryFilters } from "types";
-
+import { documentsTableColumns, SearchDocumentsFilterPanel } from ".";
 import { DocumentHighlightsPanel } from "../document-panels";
 import { DOCUMENT_DETAILS } from "../documents.routes.const";
-
-import { documentsTableColumns, SearchDocumentsFilterPanel } from ".";
 
 export const SearchDocumentsPage = () => {
   const navigate = useNavigate();
@@ -41,7 +34,7 @@ export const SearchDocumentsPage = () => {
 
   const documents = useAppSelector(selectAllDocumentsData);
 
-  const onSearchDocuments = async (filters: DocumentsQueryFilters) => {
+  const onSearchDocuments = async filterssQueryFilters => {
     dispatch(searchDocuments(filters));
   };
 

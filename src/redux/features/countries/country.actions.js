@@ -1,26 +1,15 @@
-import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
-
-import { AppActionType, typedAction, SerializedError } from "redux/app";
-
-import { Country } from "types";
+import { AppActionType, typedAction } from "redux/app";
 
 import { countryService } from ".";
 
 const findAllCountriesLoading = () =>
   typedAction(AppActionType.LIST_COUNTRIES_LOADING, AppActionType.LIST_COUNTRIES_LOADING);
 
-const findAllCountriesComplete = (data: Country[]) =>
-  typedAction(AppActionType.LIST_COUNTRIES_COMPLETE, data);
+const findAllCountriesComplete = data => typedAction(AppActionType.LIST_COUNTRIES_COMPLETE, data);
 
-const findAllCountriesError = (err: SerializedError) =>
-  typedAction(AppActionType.LIST_COUNTRIES_ERROR, err);
+const findAllCountriesError = err => typedAction(AppActionType.LIST_COUNTRIES_ERROR, err);
 
-export type CountryActionType = ActionType<
-  typeof findAllCountriesLoading | typeof findAllCountriesComplete | typeof findAllCountriesError
->;
-
-export const findAllCountries = () => async (dispatch: Dispatch<CountryActionType>) => {
+export const findAllCountries = () => async dispatch => {
   try {
     dispatch(findAllCountriesLoading());
 
@@ -28,6 +17,6 @@ export const findAllCountries = () => async (dispatch: Dispatch<CountryActionTyp
 
     dispatch(findAllCountriesComplete(data));
   } catch (err) {
-    dispatch(findAllCountriesError(err as SerializedError));
+    dispatch(findAllCountriesError(err));
   }
 };

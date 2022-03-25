@@ -1,16 +1,15 @@
-import { Moment } from "moment";
-import { useState } from "react";
-
-import { Col, Row } from "reactstrap";
-
 import { FilterPanel } from "components/panels";
-import { InputField, DateField, SelectField } from "components/widgets";
+import { DateField, InputField, SelectField } from "components/widgets";
+import { useState } from "react";
+import { Col, Row } from "reactstrap";
+import { SelectOption } from "types";
+import { DATE_FILTER_FORMAT, documentRatings } from "variables/app.consts";
 
-import { DocumentsQueryFilters, SelectOption } from "types";
-import { documentRatings, DATE_FILTER_FORMAT } from "variables/app.consts";
+
+
 
 interface onSearchFunction {
-  (searchRequest: DocumentsQueryFilters): void;
+  (searchRequestsQueryFilters): void;
 }
 
 interface Props {

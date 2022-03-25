@@ -1,28 +1,22 @@
+import { BoxHeader } from "components/headers";
+import { DisplayFiles, FileInput, InputField } from "components/widgets";
+import { useLocalStateAlerts } from "hooks";
+import { toFileArray } from "pages/utils";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import CreatableSelect from "react-select/creatable";
-
 import { Button, Card, CardBody, CardHeader, Col, Container, FormGroup, Row } from "reactstrap";
-
 import { createDocument } from "redux/features";
-
-import { BoxHeader } from "components/headers";
-import { InputField, FileInput, DisplayFiles } from "components/widgets";
-
-import { toFileArray } from "pages/utils";
-
-import { useLocalStateAlerts } from "hooks";
-import { SelectOption, Document } from "types";
+import { Document } from "types";
 import { defaultDocumentsTags } from "variables/app.consts";
-
 import { documentDefaultState } from "..";
 
 export const CreateDocumentPage = () => {
   const dispatch = useDispatch();
-  const [document, setDocument] = useState<Document>(documentDefaultState);
+  const [document, setDocument] = useState < Document > documentDefaultState;
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const changeFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeFileHandler = e => {
     if (e.currentTarget.files) {
       setDocument({
         ...document,
@@ -32,15 +26,17 @@ export const CreateDocumentPage = () => {
   };
 
   const onCreateDocument = async () => {
-    dispatch(createDocument(document));
+    // eslint-disable-next-line no-unused-vars
+    const { id, ...newDocument } = document;
+    dispatch(createDocument(newDocument));
 
     setSuccessMessage("Document Created");
     setSaveSent(true);
     setIsSuccess(true);
   };
 
-  const onChangeSelectedTag = (newValue: any) => {
-    const arrayOfOptions = newValue ? (newValue as SelectOption[]) : [];
+  const onChangeSelectedTag = newValue => {
+    const arrayOfOptions = newValue ? newValue : [];
     const newTags = arrayOfOptions.map(option => option.value);
     const updatedTags = document.tags ? document.tags : [];
 

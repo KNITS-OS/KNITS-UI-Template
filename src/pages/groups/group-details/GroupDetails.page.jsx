@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-
-import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
-
-import { useAppSelector } from "redux/app";
-import { selectGroupById, updateGroup } from "redux/features";
-
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
-
 import { useFeatureDisabledWarning, useLocalStateAlerts } from "hooks";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
+import { useAppSelector } from "redux/app";
+import { selectGroupById, updateGroup } from "redux/features";
 import { Group } from "types";
-
 import { MembersPanel } from "..";
+
+
+
+
+
 
 export const GroupDetailsPage = () => {
   const { id } = useParams() as { id: string };
@@ -95,7 +95,7 @@ export const GroupDetailsPage = () => {
                           label="Group Name"
                           value={group?.name}
                           type="text"
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          onChange={(e) =>
                             setGroup({
                               ...group,
                               name: e.target.value,
@@ -112,7 +112,7 @@ export const GroupDetailsPage = () => {
                           label="Group Description"
                           value={group?.description}
                           type="text"
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          onChange={(e) =>
                             setGroup({
                               ...group,
                               description: e.target.value,

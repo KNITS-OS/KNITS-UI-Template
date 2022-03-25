@@ -1,10 +1,6 @@
-import { AppActionType, StateType } from "redux/app";
+import { AppActionType } from "redux/app";
 
-import { Group } from "types";
-
-import { GroupActionType } from ".";
-
-const initialState: StateType<Group> = {
+const initialState = {
   entities: [],
   entity: null,
   isLoading: false,
@@ -12,10 +8,7 @@ const initialState: StateType<Group> = {
   error: {},
 };
 
-export const groupReducer = (
-  groupState = initialState,
-  action: GroupActionType
-): StateType<Group> => {
+export const groupReducer = (groupState = initialState, action) => {
   const { type, payload } = action;
   const { entities, entity } = groupState;
 

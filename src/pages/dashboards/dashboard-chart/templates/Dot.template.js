@@ -1,9 +1,3 @@
-import { ChartData, ChartOptions } from "chart.js";
-
-interface Props {
-  label;
-}
-
 export const dotDataTemplate = ({ label }) => {
   return {
     labels: [],
@@ -16,9 +10,9 @@ export const dotDataTemplate = ({ label }) => {
         showLine: false,
       },
     ],
-  } as ChartData<"line">;
+  };
 };
 
-export const dotOptionsTemplate: ChartOptions<"line"> = {
+export const dotOptionsTemplate = {
   plugins: {},
 };

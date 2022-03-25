@@ -1,11 +1,4 @@
-import { ChartData, ChartOptions } from "chart.js";
-
-interface DoughnutDataProps {
-  label;
-  backgroundColor;
-}
-
-export const doughnutDataTemplate = ({ label, backgroundColor }: DoughnutDataProps) => {
+export const doughnutDataTemplate = ({ label, backgroundColor }) => {
   return {
     labels: [],
     datasets: [
@@ -15,10 +8,10 @@ export const doughnutDataTemplate = ({ label, backgroundColor }: DoughnutDataPro
         backgroundColor,
       },
     ],
-  } as ChartData<"doughnut">;
+  };
 };
 
-export const doughnutOptionsTemplate: ChartOptions<"doughnut"> = {
+export const doughnutOptionsTemplate = {
   plugins: {
     legend: {
       position: "top",

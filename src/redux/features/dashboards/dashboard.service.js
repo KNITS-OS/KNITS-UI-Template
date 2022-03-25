@@ -1,6 +1,5 @@
 import {
   httpCommon,
-  HttpResponseType,
   REPORT_MEMBERS_BY_AGE_ROUTE,
   REPORT_MEMBERS_BY_BUSINESS_UNITS_ROUTE,
   REPORT_MEMBERS_BY_GENDER_ROUTE,
@@ -10,33 +9,31 @@ import {
   REPORT_MEMBERS_WORKFORCE_ROUTE,
 } from "redux/app";
 
-import { Chart, TurnoverChart } from "types";
-
-export const getTurnoverReport = (): HttpResponseType<TurnoverChart[]> => {
+export const getTurnoverReport = () => {
   return httpCommon.get(`${REPORT_MEMBERS_TURNOVER_ROUTE}`);
 };
 
-const getWorkforceReport = (): HttpResponseType<Chart[]> => {
+const getWorkforceReport = () => {
   return httpCommon.get(`${REPORT_MEMBERS_WORKFORCE_ROUTE}`);
 };
 
-const getDistributionByGenderReport = (): HttpResponseType<Chart[]> => {
+const getDistributionByGenderReport = () => {
   return httpCommon.get(`${REPORT_MEMBERS_BY_GENDER_ROUTE}`);
 };
 
-const getDistributionByRoleReport = (): HttpResponseType<Chart[]> => {
+const getDistributionByRoleReport = () => {
   return httpCommon.get(`${REPORT_MEMBERS_BY_ROLE_ROUTE}`);
 };
 
-const getDistributionByBusinessUnitReport = (): HttpResponseType<Chart[]> => {
+const getDistributionByBusinessUnitReport = () => {
   return httpCommon.get(`${REPORT_MEMBERS_BY_BUSINESS_UNITS_ROUTE}`);
 };
 
-const getDistributionByAgeReport = (): HttpResponseType<Chart[]> => {
+const getDistributionByAgeReport = () => {
   return httpCommon.get(`${REPORT_MEMBERS_BY_AGE_ROUTE}`);
 };
 
-const getDistributionBySeniorityReport = (): HttpResponseType<Chart[]> => {
+const getDistributionBySeniorityReport = () => {
   return httpCommon.get(`${REPORT_MEMBERS_BY_SENIORITY_ROUTE}`);
 };
 

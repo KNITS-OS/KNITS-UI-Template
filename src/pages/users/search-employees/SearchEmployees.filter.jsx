@@ -1,13 +1,12 @@
-import { Moment } from "moment";
-import { useState } from "react";
-
-import { Col, Row } from "reactstrap";
-
 import { FilterPanel } from "components/panels";
 import { DateField, InputField, SelectField } from "components/widgets";
-
+import { useState } from "react";
+import { Col, Row } from "reactstrap";
 import { EmployeeQueryFilters, SelectOption } from "types";
 import { DATE_FILTER_FORMAT } from "variables/app.consts";
+
+
+
 
 interface onSearchEmployeesFunction {
   (employeeSearchRequest: EmployeeQueryFilters): void;
@@ -27,7 +26,7 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
 
   const [searchHiringDate, setSearchHiringDate] = useState<Moment | undefined>();
 
-  const onChangeSearchLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeSearchLastName = (e) => {
     const searchLastName = e.target.value;
     setSearchLastName(searchLastName);
   };

@@ -1,17 +1,15 @@
 import { createSelector } from "reselect";
 
-import { RootState } from "redux/app";
-
 import { SELECT_ALL } from "variables/app.consts";
 
-export const selectBusinessUnitState = (rootState: RootState) => rootState.businessUnit;
+export const selectBusinessUnitState = rootState => rootState.businessUnit;
 
 export const selectAllBusinessUnitData = createSelector(
   [selectBusinessUnitState],
   businessUnitState => businessUnitState.entities
 );
 
-export const selectBusinessUnitById = (id: number) =>
+export const selectBusinessUnitById = id =>
   createSelector(
     [selectAllBusinessUnitData], //array of input selectors
     businessUnits => businessUnits.find(businessUnit => businessUnit.id === id) //arg

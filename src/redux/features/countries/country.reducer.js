@@ -1,10 +1,6 @@
-import { AppActionType, StateType } from "redux/app";
+import { AppActionType } from "redux/app";
 
-import { Country } from "types";
-
-import { CountryActionType } from ".";
-
-const initialState: StateType<Country> = {
+const initialState = {
   entities: [],
   entity: null,
   isLoading: false,
@@ -12,10 +8,7 @@ const initialState: StateType<Country> = {
   error: {},
 };
 
-export const countryReducer = (
-  countryState = initialState,
-  action: CountryActionType
-): StateType<Country> => {
+export const countryReducer = (countryState = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case AppActionType.LIST_COUNTRIES_LOADING:

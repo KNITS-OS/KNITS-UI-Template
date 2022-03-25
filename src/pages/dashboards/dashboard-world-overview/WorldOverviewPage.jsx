@@ -14,13 +14,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import { MapsHeader } from "components/headers";
 import { useState } from "react";
 import { VectorMap } from "react-jvectormap";
 import { useDispatch } from "react-redux";
+import { Card, CardBody, CardTitle, Col, Container, Row } from "reactstrap";
 import { Dispatch } from "redux";
-
-import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
-
 import { useAppSelector } from "redux/app";
 import {
   fetchActiveMembersReport,
@@ -35,8 +34,6 @@ import {
   WorldOverviewActionType,
 } from "redux/features";
 
-import { MapsHeader } from "components/headers";
-
 export const WorldOverviewPage = () => {
   const dispatch = useDispatch();
   const activeMap = useAppSelector(selectCurrentMapData);
@@ -46,10 +43,10 @@ export const WorldOverviewPage = () => {
   const selfResignedMembersMap = useAppSelector(selectSelfResignedMembersReportsData);
   const autoOffboardedMembersMap = useAppSelector(selectAutoOffboardedMembersReportsData);
 
-  const [activeMembers, setActiveMembers] = useState<number>(0);
-  const [newMembers, setNewMembers] = useState<number>(0);
-  const [selfResignedMembers, setSelfResignedMembers] = useState<number>(0);
-  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState<number>(0);
+  const [activeMembers, setActiveMembers] = useState < number > 0;
+  const [newMembers, setNewMembers] = useState < number > 0;
+  const [selfResignedMembers, setSelfResignedMembers] = useState < number > 0;
+  const [autoOffboardedMembers, setAutoOffboardedMembers] = useState < number > 0;
 
   const mapFilterClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -134,7 +131,7 @@ export const WorldOverviewPage = () => {
                       },
                     ],
                   }}
-                  onRegionTipShow={function name(e: any, label: any, code: string) {
+                  onRegionTipShow={function name(e, label, code: string) {
                     if (activeMap !== null) {
                       activeMembersMap[code] !== undefined
                         ? setActiveMembers(activeMembersMap[code])

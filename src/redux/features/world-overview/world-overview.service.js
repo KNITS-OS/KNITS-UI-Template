@@ -1,25 +1,22 @@
 import {
+  httpCommon,
   REPORT_ACTIVE_MEMBERS_ROUTE,
   REPORT_AUTO_OFFBOARDED_MEMBERS_ROUTE,
   REPORT_NEW_MEMBERS_ROUTE,
   REPORT_SELF_RESIGNED_MEMBERS_ROUTE,
-  httpCommon,
-  HttpResponseType,
 } from "redux/app";
 
-import { MapValues } from "types";
-
-const getNewMembersMapData = (): HttpResponseType<MapValues> => {
+const getNewMembersMapData = () => {
   return httpCommon.get(`${REPORT_NEW_MEMBERS_ROUTE}`);
 };
-const getAutoOffboardedMembersMapData = (): HttpResponseType<MapValues> => {
+const getAutoOffboardedMembersMapData = () => {
   return httpCommon.get(`${REPORT_AUTO_OFFBOARDED_MEMBERS_ROUTE}`);
 };
-const getActiveMembersMapData = (): HttpResponseType<MapValues> => {
+const getActiveMembersMapData = () => {
   return httpCommon.get(`${REPORT_ACTIVE_MEMBERS_ROUTE}`);
 };
 
-const getSelfResignedMembersMapData = (): HttpResponseType<MapValues> => {
+const getSelfResignedMembersMapData = () => {
   return httpCommon.get(`${REPORT_SELF_RESIGNED_MEMBERS_ROUTE}`);
 };
 export const worldOverviewService = {

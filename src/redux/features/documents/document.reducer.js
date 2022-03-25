@@ -1,10 +1,6 @@
-import { AppActionType, StateType } from "redux/app";
+import { AppActionType } from "redux/app";
 
-import { Document } from "types";
-
-import { DocumentActionType } from ".";
-
-const initialState: StateType<Document> = {
+const initialState = {
   entities: [],
   entity: null,
   isLoading: false,
@@ -12,10 +8,7 @@ const initialState: StateType<Document> = {
   error: {},
 };
 
-export const documentReducer = (
-  documentState = initialState,
-  action: DocumentActionType
-): StateType<Document> => {
+export const documentReducer = (documentState = initialState, action) => {
   const { type, payload } = action;
   const { entities, entity } = documentState;
 

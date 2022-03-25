@@ -30,7 +30,7 @@ const toPieChartUI = (response: Chart[]): IPieChart => {
   };
 };
 
-export const renderChart = (response: AxiosResponse<Chart[]>) => {
+export const renderChart = (response: AxiosResponse) => {
   const pieChart = toPieChartUI(response.data);
   return <Pie data={pieChart.data} options={pieChart.options} className="chart-canvas" />;
 };

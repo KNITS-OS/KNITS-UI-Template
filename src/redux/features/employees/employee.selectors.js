@@ -1,17 +1,15 @@
 import { createSelector } from "reselect";
 
-import { RootState } from "redux/app";
-
 import { SELECT_ALL } from "variables/app.consts";
 
-export const selectEmployeesState = (rootState: RootState) => rootState.employee;
+export const selectEmployeesState = rootState => rootState.employee;
 
 export const selectAllEmployeeData = createSelector(
   [selectEmployeesState],
   employeeState => employeeState.entities
 );
 
-export const selectEmployeeById = (id: number) =>
+export const selectEmployeeById = id =>
   createSelector([selectAllEmployeeData], employeesData =>
     employeesData.find(employee => employee.id === id)
   );

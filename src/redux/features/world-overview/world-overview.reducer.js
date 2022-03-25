@@ -1,21 +1,18 @@
 /* eslint-disable no-case-declarations */
-import { AppActionType, StateType } from "redux/app";
+import { AppActionType } from "redux/app";
 
-import { WorldOverviewCachedReports } from "types";
 import {
-  REPORT_KEY_NEW_MEMBERS,
-  REPORT_KEY_CURRENT_MAP,
-  REPORT_KEY_SELF_RESIGNED_MEMBERS,
-  REPORT_KEY_AUTO_OFFBOARDED_MEMBERS,
   NO_REPORT_CACHED,
   REPORT_KEY_ACTIVE_MEMBERS,
+  REPORT_KEY_AUTO_OFFBOARDED_MEMBERS,
+  REPORT_KEY_CURRENT_MAP,
+  REPORT_KEY_NEW_MEMBERS,
+  REPORT_KEY_SELF_RESIGNED_MEMBERS,
 } from "variables/app.consts";
-
-import { WorldOverviewActionType } from ".";
 
 const NO_ACTION_FOUND = "NO_ACTION_FOUND";
 
-const initialState: StateType<WorldOverviewCachedReports> = {
+const initialState = {
   entities: [
     {
       reportName: REPORT_KEY_ACTIVE_MEMBERS,
@@ -44,7 +41,7 @@ const initialState: StateType<WorldOverviewCachedReports> = {
   error: {},
 };
 
-const toCacheKey = (actionType: AppActionType): string => {
+const toCacheKey = actionType => {
   switch (actionType) {
     case AppActionType.FETCH_ACTIVE_MEMBERS_REPORT_COMPLETE:
       return REPORT_KEY_ACTIVE_MEMBERS;
@@ -59,10 +56,7 @@ const toCacheKey = (actionType: AppActionType): string => {
   }
 };
 
-export const worldOverviewReducer = (
-  worldOverviewState = initialState,
-  action: WorldOverviewActionType
-): StateType<WorldOverviewCachedReports> => {
+export const worldOverviewReducer = (worldOverviewState = initialState, action) => {
   const { type, payload } = action;
   const { entities, entity } = worldOverviewState;
   switch (type) {

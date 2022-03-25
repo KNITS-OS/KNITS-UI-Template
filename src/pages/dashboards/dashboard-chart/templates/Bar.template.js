@@ -1,14 +1,3 @@
-import { ChartData, ChartOptions } from "chart.js";
-
-interface Bar {
-  label;
-  backgroundColor;
-}
-
-interface Props {
-  bars: Bar[];
-}
-
 export const barDataTemplate = ({ bars }) => {
   const datasets = bars.map(bar => ({
     label: bar.label,
@@ -20,10 +9,10 @@ export const barDataTemplate = ({ bars }) => {
   return {
     labels: [],
     datasets,
-  } as ChartData<"bar">;
+  };
 };
 
-export const barOptionsTemplate: ChartOptions<"bar"> = {
+export const barOptionsTemplate = {
   plugins: {
     tooltip: {
       mode: "index",
@@ -32,7 +21,7 @@ export const barOptionsTemplate: ChartOptions<"bar"> = {
   },
 };
 
-export const multiBarOptionsTemplate: ChartOptions<"bar"> = {
+export const multiBarOptionsTemplate = {
   plugins: {
     tooltip: {
       mode: "index",

@@ -1,9 +1,4 @@
-import { Dispatch } from "redux";
-import { ActionType } from "typesafe-actions";
-
-import { AppActionType, IUpdated, typedAction, SerializedError } from "redux/app";
-
-import { Employee } from "types";
+import { AppActionType, typedAction } from "redux/app";
 
 import { employeeService } from ".";
 
@@ -16,54 +11,31 @@ const updateEmployeeLoading = () =>
 const deleteEmployeeLoading = () =>
   typedAction(AppActionType.DELETE_EMPLOYEE_LOADING, AppActionType.DELETE_EMPLOYEE_LOADING);
 
-const searchEmployeeComplete = (data: Employee) =>
-  typedAction(AppActionType.SEARCH_EMPLOYEE_COMPLETE, data);
-const searchEmployeesComplete = (data: Employee[]) =>
-  typedAction(AppActionType.SEARCH_EMPLOYEES_COMPLETE, data);
-const updateEmployeeComplete = (data: Employee) =>
-  typedAction(AppActionType.UPDATE_EMPLOYEE_COMPLETE, data);
-const deleteEmployeeComplete = (data: number) =>
-  typedAction(AppActionType.DELETE_EMPLOYEE_COMPLETE, data);
+const searchEmployeeComplete = data => typedAction(AppActionType.SEARCH_EMPLOYEE_COMPLETE, data);
+const searchEmployeesComplete = data => typedAction(AppActionType.SEARCH_EMPLOYEES_COMPLETE, data);
+const updateEmployeeComplete = data => typedAction(AppActionType.UPDATE_EMPLOYEE_COMPLETE, data);
+const deleteEmployeeComplete = data => typedAction(AppActionType.DELETE_EMPLOYEE_COMPLETE, data);
 
-const searchEmployeeError = (err: SerializedError) =>
-  typedAction(AppActionType.SEARCH_EMPLOYEE_ERROR, err);
+const searchEmployeeError = err => typedAction(AppActionType.SEARCH_EMPLOYEE_ERROR, err);
 
-const searchEmployeesError = (err: SerializedError) =>
-  typedAction(AppActionType.SEARCH_EMPLOYEES_ERROR, err);
+const searchEmployeesError = err => typedAction(AppActionType.SEARCH_EMPLOYEES_ERROR, err);
 
-const updateEmployeeError = (err: SerializedError) =>
-  typedAction(AppActionType.UPDATE_EMPLOYEE_ERROR, err);
+const updateEmployeeError = err => typedAction(AppActionType.UPDATE_EMPLOYEE_ERROR, err);
 
-const deleteEmployeeError = (err: SerializedError) =>
-  typedAction(AppActionType.DELETE_EMPLOYEE_ERROR, err);
+const deleteEmployeeError = err => typedAction(AppActionType.DELETE_EMPLOYEE_ERROR, err);
 
-export type EmployeeActionType = ActionType<
-  | typeof searchEmployeeLoading
-  | typeof searchEmployeesLoading
-  | typeof updateEmployeeLoading
-  | typeof deleteEmployeeLoading
-  | typeof searchEmployeeComplete
-  | typeof searchEmployeesComplete
-  | typeof updateEmployeeComplete
-  | typeof deleteEmployeeComplete
-  | typeof searchEmployeeError
-  | typeof searchEmployeesError
-  | typeof updateEmployeeError
-  | typeof deleteEmployeeError
->;
-
-export const searchEmployee = (id: number) => async (dispatch: Dispatch<EmployeeActionType>) => {
+export const searchEmployee = id => async dispatch => {
   try {
     dispatch(searchEmployeeLoading());
 
     const { data } = await employeeService.getEmployeeById(id);
     dispatch(searchEmployeeComplete(data));
   } catch (err) {
-    dispatch(searchEmployeeError(err as SerializedError));
+    dispatch(searchEmployeeError(err));
   }
 };
 
-export const searchEmployees = (filters: any) => async (dispatch: Dispatch<EmployeeActionType>) => {
+export const searchEmployees = filters => async dispatch => {
   try {
     const queryParams = new URLSearchParams(filters);
 
@@ -72,29 +44,28 @@ export const searchEmployees = (filters: any) => async (dispatch: Dispatch<Emplo
     const { data } = await employeeService.searchEmployees(queryParams);
     dispatch(searchEmployeesComplete(data));
   } catch (err) {
-    dispatch(searchEmployeesError(err as SerializedError));
+    dispatch(searchEmployeesError(err));
   }
 };
 
-export const updateEmployee =
-  (updatedEmployee: IUpdated<Employee>) => async (dispatch: Dispatch<EmployeeActionType>) => {
-    try {
-      dispatch(updateEmployeeLoading());
+export const updateEmployee = updatedEmployee => async dispatch => {
+  try {
+    dispatch(updateEmployeeLoading());
 
-      const { data } = await employeeService.updateEmployee(updatedEmployee);
-      dispatch(updateEmployeeComplete(data));
-    } catch (err) {
-      dispatch(updateEmployeeError(err as SerializedError));
-    }
-  };
+    const { data } = await employeeService.updateEmployee(updatedEmployee);
+    dispatch(updateEmployeeComplete(data));
+  } catch (err) {
+    dispatch(updateEmployeeError(err));
+  }
+};
 
-export const deleteEmployee = (id: number) => async (dispatch: Dispatch<EmployeeActionType>) => {
+export const deleteEmployee = id => async dispatch => {
   try {
     dispatch(deleteEmployeeLoading());
 
     await employeeService.deleteEmployee(id);
     dispatch(deleteEmployeeComplete(id));
   } catch (err) {
-    dispatch(deleteEmployeeError(err as SerializedError));
+    dispatch(deleteEmployeeError(err));
   }
 };
