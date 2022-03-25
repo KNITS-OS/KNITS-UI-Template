@@ -12,6 +12,17 @@ export interface GroupSaveRequest {
   members: number[];
   description: string;
 }
+export interface DocumentSaveRequest {
+  title: string;
+  description: string;
+  author: string;
+  publishDate: string;
+  rating: number;
+  tags?: string[];
+  imageUrl?: string;
+  contentUrl?: string;
+  contentFiles?: File[];
+}
 
 export interface EmailSaveRequest {
   subject: string;

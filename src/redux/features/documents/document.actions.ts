@@ -3,7 +3,7 @@ import { ActionType } from "typesafe-actions";
 
 import { AppActionType, SerializedError, typedAction, IUpdated } from "redux/app";
 
-import { Document } from "types";
+import { Document, DocumentSaveRequest } from "types";
 
 import { documentService } from ".";
 
@@ -63,7 +63,7 @@ export type DocumentActionType = ActionType<
 >;
 
 export const createDocument =
-  (document: Document) => async (dispatch: Dispatch<DocumentActionType>) => {
+  (document: DocumentSaveRequest) => async (dispatch: Dispatch<DocumentActionType>) => {
     try {
       dispatch(createDocumentLoading());
 

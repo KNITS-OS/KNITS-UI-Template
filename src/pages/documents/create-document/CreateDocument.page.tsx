@@ -12,7 +12,7 @@ import { InputField, FileInput, DisplayFiles } from "components/widgets";
 import { toFileArray } from "pages/utils";
 
 import { useLocalStateAlerts } from "hooks";
-import { SelectOption, Document } from "types";
+import { SelectOption, Document, DocumentSaveRequest } from "types";
 import { defaultDocumentsTags } from "variables/app.consts";
 
 import { documentDefaultState } from "..";
@@ -32,7 +32,9 @@ export const CreateDocumentPage = () => {
   };
 
   const onCreateDocument = async () => {
-    dispatch(createDocument(document));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...newDocument } = document;
+    dispatch(createDocument(newDocument as DocumentSaveRequest));
 
     setSuccessMessage("Document Created");
     setSaveSent(true);

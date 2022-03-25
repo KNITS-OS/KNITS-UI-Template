@@ -41,7 +41,7 @@ export const SearchDocumentsPage = () => {
 
   const documents = useAppSelector(selectAllDocumentsData);
 
-  const onSearchDocuments = async (filters: DocumentsQueryFilters) => {
+  const onSearchDocuments = (filters: DocumentsQueryFilters) => {
     dispatch(searchDocuments(filters));
   };
 
@@ -50,7 +50,7 @@ export const SearchDocumentsPage = () => {
     navigate(`/admin${DOCUMENT_DETAILS}/${id}`);
   };
 
-  const onDeleteDocument = async (e: MouseEvent<HTMLButtonElement>) => {
+  const onDeleteDocument = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { id } = e.currentTarget;
     dispatch(deleteDocument(parseInt(id)));

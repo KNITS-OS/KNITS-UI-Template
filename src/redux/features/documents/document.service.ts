@@ -1,6 +1,6 @@
-import { Document } from "types";
+import { httpCommon, DOCUMENT_ROUTE, HttpResponseType, IUpdated } from "redux/app";
 
-import { httpCommon, DOCUMENT_ROUTE, HttpResponseType, IUpdated } from "../../app";
+import { Document, DocumentSaveRequest } from "types";
 
 const searchDocuments = (queryParams: URLSearchParams): HttpResponseType<Document[]> =>
   httpCommon.get(`${DOCUMENT_ROUTE}?${queryParams}`);
@@ -8,7 +8,7 @@ const searchDocuments = (queryParams: URLSearchParams): HttpResponseType<Documen
 const getDocumentById = (id: number): HttpResponseType<Document> =>
   httpCommon.get(`${DOCUMENT_ROUTE}/${id}`);
 
-const createDocument = (document: Document): HttpResponseType<Document> =>
+const createDocument = (document: DocumentSaveRequest): HttpResponseType<Document> =>
   httpCommon.post(`${DOCUMENT_ROUTE}`, document);
 
 const updateDocument = (updatedDocument: IUpdated<Document>): HttpResponseType<Document> => {

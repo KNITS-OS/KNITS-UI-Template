@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Collapse } from "reactstrap";
 
+import { employeeService } from "redux/features";
+
 import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS, employeesTableColumns } from "pages/users";
 
 import { Employee, Group } from "types";
-
-import { employeeService } from "../../../redux/features";
 
 interface Props {
   group: Group;
