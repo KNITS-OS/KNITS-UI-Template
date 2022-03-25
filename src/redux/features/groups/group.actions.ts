@@ -63,8 +63,6 @@ export const createGroup =
   (group: GroupSaveRequest) => async (dispatch: Dispatch<GroupActionType>) => {
     try {
       dispatch(createGroupLoading());
-      console.log("group 1234", group);
-
       const { data } = await groupService.createGroup(group);
 
       dispatch(createGroupComplete(data));

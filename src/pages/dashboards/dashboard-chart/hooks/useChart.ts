@@ -23,8 +23,6 @@ export const useChart = <T>(
 
   const fetchDataAsync = async () => {
     const httpResponse = await asyncFunction();
-    console.log("httpResponse 1234", httpResponse);
-
     if (!httpResponse.data) {
       setAlert(renderChartErrorAlert(httpResponse));
     } else {

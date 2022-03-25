@@ -22,7 +22,6 @@ export const GroupDetailsPage = () => {
   const dispatch = useDispatch();
 
   const groupState = useAppSelector(selectGroupById(groupId)) as Group;
-  console.log("groupState 1234", groupState);
   const [group, setGroup] = useState(groupState);
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
