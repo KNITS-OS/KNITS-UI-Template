@@ -25,6 +25,7 @@ module.exports = {
       },
     },
   },
+  plugins: ["mobx"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -38,8 +39,11 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:testing-library/react",
     "plugin:css-import-order/recommended",
+    "plugin:mobx/recommended",
   ],
   rules: {
+    "mobx/missing-observer": "off",
+    "mobx/no-anonymous-observer": "off",
     "react/function-component-definition": [
       "error",
       { namedComponents: "arrow-function", unnamedComponents: "arrow-function" },
@@ -80,7 +84,7 @@ module.exports = {
             position: "before",
           },
           {
-            pattern: "redux/**",
+            pattern: "mobx/**",
             group: "internal",
             position: "before",
           },
