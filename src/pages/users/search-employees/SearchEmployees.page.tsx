@@ -1,7 +1,10 @@
+import { observer } from "mobx-react-lite";
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
+
+import { useStores } from "mobx/app";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
@@ -18,18 +21,20 @@ import {
 
 import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
 
-export const SearchEmployeesPage = () => {
+export const SearchEmployeesPage = observer(() => {
   const navigate = useNavigate();
+  const { employeeStore } = useStores();
 
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>(employeeStore.employees);
 
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
 
   const onSearchEmployees = async (filters: EmployeeQueryFilters) => {
-    const queryParams = new URLSearchParams(filters as any);
-    const { data } = await employeeService.searchEmployees(queryParams);
-    setEmployees(data);
+    // const queryParams = new URLSearchParams(filters as any);
+    // const { data } = await employeeService.searchEmployees(queryParams);
+    // setEmployees(data);
+    await employeeStore.searchEmployees(filters);
   };
 
   const onViewEmployeeDetails = (e: MouseEvent<HTMLButtonElement>) => {
@@ -69,7 +74,7 @@ export const SearchEmployeesPage = () => {
               </CardHeader>
 
               <ReactTable
-                data={employees}
+                data={employeeStore.employees}
                 columns={employeesTableColumns({
                   onDetailsButtonClick: onViewEmployeeDetails,
                   onRemoveButtonClick: onDeleteEmployee,
@@ -81,4 +86,4 @@ export const SearchEmployeesPage = () => {
       </Container>
     </>
   );
-};
+});

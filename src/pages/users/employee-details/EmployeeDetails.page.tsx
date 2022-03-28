@@ -15,10 +15,13 @@
 
 */
 
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
+
+import { useStores } from "mobx/app";
 
 import { BoxHeader } from "components/headers";
 
@@ -29,28 +32,31 @@ import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { Employee } from "types";
 
-export const EmployeeDetailsPage = () => {
+export const EmployeeDetailsPage = observer(() => {
   const { id } = useParams() as { id: string };
   const employeeId = parseInt(id);
   const navigate = useNavigate();
 
+  const { employeeStore } = useStores();
+
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const [employee, setEmployee] = useState<Employee>();
+  console.log("pl", employee);
 
   const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
 
   useEffect(() => {
-    const fetchEmployee = async () => {
-      const { data } = await employeeService.getEmployeeById(employeeId);
-      setEmployee(data);
-    };
-    fetchEmployee();
-
+    employeeStore.findEmployeeById(employeeId);
+    // const fetchEmployee = async () => {
+    //   const asi = await employeeStore.findEmployeeById(employeeId);
+    //   console.log("asi 1234", asi);
+    // };
+    // fetchEmployee();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!employee) {
+  if (!employeeStore.employee) {
     return (
       <div className="text-center">
         <Spinner />
@@ -98,7 +104,7 @@ export const EmployeeDetailsPage = () => {
               </CardHeader>
               <CardBody>
                 <EmployeePanel
-                  employee={employee}
+                  employee={employeeStore.employee as any}
                   groupOptions={groupOptions}
                   onSave={onSaveEmployee}
                 />
@@ -109,4 +115,4 @@ export const EmployeeDetailsPage = () => {
       </Container>
     </>
   );
-};
+});

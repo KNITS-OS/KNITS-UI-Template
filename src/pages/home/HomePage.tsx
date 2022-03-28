@@ -2,9 +2,9 @@ import { observer } from "mobx-react-lite";
 
 import { Button, Card, CardBody, CardHeader, Container, Row } from "reactstrap";
 
-import { BoxHeader } from "components/headers";
-
 import { useStores } from "mobx/app";
+
+import { BoxHeader } from "components/headers";
 
 export const HomePage = observer(() => {
   const { counterStore } = useStores();

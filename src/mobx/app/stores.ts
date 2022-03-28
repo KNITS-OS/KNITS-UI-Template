@@ -2,10 +2,13 @@
 
 import { createContext, useContext } from "react";
 
-import { CounterStore } from "../stores";
+import { CounterStore, EmployeeStore } from "../stores";
+
+// configure({ enforceActions: "always" });
 
 export const stores = Object.freeze({
   counterStore: CounterStore,
+  employeeStore: EmployeeStore,
 });
 
 const StoresContext = createContext(stores);
