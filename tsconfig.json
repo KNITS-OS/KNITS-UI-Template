@@ -23,7 +23,8 @@
     "removeComments": true,
     "strictNullChecks": true,
     "baseUrl": "src",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "experimentalDecorators": true
   },
   "include": ["src", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

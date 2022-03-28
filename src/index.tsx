@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import "variables/chartDefaults";
 
+import { stores, StoresProvider } from "mobx/app";
+
 import { Router } from "./Router";
 
 import "./assets/css/argon-dashboard-pro-react.css";
@@ -22,7 +24,9 @@ import "components/widgets/react-table/styles/reactTable.css";
 ReactDOM.render(
   <BrowserRouter>
     <StrictMode>
-      <Router />
+      <StoresProvider value={stores}>
+        <Router />
+      </StoresProvider>
     </StrictMode>
   </BrowserRouter>,
   document.getElementById("root")
