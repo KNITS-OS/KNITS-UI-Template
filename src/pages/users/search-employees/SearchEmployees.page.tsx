@@ -25,16 +25,16 @@ export const SearchEmployeesPage = observer(() => {
   const navigate = useNavigate();
   const { employeeStore } = useStores();
 
-  const [employees, setEmployees] = useState<Employee[]>(employeeStore.employees);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
 
-  const onSearchEmployees = async (filters: EmployeeQueryFilters) => {
+  const onSearchEmployees = (filters: EmployeeQueryFilters) => {
     // const queryParams = new URLSearchParams(filters as any);
     // const { data } = await employeeService.searchEmployees(queryParams);
     // setEmployees(data);
-    await employeeStore.searchEmployees(filters);
+    employeeStore.searchEmployees(filters);
   };
 
   const onViewEmployeeDetails = (e: MouseEvent<HTMLButtonElement>) => {
@@ -74,7 +74,7 @@ export const SearchEmployeesPage = observer(() => {
               </CardHeader>
 
               <ReactTable
-                data={employeeStore.employees}
+                data={employeeStore.entities}
                 columns={employeesTableColumns({
                   onDetailsButtonClick: onViewEmployeeDetails,
                   onRemoveButtonClick: onDeleteEmployee,

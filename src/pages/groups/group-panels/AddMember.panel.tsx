@@ -13,7 +13,6 @@ import { Group, Employee, AdvancedEmployeeQueryFilters } from "types";
 
 interface Props {
   group: Group;
-  setGroup: (group: Group) => void;
   addMemberCollapse: boolean;
   currentGroupMembers: Employee[];
   setCurrentGroupMembers: React.Dispatch<React.SetStateAction<Employee[]>>;
@@ -21,7 +20,6 @@ interface Props {
 
 export const AddMemberPanel = ({
   group,
-  setGroup,
   addMemberCollapse,
   currentGroupMembers,
   setCurrentGroupMembers,
@@ -60,7 +58,6 @@ export const AddMemberPanel = ({
             data={employees}
             selectElement={
               <AddNewMemberButton
-                setGroup={setGroup}
                 setCurrentGroupMembers={setCurrentGroupMembers}
                 setSaveSent={setSaveSent}
                 setSuccessMessage={setSuccessMessage}

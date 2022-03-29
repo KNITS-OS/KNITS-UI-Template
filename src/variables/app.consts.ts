@@ -1,4 +1,4 @@
-import { Theme } from "types";
+import { Employee, Group, Theme } from "types";
 
 export const CREATE_ENTITY_ID = -1; //on create entity id will be created on backend and therefore is missing here
 export const GENERIC_ERROR_CODE = -1024;
@@ -79,4 +79,43 @@ export const ThemeColors = {
 export const mode: Theme = "light";
 export const fonts = {
   base: "Open Sans",
+};
+
+export const initialGroupState: Group = {
+  id: CREATE_ENTITY_ID,
+  name: "",
+  description: "",
+  members: [],
+  active: true,
+};
+export const initialEmployeeState: Employee = {
+  id: CREATE_ENTITY_ID,
+  pdmId: CREATE_ENTITY_ID,
+  firstName: "",
+  lastName: "",
+  internationalName: "",
+  title: "",
+  email: "",
+  managementGroup: "",
+  companyCode: "",
+  businessUnit: "",
+  costCenter: "",
+  companyPhone: "",
+  companyMobilePhone: "",
+  gender: "",
+  nationality: "",
+  office: {
+    countryiso3: "",
+    city: "",
+    street: "",
+    postalCode: "",
+    country: "",
+  },
+  birthDate: "",
+  startDate: "",
+  onboardingDate: "",
+  offboardingDate: "",
+  endDate: null,
+  dateOfLeave: null,
+  groups: [],
 };

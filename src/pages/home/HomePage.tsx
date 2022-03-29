@@ -1,13 +1,10 @@
 import { observer } from "mobx-react-lite";
 
-import { Button, Card, CardBody, CardHeader, Container, Row } from "reactstrap";
-
-import { useStores } from "mobx/app";
+import { Card, CardBody, CardHeader, Container, Row } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 
 export const HomePage = observer(() => {
-  const { counterStore } = useStores();
   return (
     <>
       <BoxHeader />
@@ -18,11 +15,7 @@ export const HomePage = observer(() => {
               <CardHeader>
                 <h3 className="mb-0">Home</h3>
               </CardHeader>
-              <CardBody>
-                <Button onClick={() => counterStore.increment()}>Increment</Button>
-                <Button onClick={() => counterStore.decrement()}>Decrement</Button>
-                <h2>Value {counterStore.value}</h2>
-              </CardBody>
+              <CardBody></CardBody>
             </Card>
           </div>
         </Row>

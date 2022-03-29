@@ -1,40 +1,31 @@
-import { observable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 
-import { employeeService, SerializedError } from "api";
+import { employeeService, IUpdated, SerializedError } from "api";
 import { Employee, EmployeeQueryFilters } from "types";
+import { initialEmployeeState } from "variables/app.consts";
 
-export interface IEmployeeStore {
-  employees: Employee[];
-  employee: Employee | null;
-  isLoading: boolean;
-  isSuccess: boolean;
-  error: SerializedError;
-  findEmployeeById(id: number): void;
-  searchEmployees(filters: EmployeeQueryFilters): void;
+export interface IUpdateEmployeeState {
+  name: keyof typeof initialEmployeeState;
+  value: any;
 }
+export class EmployeeStore {
+  entities: Employee[] = [];
+  entity: Employee = initialEmployeeState;
+  isLoading = false;
+  isSuccess = false;
+  error: SerializedError = {};
 
-export const EmployeeStore = observable({
-  employees: [],
-  employee: null,
-  isLoading: false,
-  isSuccess: false,
-  error: {},
+  constructor() {
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
 
-  // one way to create async functions
-  // *findEmployeeById(id: number) {
-  //   const { data } = yield employeeService.getEmployeeById(id);
-  //   this.employee = data;
-  // },
-
-  // https://stackoverflow.com/questions/64770762/mobx-since-strict-mode-is-enabled-changing-observed-observable-values-withou
   async findEmployeeById(id: number) {
-    this.employee = null;
     this.isLoading = true;
     try {
       const { data } = await employeeService.getEmployeeById(id);
 
       runInAction(() => {
-        this.employee = data;
+        this.entity = data;
         this.isSuccess = true;
         this.isLoading = false;
       });
@@ -44,16 +35,15 @@ export const EmployeeStore = observable({
         this.isLoading = false;
       });
     }
-  },
+  }
 
   async searchEmployees(filters: EmployeeQueryFilters) {
-    this.employees = [];
     this.isLoading = true;
     try {
       const queryParams = new URLSearchParams(filters as any);
       const { data } = await employeeService.searchEmployees(queryParams);
       runInAction(() => {
-        this.employees = data;
+        this.entities = data;
         this.isSuccess = true;
         this.isLoading = false;
       });
@@ -63,14 +53,14 @@ export const EmployeeStore = observable({
         this.isLoading = false;
       });
     }
-  },
-  async deleteEmployee(id: number) {
-    this.employees = [];
+  }
+
+  async updateEmployee(updatedEmployee: IUpdated<Employee>) {
     this.isLoading = true;
     try {
-      const { data } = await employeeService.deleteEmployee(id);
+      const { data } = await employeeService.updateEmployee(updatedEmployee);
       runInAction(() => {
-        this.employee = data;
+        this.entities = this.entities.map(item => (item.id === data.id ? data : item));
         this.isSuccess = true;
         this.isLoading = false;
       });
@@ -80,5 +70,26 @@ export const EmployeeStore = observable({
         this.isLoading = false;
       });
     }
-  },
-} as IEmployeeStore);
+  }
+
+  async deleteEmployee(id: number) {
+    this.isLoading = true;
+    try {
+      await employeeService.deleteEmployee(id);
+      runInAction(() => {
+        this.entities = this.entities.filter(item => item.id !== id);
+        this.isSuccess = true;
+        this.isLoading = false;
+      });
+    } catch (e) {
+      runInAction(() => {
+        this.error = e as SerializedError;
+        this.isLoading = false;
+      });
+    }
+  }
+
+  updateEmployeeState({ name, value }: IUpdateEmployeeState) {
+    this.entity = { ...this.entity, [name]: value };
+  }
+}

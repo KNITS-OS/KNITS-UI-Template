@@ -1,15 +1,21 @@
 // https://javascript.plainenglish.io/all-you-need-is-mobx-react-lite-47ba0e95e9c8
 
+import { configure } from "mobx";
 import { createContext, useContext } from "react";
 
-import { CounterStore, EmployeeStore, GroupStore } from "../stores";
+import { EmployeeStore, GroupStore } from "../stores";
 
-// configure({ enforceActions: "always" });
+configure({
+  enforceActions: "observed",
+  computedRequiresReaction: true,
+  reactionRequiresObservable: true,
+  observableRequiresReaction: true,
+  disableErrorBoundaries: true,
+});
 
 export const stores = Object.freeze({
-  counterStore: CounterStore,
-  employeeStore: EmployeeStore,
-  groupsStore: new GroupStore(),
+  employeeStore: new EmployeeStore(),
+  groupStore: new GroupStore(),
 });
 
 const StoresContext = createContext(stores);

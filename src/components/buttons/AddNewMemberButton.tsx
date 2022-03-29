@@ -1,13 +1,15 @@
+import { observer } from "mobx-react-lite";
 import { Dispatch, SetStateAction } from "react";
 
 import { Button } from "reactstrap";
+
+import { useStores } from "mobx/app";
 
 import { AdvancedEmployeeQueryFilters, Employee, Group } from "types";
 
 interface Props {
   selectedFlatRows?: Employee[];
   toggleAllRowsSelected?: (value?: boolean | undefined) => void;
-  setGroup: (group: Group) => void;
   setCurrentGroupMembers: Dispatch<SetStateAction<Employee[]>>;
   setSaveSent: Dispatch<SetStateAction<boolean>>;
   setSuccessMessage: Dispatch<SetStateAction<string>>;
@@ -16,41 +18,47 @@ interface Props {
   group: Group;
 }
 
-export const AddNewMemberButton = ({
-  selectedFlatRows = [],
-  toggleAllRowsSelected,
-  setCurrentGroupMembers,
-  setGroup,
-  setSaveSent,
-  setSuccessMessage,
-  setIsSuccess,
-  setFilters,
-  group,
-}: Props) => {
-  const onMemberAdd = () => {
-    const memberIds = selectedFlatRows.map(member => member.id);
+export const AddNewMemberButton = observer(
+  ({
+    selectedFlatRows = [],
+    toggleAllRowsSelected,
+    setCurrentGroupMembers,
+    setSaveSent,
+    setSuccessMessage,
+    setIsSuccess,
+    setFilters,
+    group,
+  }: Props) => {
+    const { groupStore } = useStores();
 
-    setGroup({ ...group, members: [...group.members, ...memberIds] });
-    setCurrentGroupMembers(previousMembers => [...previousMembers, ...selectedFlatRows]);
-    setFilters(oldFilters => {
-      return {
-        ...oldFilters,
-        members: (oldFilters.members, memberIds.map(id => `id_ne=${id}`).join("&")),
-      };
-    });
+    const onMemberAdd = () => {
+      const memberIds = selectedFlatRows.map(member => member.id);
 
-    setSuccessMessage("Member(s) added successfully");
-    setSaveSent(true);
-    setIsSuccess(true);
+      groupStore.updateGroupState({
+        name: "members",
+        value: { ...group, members: [...group.members, ...memberIds] },
+      });
+      setCurrentGroupMembers(previousMembers => [...previousMembers, ...selectedFlatRows]);
+      setFilters(oldFilters => {
+        return {
+          ...oldFilters,
+          members: (oldFilters.members, memberIds.map(id => `id_ne=${id}`).join("&")),
+        };
+      });
 
-    if (toggleAllRowsSelected) {
-      toggleAllRowsSelected();
-    }
-  };
+      setSuccessMessage("Member(s) added successfully");
+      setSaveSent(true);
+      setIsSuccess(true);
 
-  return (
-    <Button color="success" onClick={onMemberAdd}>
-      Add Members To Group
-    </Button>
-  );
-};
+      if (toggleAllRowsSelected) {
+        toggleAllRowsSelected();
+      }
+    };
+
+    return (
+      <Button color="success" onClick={onMemberAdd}>
+        Add Members To Group
+      </Button>
+    );
+  }
+);

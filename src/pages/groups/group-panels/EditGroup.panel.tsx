@@ -67,7 +67,7 @@ export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }:
                 </Row>
               </div>
 
-              <MembersPanel group={group} setGroup={setGroup} />
+              <MembersPanel group={group} />
 
               <Row className="align-items-center py-4">
                 <Col lg="12" xs="7" className="text-right">

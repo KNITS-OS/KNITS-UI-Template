@@ -28,7 +28,6 @@ import { BoxHeader } from "components/headers";
 import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
 import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
-import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { Employee } from "types";
 
@@ -41,8 +40,7 @@ export const EmployeeDetailsPage = observer(() => {
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [employee, setEmployee] = useState<Employee>();
-  console.log("pl", employee);
+  const { entity: employee } = employeeStore;
 
   const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
 
@@ -51,7 +49,7 @@ export const EmployeeDetailsPage = observer(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!employeeStore.employee) {
+  if (!employeeStore.entity && employeeStore.isLoading) {
     return (
       <div className="text-center">
         <Spinner />
@@ -60,11 +58,7 @@ export const EmployeeDetailsPage = observer(() => {
   }
 
   const onSaveEmployee = async (updatedEmployee: Employee) => {
-    const { data } = await employeeService.updateEmployee({
-      id: employeeId,
-      body: updatedEmployee,
-    });
-    setEmployee(data);
+    employeeStore.updateEmployee({ id: employeeId, body: updatedEmployee });
 
     setSuccessMessage("Employee Updated");
     setSaveSent(true);
@@ -99,7 +93,7 @@ export const EmployeeDetailsPage = observer(() => {
               </CardHeader>
               <CardBody>
                 <EmployeePanel
-                  employee={employeeStore.employee as any}
+                  employee={employee}
                   groupOptions={groupOptions}
                   onSave={onSaveEmployee}
                 />

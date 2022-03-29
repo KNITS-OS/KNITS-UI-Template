@@ -1,9 +1,12 @@
+import { observer } from "mobx-react-lite";
 import moment, { Moment } from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button, Col, Form, Row } from "reactstrap";
 
-import { InputField, DateField, SelectField } from "components/widgets";
+import { useStores } from "mobx/app";
+
+import { DateField, InputField, SelectField } from "components/widgets";
 
 import { selectGroupsByIdsAsSelectValues } from "pages/utils";
 
@@ -20,29 +23,28 @@ interface Props {
   onSave: onSaveFunction;
 }
 
-export const EmployeePanel = ({ employee, groupOptions, onSave }: Props) => {
-  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>(
-    moment(employee?.onboardingDate, DATE_FILTER_FORMAT)
-  );
+export const EmployeePanel = observer(({ employee, groupOptions, onSave }: Props) => {
+  const { employeeStore } = useStores();
 
-  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>(
-    moment(employee?.offboardingDate, DATE_FILTER_FORMAT)
-  );
+  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>();
 
-  const employeeGroups = selectGroupsByIdsAsSelectValues(employee.groups || []);
+  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>();
 
-  const [groups, setGroups] = useState<number[]>(employee.groups || []);
+  useEffect(() => {
+    setOnboardingDate(moment(employee?.onboardingDate, DATE_FILTER_FORMAT));
+    setOffboardingDate(moment(employee?.offboardingDate, DATE_FILTER_FORMAT));
+  }, [employee]);
 
   // state to know which group fields has the user selected
-  const [currentGroupSelections, setCurrentGroupSelections] =
-    useState<SelectOption[]>(employeeGroups);
+  const [currentGroupSelections, setCurrentGroupSelections] = useState<SelectOption[]>(
+    selectGroupsByIdsAsSelectValues(employee?.groups)
+  );
 
   const onSaveEmployee = () => {
     const newEmployee: Employee = {
       ...employee,
       onboardingDate: moment(onboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
       offboardingDate: moment(offboardingDate, DATE_FILTER_FORMAT).format(DATE_FILTER_FORMAT),
-      groups,
     };
 
     onSave(newEmployee);
@@ -75,7 +77,7 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }: Props) => {
               id="select-group"
               label="Group"
               options={groupOptions}
-              defaultValue={employeeGroups}
+              value={selectGroupsByIdsAsSelectValues(employee?.groups)}
               isMulti={true}
               isOptionDisabled={option => {
                 const { label } = option as SelectOption;
@@ -98,11 +100,11 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }: Props) => {
                 // split and return an array of numbers
                 if (selections.some(item => item.label === "ALL")) {
                   const values = selections[0].value.split(",").map(Number);
-                  setGroups(values);
+                  employeeStore.updateEmployeeState({ name: "groups", value: values });
                 } else {
                   // if user selected groups manually, return an array of the group ids
                   const groupIdsSelected = selections.map(item => parseInt(item.value));
-                  setGroups(groupIdsSelected);
+                  employeeStore.updateEmployeeState({ name: "groups", value: groupIdsSelected });
                 }
               }}
             />
@@ -273,4 +275,4 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }: Props) => {
       </div>
     </Form>
   );
-};
+});

@@ -1,42 +1,59 @@
-import React, { useState } from "react";
+import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Row, Spinner } from "reactstrap";
+
+import { useStores } from "mobx/app";
 
 import { BoxHeader } from "components/headers";
 import { InputField } from "components/widgets";
 
-import { groupsData } from "data";
-import { useFeatureDisabledWarning, useLocalStateAlerts } from "hooks";
-import { Group } from "types";
+import { useLocalStateAlerts } from "hooks";
 
 import { MembersPanel } from "..";
+import { GROUP_SEARCH } from "../groups.routes.const";
 
-export const GroupDetailsPage = () => {
+export const GroupDetailsPage = observer(() => {
   const { id } = useParams() as { id: string };
   const groupId = parseInt(id);
   const navigate = useNavigate();
-  const [group, setGroup] = useState(groupsData.find(e => e.id === groupId) as Group);
+
+  const { groupStore } = useStores();
+
+  const { entity: group } = groupStore;
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const { fireAlert } = useFeatureDisabledWarning();
+  if (!group) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  useEffect(() => {
+    groupStore.findGroupById(groupId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupStore]);
 
   const onSaveGroup = () => {
-    console.log("update group", groupId, group);
+    groupStore.updateGroup({ id: groupId, body: group });
     setSuccessMessage("Group Updated");
     setSaveSent(true);
     setIsSuccess(true);
   };
 
   const onToggleGroupActive = () => {
-    fireAlert();
-
-    console.log("toggle group active", groupId, group);
+    groupStore.updateGroupState({
+      name: "active",
+      value: !group.active,
+    });
   };
   const onDeleteGroup = () => {
-    fireAlert();
-    console.log("delete group", groupId);
+    groupStore.deleteGroup(groupId);
+    navigate(`/admin${GROUP_SEARCH}`);
   };
 
   return (
@@ -84,9 +101,9 @@ export const GroupDetailsPage = () => {
                           value={group?.name}
                           type="text"
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setGroup({
-                              ...group,
-                              name: e.target.value,
+                            groupStore.updateGroupState({
+                              name: "name",
+                              value: e.target.value,
                             })
                           }
                         />
@@ -101,9 +118,9 @@ export const GroupDetailsPage = () => {
                           value={group?.description}
                           type="text"
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setGroup({
-                              ...group,
-                              description: e.target.value,
+                            groupStore.updateGroupState({
+                              name: "description",
+                              value: e.target.value,
                             })
                           }
                         />
@@ -111,7 +128,7 @@ export const GroupDetailsPage = () => {
                     </Row>
                   </div>
 
-                  <MembersPanel group={group} setGroup={setGroup} />
+                  <MembersPanel group={group} />
 
                   <hr className="my-4" />
 
@@ -133,4 +150,4 @@ export const GroupDetailsPage = () => {
       </Container>
     </>
   );
-};
+});

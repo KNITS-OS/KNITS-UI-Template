@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
 import {
   Column,
@@ -22,7 +23,7 @@ interface Props<T> {
   selectElement?: JSX.Element;
 }
 
-export const ReactTable = <T,>({ data, columns, selectElement }: Props<T>) => {
+export const ReactTable = observer(<T,>({ data, columns, selectElement }: Props<T>) => {
   const memoizedData: Array<T> = useMemo(() => data, [data]);
   const memoizedColumns: Array<Column> = useMemo(() => columns, [columns]);
 
@@ -185,4 +186,4 @@ export const ReactTable = <T,>({ data, columns, selectElement }: Props<T>) => {
       />
     </>
   );
-};
+});

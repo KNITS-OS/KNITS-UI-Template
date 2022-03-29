@@ -10,10 +10,9 @@ import { AddMemberPanel, CurrentMemberPanel } from ".";
 
 interface Props {
   group: Group;
-  setGroup: React.Dispatch<React.SetStateAction<Group>>;
 }
 
-export const MembersPanel = ({ group, setGroup }: Props) => {
+export const MembersPanel = ({ group }: Props) => {
   const [currentMembersCollapse, setCurrentMembersCollapse] = useState(false);
   const [addMemberCollapse, setAddMemberCollapse] = useState(false);
   const [currentGroupMembers, setCurrentGroupMembers] = useState<Employee[]>([]);
@@ -59,7 +58,6 @@ export const MembersPanel = ({ group, setGroup }: Props) => {
           <AddMemberPanel
             addMemberCollapse={addMemberCollapse}
             group={group}
-            setGroup={setGroup}
             currentGroupMembers={currentGroupMembers}
             setCurrentGroupMembers={setCurrentGroupMembers}
           />
@@ -71,7 +69,6 @@ export const MembersPanel = ({ group, setGroup }: Props) => {
           <CurrentMemberPanel
             currentMembersCollapse={currentMembersCollapse}
             currentGroupMembers={currentGroupMembers}
-            setGroup={setGroup}
             setCurrentGroupMembers={setCurrentGroupMembers}
           />
         </Col>

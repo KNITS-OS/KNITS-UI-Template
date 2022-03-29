@@ -15,14 +15,14 @@ import { groupsTableColumns } from ".";
 
 export const SearchGroupsPage = observer(() => {
   const navigate = useNavigate();
-  const { groupsStore } = useStores();
+  const { groupStore } = useStores();
 
   useEffect(() => {
-    groupsStore.findGroups();
+    groupStore.findGroups();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!groupsStore.groups) {
+  if (!groupStore.entities) {
     return (
       <div className="text-center">
         <Spinner />
@@ -37,7 +37,7 @@ export const SearchGroupsPage = observer(() => {
 
   const onDeleteGroup = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.target as HTMLElement;
-    console.log("delete group", id);
+    groupStore.deleteGroup(parseInt(id));
   };
 
   return (
@@ -53,7 +53,7 @@ export const SearchGroupsPage = observer(() => {
               </CardHeader>
 
               <ReactTable
-                data={groupsStore.groups}
+                data={groupStore.entities}
                 columns={groupsTableColumns({
                   onDetailsButtonClick: onViewGroupDetails,
                   onRemoveButtonClick: onDeleteGroup,
