@@ -1,21 +1,34 @@
-import { MouseEvent, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { MouseEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Card, CardHeader, Container, Row } from "reactstrap";
+import { Card, CardHeader, Container, Row, Spinner } from "reactstrap";
+
+import { useStores } from "mobx/app";
 
 import { BoxHeader } from "components/headers";
 import { ReactTable } from "components/widgets";
-
-import { groupsData } from "data";
 
 import { GROUP_DETAILS } from "..";
 
 import { groupsTableColumns } from ".";
 
-export const SearchGroupsPage = () => {
+export const SearchGroupsPage = observer(() => {
   const navigate = useNavigate();
+  const { groupsStore } = useStores();
 
-  const [groups] = useState(groupsData);
+  useEffect(() => {
+    groupsStore.findGroups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!groupsStore.groups) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   const onViewGroupDetails = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.target as HTMLElement;
@@ -40,7 +53,7 @@ export const SearchGroupsPage = () => {
               </CardHeader>
 
               <ReactTable
-                data={groups}
+                data={groupsStore.groups}
                 columns={groupsTableColumns({
                   onDetailsButtonClick: onViewGroupDetails,
                   onRemoveButtonClick: onDeleteGroup,
@@ -52,4 +65,4 @@ export const SearchGroupsPage = () => {
       </Container>
     </>
   );
-};
+});
