@@ -43,6 +43,7 @@ module.exports = {
   ],
   rules: {
     "mobx/missing-observer": "off",
+    "mobx/missing-make-observable": "off",
     "mobx/no-anonymous-observer": "off",
     "react/function-component-definition": [
       "error",
