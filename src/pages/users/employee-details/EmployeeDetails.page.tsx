@@ -48,11 +48,6 @@ export const EmployeeDetailsPage = observer(() => {
 
   useEffect(() => {
     employeeStore.findEmployeeById(employeeId);
-    // const fetchEmployee = async () => {
-    //   const asi = await employeeStore.findEmployeeById(employeeId);
-    //   console.log("asi 1234", asi);
-    // };
-    // fetchEmployee();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
