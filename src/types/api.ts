@@ -81,9 +81,14 @@ export interface LoginBody {
   password: string;
 }
 
-export interface SerializedError {
-  name?: string;
-  message?: string;
-  stack?: string;
-  code?: string;
+export interface DocumentSaveRequest {
+  title: string;
+  description: string;
+  author: string;
+  publishDate: string;
+  rating: number;
+  tags?: string[];
+  imageUrl?: string;
+  contentUrl?: string;
+  contentFiles?: File[];
 }

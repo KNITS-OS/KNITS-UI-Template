@@ -1,7 +1,17 @@
 import { observable, runInAction } from "mobx";
 
-import { employeeService } from "api";
-import { EmployeeQueryFilters, SerializedError } from "types";
+import { employeeService, SerializedError } from "api";
+import { Employee, EmployeeQueryFilters } from "types";
+
+export interface IEmployeeStore {
+  employees: Employee[];
+  employee: Employee | null;
+  isLoading: boolean;
+  isSuccess: boolean;
+  error: SerializedError;
+  findEmployeeById(id: number): void;
+  searchEmployees(filters: EmployeeQueryFilters): void;
+}
 
 export const EmployeeStore = observable({
   employees: [],
@@ -10,6 +20,7 @@ export const EmployeeStore = observable({
   isSuccess: false,
   error: {},
 
+  // one way to create async functions
   // *findEmployeeById(id: number) {
   //   const { data } = yield employeeService.getEmployeeById(id);
   //   this.employee = data;
@@ -59,7 +70,7 @@ export const EmployeeStore = observable({
     try {
       const { data } = await employeeService.deleteEmployee(id);
       runInAction(() => {
-        this.employees = data;
+        this.employee = data;
         this.isSuccess = true;
         this.isLoading = false;
       });
@@ -70,4 +81,4 @@ export const EmployeeStore = observable({
       });
     }
   },
-});
+} as IEmployeeStore);
