@@ -36,7 +36,7 @@ export const AddNewMemberButton = observer(
 
       groupStore.updateGroupState({
         name: "members",
-        value: { ...group, members: [...group.members, ...memberIds] },
+        value: [...group.members, ...memberIds],
       });
       setCurrentGroupMembers(previousMembers => [...previousMembers, ...selectedFlatRows]);
       setFilters(oldFilters => {
