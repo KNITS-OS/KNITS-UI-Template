@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
+import { createReducer, ORM } from "redux-orm";
 import thunk from "redux-thunk";
 
 import {
@@ -12,9 +13,15 @@ import {
   employeeReducer,
 } from "redux/features";
 
+import { Employee, Group } from "../models";
+
+const orm = new ORM();
+orm.register(Employee, Group);
+
 const middleware = [thunk];
 
 const rootReducer = combineReducers({
+  orm: createReducer(orm),
   employee: employeeReducer,
   document: documentReducer,
   group: groupReducer,
