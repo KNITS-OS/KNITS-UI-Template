@@ -31,11 +31,10 @@ export const CurrentMemberPanel = observer(
       const { id } = e.currentTarget as HTMLButtonElement;
       const newGroupMembers = currentGroupMembers.filter(member => member.id !== parseInt(id));
       setCurrentGroupMembers(prevState => prevState.filter(member => member.id !== parseInt(id)));
+
       groupStore.updateGroupState({
         name: "members",
-        value: {
-          members: newGroupMembers.map(member => member.id),
-        },
+        value: newGroupMembers.map(member => member.id),
       });
     };
 
