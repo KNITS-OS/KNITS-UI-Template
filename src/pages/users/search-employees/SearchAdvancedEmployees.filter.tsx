@@ -21,9 +21,9 @@ interface Props {
 }
 
 export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMembers }: Props) => {
-  const [businessUnits] = useState(selectAllBusinessUnitsDataAsSelectOptions);
-  const [countries] = useState(selectAllCountriesDataAsSelectOptions);
-  const [groups] = useState(selectAllGroupsDataAsSelectOptions);
+  const [businessUnitOptions] = useState(selectAllBusinessUnitsDataAsSelectOptions());
+  const [countryOptions] = useState(selectAllCountriesDataAsSelectOptions());
+  const [groupOptions, setGroupOptions] = useState<SelectOption[]>([]);
 
   const [searchLastName, setSearchLastName] = useState("");
   const [searchOnBoardDateFrom, setSearchOnBoardDateFrom] = useState<Moment | undefined>(undefined);
@@ -41,6 +41,15 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
   const [groupMembers, setGroupMembers] = useState(
     currentGroupMembers?.map(member => member.id) || []
   );
+
+  useEffect(() => {
+    const getData = async () => {
+      const groups = await selectAllGroupsDataAsSelectOptions();
+      setGroupOptions(groups);
+    };
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setGroupMembers(currentGroupMembers?.map(member => member.id) || []);
@@ -99,7 +108,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
             id="select-businessUnits"
             label="Business Unit"
             value={businessUnitSelected}
-            options={businessUnits}
+            options={businessUnitOptions}
             onChange={item => {
               setBusinessUnitSelected(item as SelectOption);
             }}
@@ -110,7 +119,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
             id="select-country"
             label="Country"
             value={countrySelected}
-            options={countries}
+            options={countryOptions}
             onChange={item => {
               setCountrySelected(item as SelectOption);
             }}
@@ -122,7 +131,7 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
             id="select-group"
             label="Group"
             value={groupSelected}
-            options={groups}
+            options={groupOptions}
             onChange={item => {
               setGroupSelected(item as SelectOption);
             }}

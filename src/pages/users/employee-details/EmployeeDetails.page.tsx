@@ -29,7 +29,7 @@ import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/users";
 import { selectAllGroupsDataAsSelectOptions } from "pages/utils";
 
 import { useLocalStateAlerts } from "hooks";
-import { Employee } from "types";
+import { Employee, SelectOption } from "types";
 
 export const EmployeeDetailsPage = observer(() => {
   const { id } = useParams() as { id: string };
@@ -42,10 +42,16 @@ export const EmployeeDetailsPage = observer(() => {
 
   const { entity: employee } = employeeStore;
 
-  const [groupOptions] = useState(selectAllGroupsDataAsSelectOptions());
+  const [groupOptions, setGroupOptions] = useState<SelectOption[]>([]);
 
   useEffect(() => {
     employeeStore.findEmployeeById(employeeId);
+
+    const getData = async () => {
+      const groups = await selectAllGroupsDataAsSelectOptions();
+      setGroupOptions(groups);
+    };
+    getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
