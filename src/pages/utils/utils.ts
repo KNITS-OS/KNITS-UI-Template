@@ -1,4 +1,4 @@
-import { employeeService } from "api";
+import { employeeService, groupService } from "api";
 import { businessUnitsData, countriesData, groupsData } from "data";
 import { Employee, SelectOption } from "types";
 import { SELECT_ALL, SELECT_ALL_IDS } from "variables/app.consts";
@@ -73,15 +73,17 @@ export const selectGroupsByIdsAsSelectValues = (ids: number[]): SelectOption[] =
   return [...groupsOptions];
 };
 
-export const selectAllGroupsDataAsSelectOptions = (): SelectOption[] => {
-  const groupsOptions = groupsData.map(group => {
+export const selectAllGroupsDataAsSelectOptions = async (): Promise<SelectOption[]> => {
+  const { data } = await groupService.findAll();
+  const groupsOptions = data.map(group => {
     return { value: `${group.id}`, label: group.name };
   });
-  return [SELECT_ALL_IDS(groupsData.map(group => group.id)), ...groupsOptions];
+  return [SELECT_ALL_IDS(data.map(group => group.id)), ...groupsOptions];
 };
 
 export const selectGroupMembers = async (groupId: number) => {
-  const group = groupsData.find(group => group.id === groupId);
+  const { data } = await groupService.findAll();
+  const group = data.find(group => group.id === groupId);
 
   const { data: allEmployees } = await employeeService.findAllEmployees();
 
