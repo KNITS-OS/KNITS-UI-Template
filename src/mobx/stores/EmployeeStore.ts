@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 import { employeeService, IUpdated, SerializedError } from "api";
-import { Employee, EmployeeQueryFilters } from "types";
+import { AdvancedEmployeeQueryFilters, Employee, EmployeeQueryFilters } from "types";
 import { initialEmployeeState } from "variables/app.consts";
 
 export interface IUpdateEmployeeState {
@@ -38,7 +38,7 @@ export class EmployeeStore {
     }
   }
 
-  async searchEmployees(filters: EmployeeQueryFilters) {
+  async searchEmployees(filters: EmployeeQueryFilters | AdvancedEmployeeQueryFilters) {
     this.isLoading = true;
     try {
       const queryParams = new URLSearchParams(filters as any);

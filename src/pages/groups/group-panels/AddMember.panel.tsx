@@ -1,13 +1,15 @@
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
 import { Card, Collapse } from "reactstrap";
+
+import { useStores } from "mobx/app";
 
 import { AddNewMemberButton } from "components/buttons";
 import { ReactTable } from "components/widgets";
 
 import { SearchAdvancedEmployeesFilterPanel, employeesTableColumns } from "pages/users";
 
-import { employeeService } from "api";
 import { useLocalStateAlerts } from "hooks";
 import { Group, Employee, AdvancedEmployeeQueryFilters } from "types";
 
@@ -18,58 +20,52 @@ interface Props {
   setCurrentGroupMembers: React.Dispatch<React.SetStateAction<Employee[]>>;
 }
 
-export const AddMemberPanel = ({
-  group,
-  addMemberCollapse,
-  currentGroupMembers,
-  setCurrentGroupMembers,
-}: Props) => {
-  const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
+export const AddMemberPanel = observer(
+  ({ group, addMemberCollapse, currentGroupMembers, setCurrentGroupMembers }: Props) => {
+    const { employeeStore } = useStores();
+    const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const [filters, setFilters] = useState<AdvancedEmployeeQueryFilters>({});
+    const [filters, setFilters] = useState<AdvancedEmployeeQueryFilters>({});
 
-  const [employees, setEmployees] = useState<Employee[]>([]);
+    const onSearchEmployees = (filters: AdvancedEmployeeQueryFilters) => {
+      employeeStore.searchEmployees(filters);
+    };
 
-  const onSearchEmployees = async (filters: AdvancedEmployeeQueryFilters) => {
-    const queryParams = new URLSearchParams(filters as any);
-    const { data } = await employeeService.searchEmployees(queryParams);
-    setEmployees(data);
-  };
+    useEffect(() => {
+      onSearchEmployees({
+        ...filters,
+        members: currentGroupMembers.map(member => `id_ne=${member.id}`).join("&"),
+      });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentGroupMembers, filters]);
 
-  useEffect(() => {
-    onSearchEmployees({
-      ...filters,
-      members: currentGroupMembers.map(member => `id_ne=${member.id}`).join("&"),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentGroupMembers, filters]);
+    return (
+      <>
+        {alert}
+        <Collapse isOpen={addMemberCollapse}>
+          <Card>
+            <SearchAdvancedEmployeesFilterPanel
+              setFilters={setFilters}
+              currentGroupMembers={currentGroupMembers}
+            />
 
-  return (
-    <>
-      {alert}
-      <Collapse isOpen={addMemberCollapse}>
-        <Card>
-          <SearchAdvancedEmployeesFilterPanel
-            setFilters={setFilters}
-            currentGroupMembers={currentGroupMembers}
-          />
-
-          <ReactTable
-            data={employees}
-            selectElement={
-              <AddNewMemberButton
-                setCurrentGroupMembers={setCurrentGroupMembers}
-                setSaveSent={setSaveSent}
-                setSuccessMessage={setSuccessMessage}
-                setIsSuccess={setIsSuccess}
-                setFilters={setFilters}
-                group={group}
-              />
-            }
-            columns={employeesTableColumns({})}
-          />
-        </Card>
-      </Collapse>
-    </>
-  );
-};
+            <ReactTable
+              data={employeeStore.entities}
+              selectElement={
+                <AddNewMemberButton
+                  setCurrentGroupMembers={setCurrentGroupMembers}
+                  setSaveSent={setSaveSent}
+                  setSuccessMessage={setSuccessMessage}
+                  setIsSuccess={setIsSuccess}
+                  setFilters={setFilters}
+                  group={group}
+                />
+              }
+              columns={employeesTableColumns({})}
+            />
+          </Card>
+        </Collapse>
+      </>
+    );
+  }
+);
