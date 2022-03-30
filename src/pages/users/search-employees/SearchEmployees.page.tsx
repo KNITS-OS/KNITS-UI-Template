@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { MouseEvent, useState } from "react";
+import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Card, CardHeader, Container, Row } from "reactstrap";
@@ -11,8 +11,7 @@ import { ReactTable } from "components/widgets";
 
 import { EMPLOYEE_DETAILS } from "pages/users";
 
-import { employeeService } from "api";
-import { Employee, EmployeeQueryFilters } from "types";
+import { EmployeeQueryFilters } from "types";
 
 import {
   selectAllBusinessUnitsDataAsSelectOptions,
@@ -25,15 +24,10 @@ export const SearchEmployeesPage = observer(() => {
   const navigate = useNavigate();
   const { employeeStore } = useStores();
 
-  const [employees, setEmployees] = useState<Employee[]>([]);
-
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
 
   const onSearchEmployees = (filters: EmployeeQueryFilters) => {
-    // const queryParams = new URLSearchParams(filters as any);
-    // const { data } = await employeeService.searchEmployees(queryParams);
-    // setEmployees(data);
     employeeStore.searchEmployees(filters);
   };
 
@@ -47,8 +41,7 @@ export const SearchEmployeesPage = observer(() => {
     e.preventDefault();
     const { id } = e.currentTarget;
 
-    await employeeService.deleteEmployee(parseInt(id));
-    setEmployees(employees.filter(employee => employee.id !== parseInt(id)));
+    employeeStore.deleteEmployee(parseInt(id));
   };
 
   return (
