@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
 import { Button, ButtonGroup, Col, Row } from "reactstrap";
@@ -12,7 +13,7 @@ interface Props {
   group: Group;
 }
 
-export const MembersPanel = ({ group }: Props) => {
+export const MembersPanel = observer(({ group }: Props) => {
   const [currentMembersCollapse, setCurrentMembersCollapse] = useState(false);
   const [addMemberCollapse, setAddMemberCollapse] = useState(false);
   const [currentGroupMembers, setCurrentGroupMembers] = useState<Employee[]>([]);
@@ -75,4 +76,4 @@ export const MembersPanel = ({ group }: Props) => {
       </Row>
     </>
   );
-};
+});

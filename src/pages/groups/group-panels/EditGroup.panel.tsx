@@ -1,4 +1,8 @@
+import { observer } from "mobx-react-lite";
+
 import { Button, Card, CardBody, CardHeader, Col, Row } from "reactstrap";
+
+import { useStores } from "mobx/app";
 
 import { InputField } from "components/widgets";
 
@@ -8,13 +12,13 @@ import { MembersPanel } from ".";
 
 interface Props {
   group: Group;
-  setGroup: React.Dispatch<React.SetStateAction<Group>>;
   onSave: (group: Group) => void;
   isLoading?: boolean;
   onBackToSearchClick?: () => void;
 }
 
-export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }: Props) => {
+export const EditGroupPanel = observer(({ group, onSave, onBackToSearchClick }: Props) => {
+  const { groupStore } = useStores();
   const { name, description } = group;
 
   return (
@@ -40,9 +44,9 @@ export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }:
                       value={name}
                       type="text"
                       onChange={e =>
-                        setGroup({
-                          ...group,
-                          name: e.target.value,
+                        groupStore.updateGroupState({
+                          name: "name",
+                          value: e.target.value,
                         })
                       }
                     />
@@ -57,9 +61,9 @@ export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }:
                       value={description}
                       type="text"
                       onChange={e =>
-                        setGroup({
-                          ...group,
-                          description: e.target.value,
+                        groupStore.updateGroupState({
+                          name: "description",
+                          value: e.target.value,
                         })
                       }
                     />
@@ -90,4 +94,4 @@ export const EditGroupPanel = ({ group, setGroup, onSave, onBackToSearchClick }:
       </Col>
     </Row>
   );
-};
+});
