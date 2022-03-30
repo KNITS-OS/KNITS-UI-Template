@@ -38,6 +38,7 @@ export class GroupStore {
   }
 
   async findGroupById(id: number) {
+    this.entity = initialGroupState;
     this.isLoading = true;
     try {
       const { data } = await groupService.getGroupById(id);

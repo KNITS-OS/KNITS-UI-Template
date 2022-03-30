@@ -20,6 +20,7 @@ export class EmployeeStore {
   }
 
   async findEmployeeById(id: number) {
+    this.entity = initialEmployeeState;
     this.isLoading = true;
     try {
       const { data } = await employeeService.getEmployeeById(id);
