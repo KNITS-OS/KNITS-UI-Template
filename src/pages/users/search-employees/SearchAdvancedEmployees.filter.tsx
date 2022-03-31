@@ -24,7 +24,7 @@ interface Props {
 export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMembers }: Props) => {
   const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
   const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);
-  const groups = useAppSelector(selectAllGroupsDataAsSelectOptions);
+  const groups = useAppSelector(state => selectAllGroupsDataAsSelectOptions(state.orm));
 
   const [searchLastName, setSearchLastName] = useState("");
   const [searchOnBoardDateFrom, setSearchOnBoardDateFrom] = useState<Moment | undefined>(undefined);

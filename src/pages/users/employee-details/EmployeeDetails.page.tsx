@@ -43,7 +43,7 @@ export const EmployeeDetailsPage = () => {
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
   const employee = useAppSelector(selectEmployeeById(employeeId));
-  const groupOptions = useAppSelector(selectAllGroupsDataAsSelectOptions);
+  const groupOptions = useAppSelector(state => selectAllGroupsDataAsSelectOptions(state.orm));
 
   if (!employee) {
     return (

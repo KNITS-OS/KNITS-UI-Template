@@ -8,26 +8,30 @@ import {
   worldOverviewReducer,
   countryReducer,
   businessUnitReducer,
-  groupReducer,
   documentReducer,
   employeeReducer,
 } from "redux/features";
 
 import { Employee, Group } from "../models";
 
-const orm = new ORM();
+export const orm = new ORM({
+  stateSelector: state => state.orm,
+});
 orm.register(Employee, Group);
+
+const emptyDBState = orm.getEmptyState();
+
+export const session = orm.session(emptyDBState);
 
 const middleware = [thunk];
 
 const rootReducer = combineReducers({
-  orm: createReducer(orm),
   employee: employeeReducer,
   document: documentReducer,
-  group: groupReducer,
   worldOverview: worldOverviewReducer,
   businessUnit: businessUnitReducer,
   country: countryReducer,
+  orm: createReducer(orm),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

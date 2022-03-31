@@ -1,39 +1,64 @@
-import { createSelector } from "reselect";
+import { createSelector as createOrmSelector } from "redux-orm";
+import { createSelector as createReselectSelector } from "reselect";
 
-import { RootState } from "redux/app";
+import { orm } from "redux/app";
 
+import { Group, SelectOption } from "types";
 import { SELECT_ALL_IDS } from "variables/app.consts";
 
-export const selectGroupState = (rootState: RootState) => rootState.group;
+import { Employee } from "../../models";
 
-export const selectAllGroupData = createSelector(
+export const selectGroupState = createOrmSelector(orm, session => session.Group.all());
+
+export const selectAllGroupData = createReselectSelector(
   [selectGroupState],
-  groupState => groupState.entities
+  groupState => groupState.all().toModelArray() as Group[]
 );
 
 export const selectGroupById = (id: number) =>
-  createSelector(
+  createReselectSelector(
     [selectAllGroupData], //array of input selectors
     groups => groups.find(group => group.id === id) //arg
   );
 
 export const selectGroupsByIds = (ids: number[]) =>
-  createSelector(
+  createReselectSelector(
     [selectAllGroupData], //array of input selectors
     groups => groups.filter(group => ids.includes(group.id))
   );
 
 export const selectGroupsByIdsAsSelectValues = (ids: number[]) =>
-  createSelector([selectGroupsByIds(ids)], groupsByIds => {
-    const groupOptions = groupsByIds.map(group => {
+  createReselectSelector([selectGroupsByIds(ids)], groupsByIds => {
+    const groupOptions: SelectOption[] = groupsByIds.map(group => {
       return { value: `${group.id}`, label: group.name };
     });
-    return [...groupOptions];
+    return groupOptions;
   });
 
-export const selectAllGroupsDataAsSelectOptions = createSelector([selectAllGroupData], groups => {
-  const groupOptions = groups.map(group => {
-    return { value: `${group.id}`, label: group.name };
-  });
-  return [SELECT_ALL_IDS(groups.map(group => group.id)), ...groupOptions];
+export const selectGroupMembers = createOrmSelector(orm, session => {
+  return session.Group.all()
+    .toModelArray()
+    .map(group => {
+      const { ref } = group;
+      return {
+        ...ref,
+        members: group.members.toRefArray().map((employee: Employee) => employee),
+      };
+    });
+});
+
+export const selectAllGroupsDataAsSelectOptions = createOrmSelector(orm, session => {
+  const groupOptions = session.Group.all()
+    .toModelArray()
+    .map(group => {
+      return { value: `${group.id}`, label: group.name };
+    });
+  return [
+    SELECT_ALL_IDS(
+      session.Group.all()
+        .toModelArray()
+        .map(group => group.id)
+    ),
+    ...groupOptions,
+  ];
 });

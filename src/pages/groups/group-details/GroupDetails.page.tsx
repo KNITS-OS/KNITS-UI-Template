@@ -21,7 +21,7 @@ export const GroupDetailsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const groupState = useAppSelector(selectGroupById(groupId)) as Group;
+  const groupState = useAppSelector(state => selectGroupById(groupId)(state.orm)) as Group;
   const [group, setGroup] = useState(groupState);
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();

@@ -30,7 +30,9 @@ export const EmployeePanel = ({ employee, groupOptions, onSave }: Props) => {
     moment(employee?.offboardingDate, DATE_FILTER_FORMAT)
   );
 
-  const employeeGroups = useAppSelector(selectGroupsByIdsAsSelectValues(employee.groups || []));
+  const employeeGroups = useAppSelector(state =>
+    selectGroupsByIdsAsSelectValues(employee.groups || [])(state.orm)
+  );
 
   const [groups, setGroups] = useState<number[]>(employee.groups || []);
 

@@ -54,7 +54,7 @@ export const AdminLayout = () => {
 
   const countries = useAppSelector(selectAllCountryData);
   const businessUnits = useAppSelector(selectAllBusinessUnitData);
-  const groups = useAppSelector(selectAllGroupData);
+  const groups = useAppSelector(state => selectAllGroupData(state.orm));
   const employees = useAppSelector(selectAllEmployeeData);
 
   useEffect(() => {

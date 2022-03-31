@@ -18,7 +18,7 @@ export const SearchGroupsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const groups = useAppSelector(selectAllGroupData);
+  const groups = useAppSelector(state => selectAllGroupData(state.orm));
 
   const onViewGroupDetails = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.target as HTMLElement;
