@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { getSnapshot } from "mobx-state-tree";
 import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,11 +25,13 @@ export const SearchEmployeesPage = observer(() => {
   const navigate = useNavigate();
   const { employeeStore } = useStores();
 
+  console.dir(getSnapshot(employeeStore));
+
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
 
   const onSearchEmployees = (filters: EmployeeQueryFilters) => {
-    employeeStore.searchEmployees(filters);
+    employeeStore.searchMemberlessEmployees(filters);
   };
 
   const onViewEmployeeDetails = (e: MouseEvent<HTMLButtonElement>) => {

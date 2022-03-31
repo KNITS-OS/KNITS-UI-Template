@@ -7,7 +7,6 @@ export interface EmployeeSaveRequest {
 }
 
 export interface GroupSaveRequest {
-  id: number;
   name: string;
   active: boolean;
   members: number[];

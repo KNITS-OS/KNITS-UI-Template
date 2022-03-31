@@ -1,9 +1,10 @@
 // https://javascript.plainenglish.io/all-you-need-is-mobx-react-lite-47ba0e95e9c8
 
 import { configure } from "mobx";
+import { types } from "mobx-state-tree";
 import { createContext, useContext } from "react";
 
-import { EmployeeStore, GroupStore } from "../stores";
+import { EmployeeStore, GroupStore } from "../models";
 
 configure({
   enforceActions: "observed",
@@ -13,9 +14,14 @@ configure({
   disableErrorBoundaries: true,
 });
 
-export const stores = Object.freeze({
-  employeeStore: new EmployeeStore(),
-  groupStore: new GroupStore(),
+const RootModel = types.model({
+  employeeStore: EmployeeStore,
+  groupStore: GroupStore,
+});
+
+export const stores = RootModel.create({
+  employeeStore: {},
+  groupStore: {},
 });
 
 const StoresContext = createContext(stores);

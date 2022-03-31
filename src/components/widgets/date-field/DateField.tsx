@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import moment, { Moment } from "moment";
 import { Dispatch, SetStateAction } from "react";
 import ReactDatetime from "react-datetime";
@@ -13,7 +14,7 @@ type Props = ReactDatetime.DatetimepickerProps & {
   setValue: Dispatch<SetStateAction<Moment | undefined>>;
 };
 
-export const DateField = ({ id, label, value, setValue, ...props }: Props) => {
+export const DateField = observer(({ id, label, value, setValue, ...props }: Props) => {
   return (
     <FormGroup>
       <label className="form-control-label" htmlFor={id}>
@@ -34,4 +35,4 @@ export const DateField = ({ id, label, value, setValue, ...props }: Props) => {
       />
     </FormGroup>
   );
-};
+});

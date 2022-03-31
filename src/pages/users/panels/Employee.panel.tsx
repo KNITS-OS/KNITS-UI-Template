@@ -26,14 +26,18 @@ interface Props {
 export const EmployeePanel = observer(({ employee, groupOptions, onSave }: Props) => {
   const { employeeStore } = useStores();
 
-  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>();
+  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>(
+    moment(employee?.onboardingDate, DATE_FILTER_FORMAT)
+  );
 
-  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>();
+  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>(
+    moment(employee?.offboardingDate, DATE_FILTER_FORMAT)
+  );
 
   useEffect(() => {
     setOnboardingDate(moment(employee?.onboardingDate, DATE_FILTER_FORMAT));
     setOffboardingDate(moment(employee?.offboardingDate, DATE_FILTER_FORMAT));
-  }, [employee]);
+  }, [employee.onboardingDate, employee.offboardingDate]);
 
   // state to know which group fields has the user selected
   const [currentGroupSelections, setCurrentGroupSelections] = useState<SelectOption[]>(
