@@ -21,7 +21,7 @@ import "react-notification-alert/dist/animate.css";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 import "components/widgets/react-table/styles/reactTable.css";
-
+console.log("1234 store", store);
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

@@ -55,7 +55,7 @@ export const AdminLayout = () => {
   const countries = useAppSelector(selectAllCountryData);
   const businessUnits = useAppSelector(selectAllBusinessUnitData);
   const groups = useAppSelector(state => selectAllGroupData(state.orm));
-  const employees = useAppSelector(selectAllEmployeeData);
+  const employees = useAppSelector(state => selectAllEmployeeData(state.orm));
 
   useEffect(() => {
     dispatch(findAllCountries());

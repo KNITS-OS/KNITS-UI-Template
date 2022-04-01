@@ -9,7 +9,8 @@ import {
   countryReducer,
   businessUnitReducer,
   documentReducer,
-  employeeReducer,
+  employeeService,
+  groupService,
 } from "redux/features";
 
 import { Employee, Group } from "../models";
@@ -25,14 +26,32 @@ export const session = orm.session(emptyDBState);
 
 const middleware = [thunk];
 
+const ormReducer = createReducer(orm);
+
 const rootReducer = combineReducers({
-  employee: employeeReducer,
+  orm: ormReducer,
   document: documentReducer,
   worldOverview: worldOverviewReducer,
   businessUnit: businessUnitReducer,
   country: countryReducer,
-  orm: createReducer(orm),
 });
+
+const addDataToDB = async () => {
+  const { data: employees } = await employeeService.findAllEmployees();
+  const { data: groups } = await groupService.findAll();
+
+  employees.forEach(employee => {
+    session.Employee.create(employee as any);
+  });
+  groups.forEach(group => {
+    session.Group.create(group as any);
+  });
+};
+
+const data = addDataToDB();
+console.log("data 12345", data);
+
+console.log("1234 rr", rootReducer);
 
 export type RootState = ReturnType<typeof rootReducer>;
 

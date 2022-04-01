@@ -1,31 +1,34 @@
-import { createSelector } from "reselect";
+import { createSelector as createOrmSelector } from "redux-orm";
+import { createSelector as createReselectSelector } from "reselect";
 
-import { RootState } from "redux/app";
+import { orm } from "redux/app";
 
+import { Employee } from "types";
 import { SELECT_ALL } from "variables/app.consts";
 
-export const selectEmployeesState = (rootState: RootState) => rootState.employee;
+export const selectEmployeeState = createOrmSelector(orm, session => session.Employee.all());
 
-export const selectAllEmployeeData = createSelector(
-  [selectEmployeesState],
-  employeeState => employeeState.entities
+export const selectAllEmployeeData = createReselectSelector(
+  [selectEmployeeState],
+  employeeState => employeeState.all().toModelArray() as Employee[]
 );
 
 export const selectEmployeeById = (id: number) =>
-  createSelector([selectAllEmployeeData], employeesData =>
-    employeesData.find(employee => employee.id === id)
+  createReselectSelector(
+    [selectAllEmployeeData], //array of input selectors
+    employees => employees.find(employee => employee.id === id) //arg
   );
 
-export const selectEmployeesAsList = createSelector([selectAllEmployeeData], employeesData =>
-  employeesData.map(employee => ({ value: employee.id, label: employee.internationalName }))
-);
+export const selectEmployeesAsList = () =>
+  createReselectSelector([selectAllEmployeeData], employees =>
+    employees.map(employee => ({ value: employee.id, label: employee.internationalName }))
+  );
 
-export const selectAllEmployeeDataAsSelectOptions = createSelector(
-  [selectAllEmployeeData],
-  employees => {
-    const employeesOptions = employees.map(employee => {
-      return { value: `${employee.id}`, label: `${employee.firstName} ${employee.lastName}` };
+export const selectAllEmployeeDataAsSelectOptions = createOrmSelector(orm, session => {
+  const employeeOptions = session.Employee.all()
+    .toModelArray()
+    .map(employee => {
+      return { value: `${employee.id}`, label: employee.name };
     });
-    return [SELECT_ALL, ...employeesOptions];
-  }
-);
+  return [SELECT_ALL, ...employeeOptions];
+});

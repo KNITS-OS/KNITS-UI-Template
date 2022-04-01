@@ -34,7 +34,7 @@ export const AddMemberPanel = ({
 
   const [filters, setFilters] = useState<AdvancedEmployeeQueryFilters>({});
 
-  const employees = useAppSelector(selectAllEmployeeData);
+  const employees = useAppSelector(state => selectAllEmployeeData(state.orm));
 
   const onSearchEmployees = async (filters: AdvancedEmployeeQueryFilters) => {
     dispatch(searchEmployees(filters));

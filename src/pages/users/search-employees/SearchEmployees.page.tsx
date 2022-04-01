@@ -26,7 +26,7 @@ export const SearchEmployeesPage = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const employees = useAppSelector(selectAllEmployeeData);
+  const employees = useAppSelector(state => selectAllEmployeeData(state.orm));
 
   const businessUnits = useAppSelector(selectAllBusinessUnitsDataAsSelectOptions);
   const countries = useAppSelector(selectAllCountriesDataAsSelectOptions);

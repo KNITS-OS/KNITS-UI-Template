@@ -46,12 +46,23 @@ export class Employee extends Model<typeof Employee, EmployeeType> {
     idAttribute: "id",
   };
 
-  static reducer(action: EmployeeActionType, employee: typeof Employee) {
+  static reducer(action: EmployeeActionType, EmployeeModel: typeof Employee) {
     console.log("action 1234", action);
 
     switch (action.type) {
+      case AppActionType.SEARCH_EMPLOYEE_COMPLETE:
+        EmployeeModel.withId(action.payload.id);
+        break;
+      case AppActionType.SEARCH_EMPLOYEES_COMPLETE:
+        EmployeeModel.all();
+        break;
+      case AppActionType.UPDATE_EMPLOYEE_COMPLETE:
+        // @ts-ignore
+        EmployeeModel.withId(action.payload.id).update(action.payload);
+        break;
       case AppActionType.DELETE_EMPLOYEE_COMPLETE:
-        employee.filter(employee => employee.id === action.payload).delete();
+        // @ts-ignore
+        EmployeeModel.withId(action.payload).delete();
         break;
       default:
         break;

@@ -13,7 +13,7 @@ export class Group extends Model<typeof Group, GroupType> {
     id: attr(),
     name: attr(),
     active: attr(),
-    members: many({ to: "Employee", relatedName: "groups" }),
+    members: many({ to: "Employee", relatedName: "employeeGroups" }),
     description: attr(),
   };
 
@@ -30,6 +30,9 @@ export class Group extends Model<typeof Group, GroupType> {
         GroupModel.create(action.payload);
         break;
       case AppActionType.SEARCH_GROUP_COMPLETE:
+        GroupModel.withId(action.payload.id);
+        break;
+      case AppActionType.SEARCH_GROUPS_COMPLETE:
         GroupModel.all();
         break;
       case AppActionType.UPDATE_GROUP_COMPLETE:
