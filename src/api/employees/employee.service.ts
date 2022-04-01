@@ -10,9 +10,6 @@ const searchEmployees = (queryParams: URLSearchParams): HttpResponseType<Employe
   return httpCommon.get(`${EMPLOYEE_ROUTE}?${members}&${queryParams}`);
 };
 
-const searchMemberlessEmployees = (queryParams: URLSearchParams): HttpResponseType<Employee[]> =>
-  httpCommon.get(`${EMPLOYEE_ROUTE}?${queryParams}`);
-
 const findAllEmployees = (): HttpResponseType<Employee[]> => httpCommon.get(`${EMPLOYEE_ROUTE}`);
 
 const getEmployeeById = (id: number): HttpResponseType<Employee> =>
@@ -33,7 +30,6 @@ const deleteEmployee = (id: number): HttpResponseType<Employee> =>
 
 export const employeeService = {
   searchEmployees,
-  searchMemberlessEmployees,
   findAllEmployees,
   getEmployeeById,
   searchEmployeesByIds,

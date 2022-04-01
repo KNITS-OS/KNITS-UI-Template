@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
-import { Card, Collapse } from "reactstrap";
+import { Card, Collapse, Spinner } from "reactstrap";
 
 import { useStores } from "mobx/app";
 
@@ -48,21 +48,26 @@ export const AddMemberPanel = observer(
               setFilters={setFilters}
               currentGroupMembers={currentGroupMembers}
             />
-
-            <ReactTable
-              data={employeeStore.entities}
-              selectElement={
-                <AddNewMemberButton
-                  setCurrentGroupMembers={setCurrentGroupMembers}
-                  setSaveSent={setSaveSent}
-                  setSuccessMessage={setSuccessMessage}
-                  setIsSuccess={setIsSuccess}
-                  setFilters={setFilters}
-                  group={group}
-                />
-              }
-              columns={employeesTableColumns({})}
-            />
+            {employeeStore.isLoading ? (
+              <div className="text-center mt-4 mb-4">
+                <Spinner />
+              </div>
+            ) : (
+              <ReactTable
+                data={employeeStore.entities}
+                selectElement={
+                  <AddNewMemberButton
+                    setCurrentGroupMembers={setCurrentGroupMembers}
+                    setSaveSent={setSaveSent}
+                    setSuccessMessage={setSuccessMessage}
+                    setIsSuccess={setIsSuccess}
+                    setFilters={setFilters}
+                    group={group}
+                  />
+                }
+                columns={employeesTableColumns({})}
+              />
+            )}
           </Card>
         </Collapse>
       </>

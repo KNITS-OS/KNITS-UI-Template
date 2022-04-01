@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Card, CardHeader, Collapse } from "reactstrap";
+import { Card, CardHeader, Collapse, Spinner } from "reactstrap";
 
 import { useStores } from "mobx/app";
 
@@ -45,14 +45,19 @@ export const CurrentMemberPanel = observer(
             <h3 className="mb-0">Group members</h3>
             <p className="text-sm mb-0">Care Members</p>
           </CardHeader>
-
-          <ReactTable
-            data={currentGroupMembers}
-            columns={employeesTableColumns({
-              onDetailsButtonClick: onViewMemberDetails,
-              onRemoveButtonClick: onRemoveMember,
-            })}
-          />
+          {groupStore.isLoading ? (
+            <div className="text-center mt-4 mb-4">
+              <Spinner />
+            </div>
+          ) : (
+            <ReactTable
+              data={currentGroupMembers}
+              columns={employeesTableColumns({
+                onDetailsButtonClick: onViewMemberDetails,
+                onRemoveButtonClick: onRemoveMember,
+              })}
+            />
+          )}
         </Card>
       </Collapse>
     );

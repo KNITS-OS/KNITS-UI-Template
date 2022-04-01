@@ -22,14 +22,6 @@ export const SearchGroupsPage = observer(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!groupStore.entities) {
-    return (
-      <div className="text-center">
-        <Spinner />
-      </div>
-    );
-  }
-
   const onViewGroupDetails = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.target as HTMLElement;
     navigate(`/admin${GROUP_DETAILS}/${id}`);
@@ -51,14 +43,19 @@ export const SearchGroupsPage = observer(() => {
                 <h3 className="mb-0">Groups</h3>
                 <p className="text-sm mb-0">Groups</p>
               </CardHeader>
-
-              <ReactTable
-                data={groupStore.entities}
-                columns={groupsTableColumns({
-                  onDetailsButtonClick: onViewGroupDetails,
-                  onRemoveButtonClick: onDeleteGroup,
-                })}
-              />
+              {groupStore.isLoading ? (
+                <div className="text-center mt-4 mb-4">
+                  <Spinner />
+                </div>
+              ) : (
+                <ReactTable
+                  data={groupStore.entities}
+                  columns={groupsTableColumns({
+                    onDetailsButtonClick: onViewGroupDetails,
+                    onRemoveButtonClick: onDeleteGroup,
+                  })}
+                />
+              )}
             </Card>
           </div>
         </Row>
