@@ -1,6 +1,6 @@
 import { employeeService, groupService } from "api";
-import { businessUnitsData, countriesData, groupsData } from "data";
-import { Employee, SelectOption } from "types";
+import { businessUnitsData, countriesData } from "data";
+import { Employee, Group, SelectOption } from "types";
 import { SELECT_ALL, SELECT_ALL_IDS } from "variables/app.consts";
 
 export const toFileArray = (filelist: FileList | null): File[] => {
@@ -65,8 +65,8 @@ export const selectCountryByIsoCodeAsSelectOption = (code: string): SelectOption
   return [];
 };
 
-export const selectGroupsByIdsAsSelectValues = (ids: number[]): SelectOption[] => {
-  const groups = groupsData.filter(group => ids.includes(group.id));
+export const selectGroupsByIdsAsSelectValues = (ids: number[], data: Group[]): SelectOption[] => {
+  const groups = data.filter(group => ids.includes(group.id));
   const groupsOptions = groups.map(group => {
     return { value: `${group.id}`, label: group.name };
   });

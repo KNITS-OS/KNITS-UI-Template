@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import moment, { Moment } from "moment";
 import { useEffect, useState } from "react";
 
-import { Button, Col, Form, Row } from "reactstrap";
+import { Button, Col, Form, Row, Spinner } from "reactstrap";
 
 import { useStores } from "mobx/app";
 
@@ -18,27 +18,32 @@ interface onSaveFunction {
 }
 
 interface Props {
-  employee: Employee;
   groupOptions: SelectOption[];
   onSave: onSaveFunction;
 }
 
-export const EmployeePanel = observer(({ employee, groupOptions, onSave }: Props) => {
-  const { employeeStore } = useStores();
+export const EmployeePanel = observer(({ groupOptions, onSave }: Props) => {
+  const { employeeStore, groupStore } = useStores();
 
-  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>();
+  const { entity: employee } = employeeStore;
 
-  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>();
+  const [onboardingDate, setOnboardingDate] = useState<Moment | undefined>(
+    moment(employee.onboardingDate, DATE_FILTER_FORMAT)
+  );
 
-  useEffect(() => {
-    setOnboardingDate(moment(employee?.onboardingDate, DATE_FILTER_FORMAT));
-    setOffboardingDate(moment(employee?.offboardingDate, DATE_FILTER_FORMAT));
-  }, [employee]);
+  const [offboardingDate, setOffboardingDate] = useState<Moment | undefined>(
+    moment(employee.offboardingDate, DATE_FILTER_FORMAT)
+  );
 
   // state to know which group fields has the user selected
   const [currentGroupSelections, setCurrentGroupSelections] = useState<SelectOption[]>(
-    selectGroupsByIdsAsSelectValues(employee?.groups)
+    selectGroupsByIdsAsSelectValues(employee.groups, groupStore.entities)
   );
+
+  useEffect(() => {
+    setOnboardingDate(moment(employee.onboardingDate, DATE_FILTER_FORMAT));
+    setOffboardingDate(moment(employee.offboardingDate, DATE_FILTER_FORMAT));
+  }, [employee.onboardingDate, employee.offboardingDate]);
 
   const onSaveEmployee = () => {
     const newEmployee: Employee = {
@@ -49,6 +54,15 @@ export const EmployeePanel = observer(({ employee, groupOptions, onSave }: Props
 
     onSave(newEmployee);
   };
+
+  if (employeeStore.isLoading) {
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <Form>
       <h6 className="heading-small text-muted mb-4">User information</h6>
@@ -77,7 +91,7 @@ export const EmployeePanel = observer(({ employee, groupOptions, onSave }: Props
               id="select-group"
               label="Group"
               options={groupOptions}
-              value={selectGroupsByIdsAsSelectValues(employee?.groups)}
+              value={selectGroupsByIdsAsSelectValues(employee.groups, groupStore.entities)}
               isMulti={true}
               isOptionDisabled={option => {
                 const { label } = option as SelectOption;

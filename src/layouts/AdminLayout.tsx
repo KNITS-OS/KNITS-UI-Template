@@ -70,29 +70,6 @@ export const AdminLayout = observer(() => {
     })
   );
 
-  // useObserver(() => {
-  //   useEffect(() => {
-  //     if (!employeeStore.entities || employeeStore.entities.length == 0) {
-  //       employeeStore.searchEmployees({});
-  //     } else {
-  //       setIsEmployeesDataLoaded(true);
-  //     }
-
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, []);
-  // });
-
-  // useObserver(() => {
-  //   useEffect(() => {
-  //     if (!groupStore.entities || groupStore.entities.length == 0) {
-  //       groupStore.findGroups();
-  //     } else {
-  //       setIsGroupsDataLoaded(true);
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, []);
-  // });
-
   useEffect(() => {
     if (isGroupsDataLoaded && isEmployeesDataLoaded) {
       setIsDataLoadingCompleted(true);
