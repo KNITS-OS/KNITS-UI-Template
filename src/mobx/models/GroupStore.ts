@@ -2,10 +2,14 @@ import { flow, types } from "mobx-state-tree";
 
 import { groupService, IUpdated } from "api";
 import { Group, GroupSaveRequest } from "types";
-
-import { IUpdateGroupState } from "../stores";
+import { initialGroupState } from "variables/app.consts";
 
 import { GroupModel } from "./common";
+
+export interface IUpdateGroupState {
+  name: keyof typeof initialGroupState;
+  value: any;
+}
 
 export const GroupStore = types
   .model({

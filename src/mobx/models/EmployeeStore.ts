@@ -2,10 +2,13 @@ import { flow, types } from "mobx-state-tree";
 
 import { employeeService, IUpdated } from "api";
 import { Employee, AdvancedEmployeeQueryFilters, EmployeeQueryFilters } from "types";
-
-import { IUpdateEmployeeState } from "../stores";
+import { initialEmployeeState } from "variables/app.consts";
 
 import { EmployeeModel } from "./common";
+export interface IUpdateEmployeeState {
+  name: keyof typeof initialEmployeeState;
+  value: any;
+}
 
 export const EmployeeStore = types
   .model({
