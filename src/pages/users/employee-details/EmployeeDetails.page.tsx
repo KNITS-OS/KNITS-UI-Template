@@ -40,8 +40,6 @@ export const EmployeeDetailsPage = observer(() => {
 
   const { alert, setSaveSent, setSuccessMessage, setIsSuccess } = useLocalStateAlerts();
 
-  const { entity: employee } = employeeStore;
-
   const [groupOptions, setGroupOptions] = useState<SelectOption[]>([]);
 
   useEffect(() => {
@@ -55,7 +53,7 @@ export const EmployeeDetailsPage = observer(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!employeeStore.entity && employeeStore.isLoading) {
+  if (employeeStore.isLoading) {
     return (
       <div className="text-center">
         <Spinner />
@@ -98,11 +96,7 @@ export const EmployeeDetailsPage = observer(() => {
                 </Row>
               </CardHeader>
               <CardBody>
-                <EmployeePanel
-                  employee={employee}
-                  groupOptions={groupOptions}
-                  onSave={onSaveEmployee}
-                />
+                <EmployeePanel groupOptions={groupOptions} onSave={onSaveEmployee} />
               </CardBody>
             </Card>
           </Col>
