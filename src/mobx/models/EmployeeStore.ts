@@ -1,7 +1,7 @@
 import { flow, types } from "mobx-state-tree";
 
 import { employeeService, IUpdated } from "api";
-import { Employee, AdvancedEmployeeQueryFilters } from "types";
+import { Employee, AdvancedEmployeeQueryFilters, EmployeeQueryFilters } from "types";
 
 import { IUpdateEmployeeState } from "../stores";
 
@@ -29,7 +29,9 @@ export const EmployeeStore = types
       }
     });
 
-    const searchEmployees = flow(function* (filters: AdvancedEmployeeQueryFilters) {
+    const searchEmployees = flow(function* (
+      filters: EmployeeQueryFilters | AdvancedEmployeeQueryFilters
+    ) {
       self.isLoading = true;
       try {
         const queryParams = new URLSearchParams(filters as any);
