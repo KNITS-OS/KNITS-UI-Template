@@ -13,14 +13,14 @@ export const useLocalStateAlerts = () => {
 
   useEffect(() => {
     if (isSuccess && saveSent) {
-      setAlert(() => <SuccessAlert setAlert={setAlert}>{successMessage}</SuccessAlert>);
+      setAlert(() => <SuccessAlert>{successMessage}</SuccessAlert>);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   useEffect(() => {
     if (!isSuccess && saveSent) {
-      setAlert(() => <ErrorAlert setAlert={setAlert}>{errorMessage}</ErrorAlert>);
+      setAlert(() => <ErrorAlert>{errorMessage}</ErrorAlert>);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);

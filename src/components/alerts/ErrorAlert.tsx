@@ -1,16 +1,13 @@
-import SweetAlert from "react-bootstrap-sweetalert";
-
-import { AlertType } from "types";
+import { Alert } from "reactstrap";
 
 interface Props {
   children: string;
-  setAlert: React.Dispatch<React.SetStateAction<AlertType>>;
 }
 
-export const ErrorAlert = ({ children, setAlert }: Props) => {
+export const ErrorAlert = ({ children }: Props) => {
   return (
-    <SweetAlert error title="Error" onConfirm={() => setAlert(null)}>
+    <Alert className="my-4" color="error">
       {children}
-    </SweetAlert>
+    </Alert>
   );
 };
