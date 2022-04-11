@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
@@ -22,12 +21,11 @@ import "components/widgets/react-table/styles/reactTable.css";
 
 const root = createRoot(document.getElementById("root") as Element);
 
+// enable strict mode when jvectormap works with react v18 strictmode
 root.render(
   <BrowserRouter>
-    <StrictMode>
-      <AuthProvider>
-        <Router />
-      </AuthProvider>
-    </StrictMode>
+    <AuthProvider>
+      <Router />
+    </AuthProvider>
   </BrowserRouter>
 );
