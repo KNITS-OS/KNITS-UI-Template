@@ -1,16 +1,13 @@
-import SweetAlert from "react-bootstrap-sweetalert";
-
-import { AlertType } from "types";
+import { Alert } from "reactstrap";
 
 interface Props {
   children: string;
-  setAlert: React.Dispatch<React.SetStateAction<AlertType>>;
 }
 
-export const SuccessAlert = ({ children, setAlert }: Props) => {
+export const SuccessAlert = ({ children }: Props) => {
   return (
-    <SweetAlert success title="Success" onConfirm={() => setAlert(null)}>
+    <Alert className="my-4" dismissible>
       {children}
-    </SweetAlert>
+    </Alert>
   );
 };
