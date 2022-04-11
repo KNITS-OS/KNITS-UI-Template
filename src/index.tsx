@@ -1,5 +1,4 @@
-import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
@@ -22,13 +21,12 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 import "components/widgets/react-table/styles/reactTable.css";
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root") as Element);
+
+root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <StrictMode>
-        <Router />
-      </StrictMode>
+      <Router />
     </BrowserRouter>
-  </Provider>,
-  document.getElementById("root")
+  </Provider>
 );
