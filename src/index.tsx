@@ -1,5 +1,4 @@
-import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import "variables/chartDefaults";
@@ -21,13 +20,12 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 import "components/widgets/react-table/styles/reactTable.css";
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root") as Element);
+
+root.render(
   <BrowserRouter>
-    <StrictMode>
-      <StoresProvider value={stores}>
-        <Router />
-      </StoresProvider>
-    </StrictMode>
-  </BrowserRouter>,
-  document.getElementById("root")
+    <StoresProvider value={stores}>
+      <Router />
+    </StoresProvider>
+  </BrowserRouter>
 );

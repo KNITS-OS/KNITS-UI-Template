@@ -17,8 +17,8 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack"; //this will optimize load with webworker
-import Rating from "react-rating";
 import { useNavigate, useParams } from "react-router-dom";
+import { Rating } from "react-simple-star-rating";
 
 import {
   Button,
@@ -53,6 +53,7 @@ export const DocumentDetailPage = () => {
   const [document, setDocument] = useState<DocumentType>();
 
   const [numPages, setNumPages] = useState(0);
+  const [userRating, setUserRating] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
@@ -230,7 +231,11 @@ export const DocumentDetailPage = () => {
 
                     <Col lg="2">
                       <h3>Rate it:</h3>
-                      <Rating emptySymbol="fa fa-star-o fa-2x" fullSymbol="fa fa-star fa-2x" />
+                      <Rating
+                        ratingValue={userRating * 20}
+                        onClick={(value: number) => setUserRating(value / 20)}
+                        fillColor="#003369"
+                      />
                     </Col>
                   </Row>
                 </Form>
