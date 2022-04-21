@@ -36,19 +36,19 @@ export const toFormData = object => {
 
 export const toRoleEnum = role => {
   switch (role) {
-    case "RegionalTransformationManager":
+    case "Admin":
+      return Role.Admin;
+    case "RegionalManager":
       return Role.RegionalManager;
-    case "CountryTransformationManager":
+    case "CountryManager":
       return Role.CountryManager;
-    case "Advocate":
-      return Role.Advocate;
-    case "Trainer":
-      return Role.Trainer;
-    case "Sponsor":
-      return Role.Sponsor;
+    case "OperationManager":
+      return Role.OperationManager;
+    case "Employee":
+      return Role.Employee;
 
     default:
-      throw Error("Illegal value for tole. Found: " + role);
+      throw Error(`Illegal value for role. Found: ${role}`);
   }
 };
 

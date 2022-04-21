@@ -2,7 +2,11 @@ import { Card, CardBody, CardHeader, Container, Row } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
 
+import { useAuth } from "context";
+
 export const HomePage = () => {
+  const { user } = useAuth();
+  console.log(user);
   return (
     <>
       <BoxHeader />

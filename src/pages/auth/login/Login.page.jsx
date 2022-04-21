@@ -15,15 +15,16 @@ import {
   Container,
   Row,
   Col,
-  Alert,
   InputGroupAddon,
+  Alert,
 } from "reactstrap";
 
 import { AuthHeader } from "components/headers";
 
 import { HOME } from "pages/home";
 
-import { useAuth, regionalManagerUser } from "context";
+import { useAuth } from "context";
+import { arrayOfUsersData } from "data";
 import { Role } from "variables/app.consts";
 
 export const LoginPage = () => {
@@ -33,16 +34,22 @@ export const LoginPage = () => {
   const [focusedEmail, setfocusedEmail] = useState(false);
   const [focusedPassword, setfocusedPassword] = useState(false);
 
-  const [email, setEmail] = useState("gabriela.rios@kuehne-nagel.com");
+  const [email, setEmail] = useState("silvester.leanne@company.com");
   const [password, setPassword] = useState("");
+
+  const [foundUser, setFoundUser] = useState("");
 
   const handleSignIn = e => {
     e.preventDefault();
-    setUser(regionalManagerUser);
+    const _foundUser = arrayOfUsersData.find(user => user.email === email);
+    setFoundUser(_foundUser);
+    if (_foundUser) {
+      setUser(_foundUser);
+    }
   };
 
   useEffect(() => {
-    if (user !== null && user.authRole !== Role.Anonymous) {
+    if (user !== null && user.authRole !== Role.Anonymous && foundUser) {
       navigate(`/admin${HOME}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +60,7 @@ export const LoginPage = () => {
       <AuthHeader title="Welcome to Kn Care" lead="Please login" />
 
       <Container className="mt--8 pb-5">
-        {user !== null && user.authRole === Role.Anonymous && (
+        {foundUser === undefined && (
           <Alert color="warning">Login Failed! Email or Password was wrong.</Alert>
         )}
         <Row className="justify-content-center">

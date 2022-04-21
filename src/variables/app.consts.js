@@ -80,11 +80,11 @@ export const fonts = {
 };
 
 export const Role = {
-  RegionalManager: 6,
-  CountryManager: 5,
-  Advocate: 4,
-  Trainer: 3,
-  Sponsor: 2,
+  Admin: 6,
+  RegionalManager: 5,
+  CountryManager: 4,
+  OperationManager: 3,
+  Employee: 2,
   Anonymous: 1,
 };
 Object.freeze(Role);
