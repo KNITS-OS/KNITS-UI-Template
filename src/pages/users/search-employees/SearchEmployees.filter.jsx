@@ -11,7 +11,12 @@ import { selectLoggedUserDefaultCountryAsSelection } from "pages/utils";
 import { useAuth } from "context";
 import { DATE_FILTER_FORMAT, Permission, Role } from "variables/app.consts";
 
-export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchEmployees }) => {
+export const SearchEmployeesFilterPanel = ({
+  businessUnits,
+  countries,
+  onSearchEmployees,
+  setEmployees,
+}) => {
   const { user } = useAuth();
   const [searchNewMembersOnly, setSearchNewMembersOnly] = useState(false);
   const [searchLastName, setSearchLastName] = useState("");
@@ -29,6 +34,7 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
   };
 
   const resetFilters = () => {
+    setEmployees();
     setSearchLastName("");
     setSearchNewMembersOnly(false);
     setBusinessUnitSelected(null);
@@ -55,6 +61,7 @@ export const SearchEmployeesFilterPanel = ({ businessUnits, countries, onSearchE
       searchNewMembersOnly ? { newMembersOnly: searchNewMembersOnly } : null
     );
   };
+
   return (
     <FilterPanel
       title="Search Employees"

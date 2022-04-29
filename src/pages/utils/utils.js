@@ -146,3 +146,7 @@ export const selectGroupMembers = groupId => {
     .map(key => employees[parseInt(key)])
     .filter(employee => group?.members.includes(employee.id));
 };
+
+export const toDate = date => {
+  return new Date(date.replace(/\//g, "-"));
+};

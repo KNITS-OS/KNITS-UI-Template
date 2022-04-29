@@ -4,28 +4,56 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardHeader, Container, Row } from "reactstrap";
 
 import { BoxHeader } from "components/headers";
-import { ReactTable } from "components/widgets";
 
-import { EMPLOYEE_DETAILS } from "pages/users";
+import { EMPLOYEE_DETAILS, employeesTableColumns } from "pages/users";
 
-import { employeesData } from "data";
+import { businessUnitsData, employeesData } from "data";
 
+import { ReactTable } from "../../../components/widgets";
 import {
   selectAllBusinessUnitsDataAsSelectOptions,
   selectAllCountriesDataAsSelectOptions,
+  toDate,
 } from "../../utils";
+import { SearchEmployeesFilterPanel } from "../search-employees";
 
-import { employeesTableColumns, SearchEmployeesFilterPanel } from ".";
-
-export const SearchEmployeesPage = () => {
+export const ExampleSearchPage = () => {
   const navigate = useNavigate();
 
-  const [employees] = useState(employeesData);
+  const [employees, setEmployees] = useState(employeesData);
 
   const businessUnits = selectAllBusinessUnitsDataAsSelectOptions();
   const countries = selectAllCountriesDataAsSelectOptions();
+
   const onSearchEmployees = filters => {
-    console.log("filters", filters);
+    let filteredList = [...employeesData];
+
+    if (filters.lastName) {
+      filteredList = filteredList.filter(employee => {
+        return employee.lastName.includes(filters.lastName);
+      });
+    }
+    if (filters.businessUnitId) {
+      const unit = businessUnitsData.find(unit => unit.id === filters.businessUnitId);
+      filteredList = filteredList.filter(employee => {
+        if (!unit) return [...employeesData];
+        return employee.businessUnit === unit.name;
+      });
+    }
+    if (filters.hiringDateFrom) {
+      filteredList = filteredList.filter(employee => {
+        return toDate(employee.startDate) >= toDate(filters.hiringDateFrom);
+      });
+    }
+    if (filters.countryIso3) {
+      filteredList = filteredList.filter(employee => {
+        return employee.office.countryiso3 === filters.countryIso3;
+      });
+    }
+    if (filters.newMembersOnly) {
+      console.log(filters.newMembersOnly);
+    }
+    setEmployees(filteredList);
   };
 
   const onViewEmployeeDetails = e => {
@@ -37,7 +65,7 @@ export const SearchEmployeesPage = () => {
   const onDeleteEmployee = e => {
     e.preventDefault();
     const { id } = e.currentTarget;
-    console.log("delete employee", id);
+    setEmployees(employees.filter(employee => employee.id !== Number(id)));
   };
 
   return (
@@ -48,6 +76,7 @@ export const SearchEmployeesPage = () => {
           <div className="col">
             <SearchEmployeesFilterPanel
               onSearchEmployees={onSearchEmployees}
+              setEmployees={() => setEmployees(employeesData)}
               // jobTitle={jobTitles}
               countries={countries}
               businessUnits={businessUnits}

@@ -1,6 +1,13 @@
 import { allAuthRoles } from "../utils";
 
-import { EmployeeDetailsPage, EMPLOYEE_DETAILS, EMPLOYEE_SEARCH, SearchEmployeesPage } from ".";
+import {
+  EmployeeDetailsPage,
+  EMPLOYEE_DETAILS,
+  EMPLOYEE_SEARCH,
+  EXAMPLE_SEARCH,
+  SearchEmployeesPage,
+  ExampleSearchPage,
+} from ".";
 
 export const userMenu = [
   {
@@ -19,6 +26,15 @@ export const userMenu = [
         component: <SearchEmployeesPage />,
         layout: "/admin",
         key: "Users/Employees",
+        allowedRoles: [...allAuthRoles],
+      },
+      {
+        path: EXAMPLE_SEARCH,
+        name: "Example Search",
+        miniName: "S",
+        component: <ExampleSearchPage />,
+        layout: "/admin",
+        key: "Users/Search",
         allowedRoles: [...allAuthRoles],
       },
     ],

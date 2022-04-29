@@ -63,7 +63,6 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
 
   const findByAllParameters = () => {
     const filters = parametersToFilter();
-
     setFilters(filters);
   };
 
@@ -92,7 +91,6 @@ export const SearchAdvancedEmployeesFilterPanel = ({ setFilters, currentGroupMem
       groupMembers ? { members: groupMembers } : null
     );
   };
-
   return (
     <FilterPanel
       title="Search Employees"
