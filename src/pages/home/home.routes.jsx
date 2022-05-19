@@ -1,7 +1,7 @@
 import { allAuthRoles } from "../utils";
 
+import { HomePage } from "./Home.page";
 import { HOME } from "./home.routes.const";
-import { HomePage } from "./HomePage";
 
 export const homeMenu = [
   {

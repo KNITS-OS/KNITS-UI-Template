@@ -106,3 +106,5 @@ export const Permission = {
   Dashboard_statistics_country_all: 13,
 };
 Object.freeze(Permission);
+
+export const sidebarLinksGroups = [1, 2, 3, 4];
