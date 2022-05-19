@@ -23,7 +23,7 @@ import { Button, Card, CardBody, CardHeader, Col, Container, Row } from "reactst
 import { BoxHeader } from "components/headers";
 
 import { selectAllGroupsDataAsSelectOptions, selectAllRolesDataAsSelectOptions } from "pages/utils";
-import { EmployeePanel, WORK_ORDERS } from "pages/work-orders/index";
+import { EmployeePanel, EMPLOYEE_SEARCH } from "pages/work-orders";
 
 import { employeesData } from "data";
 import { useLocalStateAlerts } from "hooks";
@@ -67,7 +67,7 @@ export const EmployeeDetailsPage = () => {
                     <Button
                       className="btn btn-primary"
                       color="primary"
-                      onClick={() => navigate(`/admin${WORK_ORDERS}`)}
+                      onClick={() => navigate(`/admin${EMPLOYEE_SEARCH}`)}
                     >
                       Back to Search
                     </Button>

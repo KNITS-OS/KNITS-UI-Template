@@ -17,7 +17,7 @@
 import { useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
-import upkeepLogo from "assets/img/brand/upkeep_logo.svg";
+import careLogo from "assets/img/brand/CareLogoMin.png";
 
 import { AdminFooter } from "components/footers";
 import { AdminNavbar } from "components/navbars";
@@ -41,7 +41,7 @@ export const AdminLayout = () => {
       <Sidebar
         logo={{
           innerLink: "/",
-          imgSrc: upkeepLogo,
+          imgSrc: careLogo,
           imgAlt: "...",
         }}
         rtlActive={false}
