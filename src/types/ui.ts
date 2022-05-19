@@ -2,8 +2,11 @@ import { ChartData, ChartOptions } from "chart.js";
 import { ReactNode } from "react";
 
 import { Role } from "./security";
+
 export type LayoutType = "/admin" | "/auth" | "/rtl";
 export type Theme = "light" | "dark";
+export type SideBarGroupType = 1 | 2 | 3 | 4;
+
 export interface IRoute {
   collapse?: boolean;
   name?: string;
@@ -18,6 +21,7 @@ export interface IRoute {
   redirect?: string;
   key: string;
   allowedRoles: Role[];
+  sideBarGroup?: SideBarGroupType;
 }
 
 export type AlertType = React.ReactNode | null;
@@ -35,14 +39,17 @@ export interface ILineChart {
   data: ChartData<"line">;
   options: ChartOptions<"line">;
 }
+
 export interface IBarChart {
   data: ChartData<"bar">;
   options: ChartOptions<"bar">;
 }
+
 export interface IDoughnutChart {
   data: ChartData<"doughnut">;
   options: ChartOptions<"doughnut">;
 }
+
 export interface IPieChart {
   data: ChartData<"pie">;
   options: ChartOptions<"pie">;

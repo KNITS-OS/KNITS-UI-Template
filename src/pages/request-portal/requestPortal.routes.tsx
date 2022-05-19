@@ -1,0 +1,19 @@
+import { IRoute } from "types";
+
+import { allAuthRoles } from "../utils";
+
+import { REQUEST_PORTAL_PAGE, RequestPortalPage } from ".";
+
+export const requestPortalPage: IRoute[] = [
+  {
+    collapse: false,
+    name: "Request Portal",
+    path: REQUEST_PORTAL_PAGE,
+    component: <RequestPortalPage />,
+    icon: "ni ni-curved-next text-info",
+    layout: "/admin",
+    key: "RequestPortal",
+    allowedRoles: [...allAuthRoles],
+    sideBarGroup: 4,
+  },
+];

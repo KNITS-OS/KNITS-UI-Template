@@ -80,3 +80,5 @@ export const mode: Theme = "light";
 export const fonts = {
   base: "Open Sans",
 };
+
+export const sidebarLinksGroups = [1, 2, 3, 4];

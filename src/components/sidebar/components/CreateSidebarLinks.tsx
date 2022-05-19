@@ -7,7 +7,7 @@ import { useAuth } from "context";
 import { useSidebar } from "hooks";
 import { IRoute, Role } from "types";
 
-import { getViewCollapseInitialState, activeRoute, CollapseType } from "..";
+import { activeRoute, CollapseType, getViewCollapseInitialState } from "..";
 
 import { RouteIcon } from ".";
 
@@ -75,7 +75,10 @@ export const CreateSidebarLinks = ({ routes, collapseState, setCollapseState }: 
             // route menu children
           } else {
             return (
-              <NavItem className={activeRoute(route.layout + route.path, location)} key={route.key}>
+              <NavItem
+                className={`${activeRoute(route.layout + route.path, location)}`}
+                key={route.key}
+              >
                 <NavLink
                   to={route.layout + route.path}
                   activeClassName=""
