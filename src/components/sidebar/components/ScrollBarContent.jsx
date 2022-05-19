@@ -1,34 +1,20 @@
 import { Link } from "react-router-dom";
 
-import { Collapse, Nav, NavbarBrand, NavItem, NavLink } from "reactstrap";
+import { Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
 import { routes } from "routes";
 
 import { CreateSidebarLinks, SidebarToggler } from ".";
 
 export const ScrollBarContent = ({ logo, collapseState, setCollapseState }) => {
-  let navbarBrandProps;
-
-  if (logo && logo.innerLink) {
-    navbarBrandProps = {
-      to: logo.innerLink,
-      tag: Link,
-    };
-  } else if (logo && logo.outerLink) {
-    navbarBrandProps = {
-      href: logo.outerLink,
-      target: "_blank",
-    };
-  }
-
   return (
     <div className="scrollbar-inner">
-      <div className="sidenav-header d-flex align-items-center">
-        {logo ? (
-          <NavbarBrand {...navbarBrandProps}>
-            <img alt={logo.imgAlt} className="navbar-brand-img" src={logo.imgSrc} />
-          </NavbarBrand>
-        ) : null}
+      <div className="d-flex flex-row align-items-center justify-content-between mx-2 mt-2">
+        {logo && (
+          <Link to="/">
+            <img alt={logo.imgAlt} style={{ height: "4.5rem" }} src={logo.imgSrc} />
+          </Link>
+        )}
         <SidebarToggler />
       </div>
       <div className="navbar-inner">

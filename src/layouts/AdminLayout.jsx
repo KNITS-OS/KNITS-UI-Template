@@ -17,7 +17,7 @@
 import { useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
-import careLogo from "assets/img/brand/CareLogoMin.png";
+import knitsLogo from "assets/img/brand/KNITS.png";
 
 import { AdminFooter } from "components/footers";
 import { AdminNavbar } from "components/navbars";
@@ -41,7 +41,7 @@ export const AdminLayout = () => {
       <Sidebar
         logo={{
           innerLink: "/",
-          imgSrc: careLogo,
+          imgSrc: knitsLogo,
           imgAlt: "...",
         }}
         rtlActive={false}

@@ -14,6 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import classNames from "classnames";
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -26,10 +27,10 @@ export const Sidebar = ({ logo, rtlActive = false }) => {
 
   return (
     <Navbar
-      className={
-        "sidenav navbar-vertical navbar-expand-xs navbar-light bg-white " +
-        (rtlActive ? "" : "fixed-left")
-      }
+      className={classNames(
+        "sidenav navbar-vertical navbar-expand-xs navbar-light bg-white",
+        rtlActive ? "" : "fixed-left"
+      )}
       onMouseEnter={onMouseEnterSidebar}
       onMouseLeave={onMouseLeaveSidebar}
     >

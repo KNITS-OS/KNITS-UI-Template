@@ -2,7 +2,7 @@
   "name": "kncare-ui",
   "version": "0.1.0",
   "engines": {
-    "node": "14.17.3"
+    "node": "16.14.2"
   },
   "private": true,
   "scripts": {
@@ -55,7 +55,7 @@
     "classnames": "^2.3.1",
     "font-awesome": "^4.7.0",
     "list.js": "2.3.1",
-    "moment": "2.29.1",
+    "moment": "2.29.3",
     "normalizr": "^3.6.1",
     "nouislider": "15.5.1",
     "prop-types": "15.8.1",
